@@ -1,8 +1,8 @@
-# IanchuProject
+# Acerca de
 
 Proyecto de Mapa ecológico de Arg.
 
-## Development server
+## Instrucciones
 
 Para correr y editar local (al menos en Linux):
 

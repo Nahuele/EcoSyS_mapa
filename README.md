@@ -19,13 +19,16 @@ Clonar el Repositorio del Proyecto en alguna carpeta con el comando:
 
 Situarse en la carpeta donde está el proyecto y ejecutar:
 
+`npm install` (esto instala los paquetes en la carpeta node_modules que no está en el git)
+
+
 `npm run start` (esto lee el archivo package.json en la parte de script)
 
 es equivalente a:
 
 `ng serve`
 
-Esto arranca el server local en el puerto 4200. Cuando termina de compilar si entramos a la dirección http://localhost:4200/ veremos a nuestra página web.
+Así arranca el server local en el puerto 4200. Cuando termina de compilar si entramos a la dirección http://localhost:4200/ veremos a nuestra página web.
 
 Luego editar el código con tu editor favorito, por ejemplo Visual Studio Code.
 

@@ -1,27 +1,31 @@
 # IanchuProject
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
+Proyecto de Mapa ecológico de Arg.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Para correr y editar local (al menos en Linux):
 
-## Code scaffolding
+Instalar `npm` [npm info](https://nodejs.org/en/) 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Luego instalar angular en la computadora (con la opción -g (global) ).
+ Mas info en [Install angular](https://angular.io/guide/setup-local)
 
-## Build
+`npm install -g @angular/cli`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Clonar el Repositorio del Proyecto en alguna carpeta con el comando:
 
-## Running unit tests
+`git clone https://gitlab.com/Nahuele/ianchuproject`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Situarse en la carpeta donde está el proyecto y ejecutar:
 
-## Running end-to-end tests
+`npm run start` (esto lee el archivo package.json en la parte de script)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+es equivalente a:
 
-## Further help
+`ng serve`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Esto arranca el server local en el puerto 4200. Cuando termina de compilar si entramos a la dirección http://localhost:4200/ veremos a nuestra página web.
+
+Luego editar el código con tu editor favorito, por ejemplo Visual Studio Code.
+

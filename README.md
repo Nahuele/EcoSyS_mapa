@@ -2,6 +2,9 @@
 
 Proyecto de Mapa ecológico de Arg.
 
+![image](http://i.imgur.com/DG8nc5f.png)
+
+
 ## Instrucciones
 
 Para correr y editar local (al menos en Linux):

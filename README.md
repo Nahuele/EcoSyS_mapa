@@ -21,7 +21,12 @@ Para correr y editar local (al menos en Linux):
 
 `npm install -g typescript`
 
-- Clonar el Repositorio del Proyecto en alguna carpeta con el comando:
+- Instalar git (es opcional, yo lo recomiendo, pero sino se puede descargar la carpeta del codigo sin usar Git) [Install en Linux, solo la parte Installing Git with Apt y Configuring Git](https://linuxize.com/post/how-to-install-git-on-ubuntu-18-04/)
+
+
+- Si optamos usar Git:
+
+    Clonar el Repositorio del Proyecto en alguna carpeta con el comando:
 
 `git clone https://gitlab.com/Nahuele/ianchuproject`
 

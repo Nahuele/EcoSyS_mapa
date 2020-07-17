@@ -1,9 +1,19 @@
-<p>mapa works!</p>
-<div class="map">
-<google-map  width="800" height="600" [center]="position">
-  <map-marker
-  [position]="position"
-  [label]="label"
-  [title]="title"></map-marker>
-</google-map>
+<blockquote class="blockquote text-center" style="margin: 20px">
+  <p class="mb-0">Mapa</p>
+</blockquote>
+
+<div class="card" >
+  <div class="card-body">
+    <div >
+      <google-map  [center]="position">
+        <map-marker
+          [position]="position"
+          [label]="label"
+          [title]="title"></map-marker>
+      </google-map>
+    </div>
+  </div>
 </div>
+
+
+

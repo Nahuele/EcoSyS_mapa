@@ -7,13 +7,17 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { MapaComponent } from './mapa/mapa.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { SearchFormComponent } from './search-form/search-form.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    MapaComponent
+    MapaComponent,
+    SearchFormComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

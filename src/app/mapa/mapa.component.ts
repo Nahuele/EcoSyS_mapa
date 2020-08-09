@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {environment} from '../../environments/environment';
 import * as mapboxgl from 'mapbox-gl';
-import dbFaunas from '../../assets/dbFauna.json';
-import detallesProyectos from '../../assets/detalles.json';
 import {GetProjectsService} from '../home/get-projects.service';
 
 // apiGoogle AIzaSyCCXLGfiyzjnY4yfwpf2g26tdNIrQucNKA
@@ -15,24 +13,10 @@ import {GetProjectsService} from '../home/get-projects.service';
 })
 
 export class MapaComponent implements OnInit {
-  // google maps
-  // title = 'project';
-  // position = {
-  //   lat: -34.681,
-  //   lng: -58.371
-  // }
-  //
-  // label = {
-  //   color: 'red',
-  //   text:  'algo'
-  // }
-
-  public dbFauna = dbFaunas;
 
   mapa: mapboxgl.Map;
 
   constructor(private getProjects: GetProjectsService) { }
-
 
   ngOnInit() {
 
@@ -46,15 +30,14 @@ export class MapaComponent implements OnInit {
     // agrego el boton  de zoom y norte
     this.mapa.addControl(new mapboxgl.NavigationControl());
 
-    // console.log(this.dbFauna);
     this.buscarCoordenadas();
   }
 
   buscarCoordenadas() {
-    this.getProjects.getDetalles().subscribe(datos => {
-      for (const proyectoID in datos) {
-        const coordenadas = datos[proyectoID]['COORDENADAS'].split(',').map(Number);
-        this.addMarker(coordenadas, datos[proyectoID]);
+    this.getProjects.getProyectos().subscribe(datos => {
+      for (const proyectoID in datos.detalles_proyectos) {
+        const coordenadas = datos.detalles_proyectos[proyectoID]['COORDENADAS'].split(',').map(Number);
+        this.addMarker(coordenadas, datos.detalles_proyectos[proyectoID]);
       }
     });
   }
@@ -62,7 +45,7 @@ export class MapaComponent implements OnInit {
   addMarker(coordenadas: Array<number>, detalle) {
     console.log(detalle);
     // create the popup
-    var popup = new mapboxgl.Popup({offset: 25, closeButton: false, maxWidth: 'none'})
+    var popup = new mapboxgl.Popup({ offset: 2, closeButton: false, className: "mapboxgl-popup", maxWidth: '400px'})
       .setHTML(this.setearHtmlPopUp(detalle));
 
     new mapboxgl.Marker()
@@ -72,22 +55,13 @@ export class MapaComponent implements OnInit {
   }
 
   setearHtmlPopUp(detalle) {
-    let templateHtml = `<div>
-    <div class="card" style="width: 20rem;">
+    const templateHtml = `<div class="card">
   <img class="card-img-top" src="https://elpais.com/elpais/imagenes/2017/06/19/ciencia/1497880506_898170_1497888043_noticia_fotograma.jpg" alt="Card image cap">
   <div class="card-body">
     <h3 class="card-title">${detalle['NOMBRE DEL PROYECTO']}</h3>
     <p class="card-text"><div><strong>Titulo extendido:</strong></div> ${detalle['TITULO EXTENDIDO']}</p>
     <a href="detalles/${detalle['proyect_ID']}" class="btn btn-primary btn-sm">Más Detalles</a>
   </div>
-</div>
-
-
-
-
-
-
-
 </div>`;
     return templateHtml;
   }

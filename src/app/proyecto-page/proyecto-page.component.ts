@@ -18,22 +18,14 @@ export class ProyectoPageComponent implements OnInit {
 
   ngOnInit() {
     const acc = this.route.snapshot.paramMap.get('id');
-    this.getDetalles(acc);
-    this.getFauna(acc);
+    this.getProyectos(acc);
   }
 
-  public getDetalles(acc) {
-    this.getproject.getDetalles().subscribe(data => {
-      console.log(data[acc]);
-      this.detallesPro = data[acc]
+  getProyectos(acc) {
+    this.getproject.getProyectos().subscribe(data => {
+      this.detallesPro = data.detalles_proyectos[acc];
+      this.faunaPro = data.especies[acc]
     })
   }
 
-  public getFauna(acc) {
-    this.getproject.getFauna().subscribe(data => {
-      console.log(data);
-      console.log(data[acc]);
-      this.faunaPro = data[acc]
-    })
-  }
 }

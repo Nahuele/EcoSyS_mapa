@@ -2,9 +2,9 @@
        * element that contains the map. */
 #mapa-mapbox {
   display: block;
-  position: absolute;
-  top:0;
-  bottom: 0;
+  /*position: absolute;*/
+  /*top:0;*/
+  /*bottom: 0;*/
   height: 500px;
   width: 100%;
 }

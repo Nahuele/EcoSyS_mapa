@@ -1,0 +1,129 @@
+﻿{
+     "CARNIVOROS_PNTF_ID": [
+        {
+            "NOMBRE DE PROYECTO": "CARNIVOROS_PNTF",
+            "proyect_ID": "CARNIVOROS_PNTF_ID",
+            "SPOB": "Lycalopex culpaeus lycoides",
+            "NOMBRE VULGAR": "Zorro colorado fueguino",
+            "NOMBRE INGLÉS": "Culpeo fox",
+            "SPEST": "LC",
+            "POPULATION TREND": "Estable",
+            "IUCN link": "https://www.iucnredlist.org/species/6929/85324366",
+            "TSO": "Nativa",
+            "Punteado web": "L. culpaeus lycoides"
+        },
+        {
+            "NOMBRE DE PROYECTO": "CARNIVOROS PNTF",
+            "proyect_ID": "CARNIVOROS_PNTF_ID",
+            "SPOB": "Canis lupus familiaris",
+            "NOMBRE VULGAR": "Perro doméstico",
+            "TSO": "Invasora"
+        },
+        {
+            "NOMBRE DE PROYECTO": "CARNIVOROS PNTF",
+            "proyect_ID": "CARNIVOROS_PNTF_ID",
+            "SPOB": "Lontra provocax",
+            "NOMBRE VULGAR": "Huillín",
+            "NOMBRE INGLÉS": "Southern River Otter",
+            "SPEST": "EN",
+            "POPULATION TREND": "Disminuyendo",
+            "IUCN link": "https://www.iucnredlist.org/species/12305/21938042",
+            "TSO": "Nativa"
+        },
+        {
+            "NOMBRE DE PROYECTO": "CARNIVOROS PNTF",
+            "proyect_ID": "CARNIVOROS_PNTF_ID",
+            "SPOB": "Lycalopex griseus",
+            "NOMBRE VULGAR": "Zorro gris",
+            "NOMBRE INGLÉS": "Chilla",
+            "SPEST": "LC",
+            "POPULATION TREND": "Estable",
+            "IUCN link": "https://www.iucnredlist.org/species/6927/111975602",
+            "TSO": "Invasora"
+        },
+        {
+            "NOMBRE DE PROYECTO": "CARNIVOROS PNTF",
+            "proyect_ID": "CARNIVOROS_PNTF_ID",
+            "SPOB": "Neovison vison",
+            "NOMBRE VULGAR": "Vison americano",
+            "NOMBRE INGLÉS": "American Mink",
+            "SPEST": "LC",
+            "POPULATION TREND": "Estable",
+            "IUCN link": "https://www.iucnredlist.org/species/41661/45214988",
+            "TSO": "Invasora"
+        } ], "PROAGA_Martín_García_ID": [
+        {
+            "NOMBRE DE PROYECTO": "PROAGA Martín García",
+            "proyect_ID": "PROAGA_Martín_García_ID",
+            "SPOB": "Felis catus",
+            "NOMBRE VULGAR": "Gato doméstico (asilvestrado)",
+            "NOMBRE INGLÉS": "Feral cat",
+            "SPEST": "LC",
+            "TSO": "Invasora",
+            "Punteado web": "F. Catus"
+        },
+        {
+            "NOMBRE DE PROYECTO": "PROAGA Martín García",
+            "proyect_ID": "PROAGA_Martín_García_ID",
+            "SPOB": "Hydropsalis torquata",
+            "NOMBRE VULGAR": "Atajacaminos tijera",
+            "NOMBRE INGLÉS": "Scissor-tailed Nightjar",
+            "SPEST": "LC",
+            "POPULATION TREND": "Estable",
+            "IUCN link": "https://www.iucnredlist.org/species/22690032/93258487",
+            "TSO": "Nativa",
+            "Punteado web": "H. torquata"
+        },
+        {
+            "NOMBRE DE PROYECTO": "PROAGA Martín García",
+            "proyect_ID": "PROAGA_Martín_García_ID",
+            "SPOB": "Setopagis parvula",
+            "NOMBRE VULGAR": "Atajacaminos chico",
+            "NOMBRE INGLÉS": "Little Nightjar",
+            "SPEST": "LC",
+            "POPULATION TREND": "Estable",
+            "IUCN link": "https://www.iucnredlist.org/species/22734667/95094030",
+            "TSO": "Nativa",
+            "Punteado web": "S. parvula"
+        },
+        {
+            "NOMBRE DE PROYECTO": "PROAGA Martín García",
+            "proyect_ID": "PROAGA_Martín_García_ID",
+            "SPOB": "Atajacaminos sp.",
+            "NOMBRE VULGAR": "Atajacaminos",
+            "SPEST": "LC",
+            "TSO": "Nativa",
+            "Punteado web": "Atajacaminos sp."
+        },
+        {
+            "NOMBRE DE PROYECTO": "PROAGA Martín García",
+            "proyect_ID": "PROAGA_Martín_García_ID",
+            "SPOB": "Comunidad avifauna",
+            "Punteado web": "Avifauna"
+        },
+        {
+            "NOMBRE DE PROYECTO": "PROAGA Martín García",
+            "proyect_ID": "PROAGA_Martín_García_ID",
+            "SPOB": "Liolaemus wiegmannii",
+            "NOMBRE VULGAR": "Lagartija de Wiegmann",
+            "NOMBRE INGLÉS": "sand lizard Liolaemus wiegmannii",
+            "SPEST": "LC",
+            "POPULATION TREND": "Estable",
+            "IUCN link": "https://www.iucnredlist.org/species/56156054/56156216",
+            "TSO": "Nativa",
+            "Punteado web": "L. wiegmanni"
+        },
+        {
+            "NOMBRE DE PROYECTO": "PROAGA Martín García",
+            "proyect_ID": "PROAGA_Martín_García_ID",
+            "SPOB": "Tupinambis merianae",
+            "NOMBRE VULGAR": "Lagarto overo",
+            "NOMBRE INGLÉS": "Black-and-white Tegu",
+            "SPEST": "LC",
+            "POPULATION TREND": "Estable",
+            "IUCN link": "https://www.iucnredlist.org/species/178340/61322552",
+            "TSO": "Nativa",
+            "Punteado web": "T. merianae"
+        } ]
+    
+}

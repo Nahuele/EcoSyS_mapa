@@ -9,6 +9,7 @@ import { MapaComponent } from './mapa/mapa.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { SearchFormComponent } from './search-form/search-form.component';
 import { HomeComponent } from './home/home.component';
+import { ProyectoPageComponent } from './proyecto-page/proyecto-page.component';
 
 @NgModule({
   declarations: [
@@ -17,13 +18,15 @@ import { HomeComponent } from './home/home.component';
     FooterComponent,
     MapaComponent,
     SearchFormComponent,
-    HomeComponent
+    HomeComponent,
+    ProyectoPageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     GoogleMapsModule
   ],
+  exports:[],
   providers: [],
   bootstrap: [AppComponent]
 })

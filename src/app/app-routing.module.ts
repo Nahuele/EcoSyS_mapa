@@ -2,11 +2,24 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {ProyectoPageComponent} from './proyecto-page/proyecto-page.component';
+import {ProyectFormComponent} from './editar-db/proyect-form/proyect-form.component';
+import {LoginComponent} from './editar-db/login/login.component';
+import {RegisterComponent} from './editar-db/register/register.component';
+import {SendEmailComponent} from './editar-db/send-email/send-email.component';
+import {ResetPassComponent} from './editar-db/reset-pass/reset-pass.component';
+import {CanEditGuard} from './editar-db/auth/can-edit.guard';
+import {ProyectosComponent} from './editar-db/proyectos/proyectos.component';
 
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'detalles/:id', component: ProyectoPageComponent},
+  {path: 'submitproject', component: ProyectFormComponent, canActivate: [CanEditGuard]},
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: 'verifemail', component: SendEmailComponent},
+  {path: 'resetpass', component: ResetPassComponent},
+  {path: 'proyectos', component: ProyectosComponent, canActivate: [CanEditGuard]},
 
 ];
 

@@ -43,20 +43,20 @@ export class MapaComponent implements OnInit {
   }
 
   addMarker(coordenadas: Array<number>, detalle) {
-    console.log(detalle);
-    // create the popup
+    // console.log(detalle);
+    // create the popup from the function
     var popup = new mapboxgl.Popup({ offset: 2, closeButton: false, className: "mapboxgl-popup", maxWidth: '400px'})
       .setHTML(this.setearHtmlPopUp(detalle));
-
+    // agrega un marcador
     new mapboxgl.Marker()
       .setLngLat(coordenadas) // [12.550343, 55.665957]
       .setPopup(popup)
       .addTo(this.mapa);
   }
-
+  // creo una funcion q me hace el popup HTML
   setearHtmlPopUp(detalle) {
     const templateHtml = `<div class="card">
-  <img class="card-img-top" src="https://elpais.com/elpais/imagenes/2017/06/19/ciencia/1497880506_898170_1497888043_noticia_fotograma.jpg" alt="Card image cap">
+  <img class="card-img-top"  src="https://elpais.com/elpais/imagenes/2017/06/19/ciencia/1497880506_898170_1497888043_noticia_fotograma.jpg" alt="Card image cap">
   <div class="card-body">
     <h3 class="card-title">${detalle['NOMBRE DEL PROYECTO']}</h3>
     <p class="card-text"><div><strong>Titulo extendido:</strong></div> ${detalle['TITULO EXTENDIDO']}</p>

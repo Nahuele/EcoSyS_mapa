@@ -18,8 +18,30 @@
       </li><li class="nav-item">
         <a class="nav-link" href="#">Contacto</a>
       </li>
-
     </ul>
-
+    <ul class="navbar-nav mx-auto" *ngIf="user$ | async as user; else login">
+      <li class="nav-item " *ngIf="user">
+        <a class="nav-link" (click)="onLogout()" style="cursor: pointer">Logout</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="proyectos">Proyectos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="submitproject">Agregar</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" disabled>{{ user?.email }}</a>
+      </li>
+    </ul>
+    <ng-template #login>
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="login">Login</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" routerLink='register'>Register</a>
+        </li>
+      </ul>
+    </ng-template>
   </div>
 </nav>

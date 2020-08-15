@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
-import {Observable} from 'rxjs';
+import {from, Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
+import * as firebase from 'firebase';
+import {AngularFireModule} from '@angular/fire';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProyectoService {
 
-  projectsCollection: AngularFirestoreCollection;
-  especiesCollection: AngularFirestoreCollection;
-  proyectos: Observable<any>;
-  proyectoDoc: AngularFirestoreDocument;
-  especies: Observable<any>;
+  public projectsCollection: AngularFirestoreCollection;
+  public especiesCollection: AngularFirestoreCollection;
+  public proyectos: Observable<any>;
+  public proyectoDoc: AngularFirestoreDocument;
+  public especiesDoc: AngularFirestoreDocument;
+  public especies: Observable<any>;
 
-  constructor(public db: AngularFirestore) {
+  constructor(public db: AngularFirestore, public DB: AngularFireModule) {
     this.projectsCollection = this.db.collection('proyectos_detalles')
     // this.proyectos = this.db.collection('proyectos_detalles').valueChanges();
     // this.especies = this.db.collection('especies').valueChanges();
@@ -23,20 +26,22 @@ export class ProyectoService {
         map(actions => {
           return actions.map(propiedad => {
             const data = propiedad.payload.doc.data();
+            data.projectID = Object.keys(data);
             data.id = propiedad.payload.doc.id;
             return data;
           });
         }));
-    // this.especiesCollection = this.db.collection('especies')
-    // this.especies = this.projectsCollection.snapshotChanges()
-    //   .pipe( // esto es para traer el ID , las de arriba no traian
-    //     map(actions => {
-    //       return actions.map(propiedad => {
-    //         const data = propiedad.payload.doc.data();
-    //         data.id = propiedad.payload.doc.id;
-    //         return data;
-    //       });
-    //     }));
+    this.especiesCollection = this.db.collection('especies')
+
+    this.especies = this.especiesCollection.snapshotChanges()
+      .pipe(map(actions => {
+          return actions.map(propiedad => {
+            const data = propiedad.payload.doc.data();
+            data.projectID = Object.keys(data);
+            data.id = propiedad.payload.doc.id;
+            return data;
+          });
+        }));
   }
 
   getProjects() {
@@ -44,16 +49,44 @@ export class ProyectoService {
   };
 
   getEspecies() {
+    // this.especies.subscribe( data => console.log(data))
+    // return this.especiesCollection
     return this.especies;
   };
-  addProject(project, especies?) {
+  addProject(project) {
    this.projectsCollection.add(project);
-   // this.especiesCollection.add(especies);
   }
-  deleteProject(proyecto) {
+  addEspecies(especies) {
+    if (especies) {
+      this.especiesCollection.add(especies);
+    }
+  }
+
+  deleteProject(project) {
     // encuentro el proyecto basado en el id
-    this.proyectoDoc = this.db.doc(`proyectos_detalles/${proyecto.id}`)
-    // elimino el proyecto
+    this.proyectoDoc = this.db.doc(`proyectos_detalles/${project.id}`);
+    const projectId = project.projectID;
+    this.especies.subscribe( especie => {
+      if (especie.length > 0) {
+        for (let indexSp of Object.keys(especie)) {
+          const docuSp = especie[indexSp]
+          if (projectId in docuSp) {
+            this.especiesDoc = this.db.doc(`especies/${docuSp.id}`)
+            this.especiesDoc.delete();
+          }
+        }
+      }
+    })
+
+
+    // elimino el proyecto y sp
     this.proyectoDoc.delete();
   }
+
+  // mergeSpp(id) {
+  //   return this.getEspecies(id)
+  //     // .subscribe((especies) => {
+  //     //   return especies
+  //     // })
+  // }
 }

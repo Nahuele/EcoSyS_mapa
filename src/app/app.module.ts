@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ModalModule} from 'ngx-bootstrap/modal';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -57,6 +59,8 @@ import {CanEditGuard} from './editar-db/auth/can-edit.guard';
     BsDatepickerModule.forRoot(),
     BrowserAnimationsModule,
     AngularFireAuthModule,
+    ModalModule.forRoot(),
+    AlertModule.forRoot(),
   ],
   exports:[],
   providers: [AuthService, CanEditGuard],

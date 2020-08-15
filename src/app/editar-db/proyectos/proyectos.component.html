@@ -1,36 +1,47 @@
-<h3 class="text-center mt-2">Lista Proyectos</h3>
-<div class="container">
-  <div *ngIf="projObj.length > 0; else noprojectsfound">
-    <ul>
-      <div *ngFor="let item of projObj ">
-        <div class="card mt-2 mb-2">
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <p>id: {{item.id}}</p>
-              </div>
-              <div class="col">
-                <p>codigo: {{item | json}}</p>
-              </div>
-<!--              <div class="col">-->
-<!--                <p>nombre: {{item.nombre}}</p>-->
-<!--              </div>-->
-            </div>
-          </div>
-          <div class="row justify-content-md-center">
-            <div class="col-auto">
-              <button class="btn btn-warning" (click)="editarProyecto($event,item)" disabled> Editar
-              </button>
-            </div>
-            <div class="col-auto">
-              <button class="btn btn-danger" (click)="borrarProyecto($event,item)"> Borrar
-              </button>
-            </div>
-          </div>
 
+<ng-template #spinner class="row justify-content-md-center" >
+  <h3 class="text-center mt-2">Lista Proyectos</h3>
+  <div class="col">
+    <div class="spinner-border text-success " role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</ng-template>
+
+<div class="container">
+  <div *ngIf="projObj; else spinner">
+    <div *ngIf="projObj && projObj.length > 0; else noprojectsfound">
+      <ul>
+        <div *ngFor="let item of projObj">
+          <div class="card mt-2 mb-2">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <p>id: {{item.projectID}}</p>
+                </div>
+                <div class="col">
+                  <p>codigo: {{item | json}}</p>
+                </div>
+                <!--              <div *ngFor="let sp of sppObj">-->
+                <!--                <p></p>-->
+                <!--              </div>-->
+              </div>
+            </div>
+            <div class="row justify-content-md-center">
+              <div class="col-auto">
+                <button class="btn btn-warning" (click)="editarProyecto(idProject)" disabled> Editar
+                </button>
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-danger" (click)="borrarProyecto($event, item)"> Borrar
+                </button>
+              </div>
+            </div>
+
+          </div>
         </div>
-      </div>
-    </ul>
+      </ul>
+    </div>
   </div>
 </div>
 

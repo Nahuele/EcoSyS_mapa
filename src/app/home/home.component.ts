@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import dbProjects from '../../assets/dbProjects.json';
-import {GetProjectsService} from './get-projects.service';
 
 @Component({
   selector: 'app-home',

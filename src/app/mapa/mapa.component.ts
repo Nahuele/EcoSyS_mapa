@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {environment} from '../../environments/environment';
 import * as mapboxgl from 'mapbox-gl';
-import {GetProjectsService} from '../home/get-projects.service';
 
 // apiGoogle AIzaSyCCXLGfiyzjnY4yfwpf2g26tdNIrQucNKA
 
@@ -16,7 +15,7 @@ export class MapaComponent implements OnInit {
 
   mapa: mapboxgl.Map;
 
-  constructor(private getProjects: GetProjectsService) { }
+  constructor() { }
 
   ngOnInit() {
 
@@ -30,17 +29,17 @@ export class MapaComponent implements OnInit {
     // agrego el boton  de zoom y norte
     this.mapa.addControl(new mapboxgl.NavigationControl());
 
-    this.buscarCoordenadas();
+    // this.buscarCoordenadas();
   }
 
-  buscarCoordenadas() {
-    this.getProjects.getProyectos().subscribe(datos => {
-      for (const proyectoID in datos.detalles_proyectos) {
-        const coordenadas = datos.detalles_proyectos[proyectoID]['COORDENADAS'].split(',').map(Number);
-        this.addMarker(coordenadas, datos.detalles_proyectos[proyectoID]);
-      }
-    });
-  }
+  // buscarCoordenadas() {
+  //   this.getProjects.getProyectos().subscribe(datos => {
+  //     for (const proyectoID in datos.detalles_proyectos) {
+  //       const coordenadas = datos.detalles_proyectos[proyectoID]['COORDENADAS'].split(',').map(Number);
+  //       this.addMarker(coordenadas, datos.detalles_proyectos[proyectoID]);
+  //     }
+  //   });
+  // }
 
   addMarker(coordenadas: Array<number>, detalle) {
     // console.log(detalle);

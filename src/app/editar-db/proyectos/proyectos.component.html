@@ -1,6 +1,5 @@
 
 <ng-template #spinner class="row justify-content-md-center" >
-  <h3 class="text-center mt-2">Lista Proyectos</h3>
   <div class="col">
     <div class="spinner-border text-success " role="status">
       <span class="sr-only">Loading...</span>
@@ -11,20 +10,34 @@
 <div class="container">
   <div *ngIf="projObj; else spinner">
     <div *ngIf="projObj && projObj.length > 0; else noprojectsfound">
+      <h3 class="text-center mt-3 mb-3 ">Lista de proyectos</h3>
       <ul>
         <div *ngFor="let item of projObj">
-          <div class="card mt-2 mb-2">
+          <div class="card text-center mt-2 mb-2 border-info " >
+<!--            <div class="card-header">-->
+<!--              <p><strong>Titulo</strong></p>-->
+<!--            </div>-->
+            <div class="card-header text-info border-info" (click)="goToProject()" style="cursor: pointer">
+              <div class="row justify-content-md-center">
+                <div class="col-auto">
+                  <p class="card-text"><strong>{{item[item.projectID]['titulo_extendido'] | json}}</strong></p>
+                </div>
+              </div>
+            </div>
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <p>id: {{item.projectID}}</p>
+                  <p><strong>id:</strong> {{item.projectID}}</p>
                 </div>
                 <div class="col">
-                  <p>codigo: {{item | json}}</p>
+                  <p><strong>nombre:</strong> {{item[item.projectID]['nombre'] | json}} </p>
                 </div>
-                <!--              <div *ngFor="let sp of sppObj">-->
-                <!--                <p></p>-->
-                <!--              </div>-->
+                <div class="col">
+                  <p><strong>coordenadas:</strong> {{item[item.projectID]['coordenadas'] | json}} </p>
+                </div>
+                <div class="col">
+                  <p><strong>ciudad:</strong> {{item[item.projectID]['ciudad'] | json}} </p>
+                </div>
               </div>
             </div>
             <div class="row justify-content-md-center">
@@ -33,7 +46,7 @@
                 </button>
               </div>
               <div class="col-auto">
-                <button class="btn btn-danger" (click)="borrarProyecto($event, item)"> Borrar
+                <button class="btn btn-danger" (click)="openModal(modalconfirm); borrarProyecto($event, item)"> Borrar
                 </button>
               </div>
             </div>
@@ -47,4 +60,13 @@
 
 <ng-template #noprojectsfound>
   <h3 class="text-center mt-4">No hay proyectos</h3>
+</ng-template>
+
+
+<ng-template #modalconfirm>
+  <div class="modal-body text-center">
+    <p>Do you want to confirm?</p>
+    <button type="button" class="btn btn-default" (click)="confirmDelete()" >Si</button>
+    <button type="button" class="btn btn-primary" (click)="declineDelete()" >No</button>
+  </div>
 </ng-template>

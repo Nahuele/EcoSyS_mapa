@@ -31,13 +31,14 @@ export class ProyectoPageComponent implements OnInit {
       }
       console.log(this.detallesPro);
     });
-    // this.proyectoService.getEspecies().valueChanges().subscribe(entry => {
-    //   for (let item of entry) {
-    //     if (item[acc]) {
-    //       this.sppObj = item[acc]['especies'];
-    //     }
-    //   }
-    // })
+    this.proyectoService.getEspecies().subscribe(entry => {
+      for (let item of entry) {
+        if (item[acc]) {
+          this.sppObj = item[acc]['especies'];
+        }
+      }
+      console.log(this.sppObj);
+    });
   }
 
 }

@@ -66,6 +66,7 @@ export class ProyectoService {
     // encuentro el proyecto basado en el id
     this.proyectoDoc = this.db.doc(`proyectos_detalles/${project.id}`);
     const projectId = project.projectID;
+    // ccon esta subscripcion busco en la tabla de sp y borros las q tengan mismo ID del proyecto ! ojo con esto!
     this.especies.subscribe( especie => {
       if (especie.length > 0) {
         for (let indexSp of Object.keys(especie)) {
@@ -77,16 +78,7 @@ export class ProyectoService {
         }
       }
     })
-
-
     // elimino el proyecto y sp
     this.proyectoDoc.delete();
   }
-
-  // mergeSpp(id) {
-  //   return this.getEspecies(id)
-  //     // .subscribe((especies) => {
-  //     //   return especies
-  //     // })
-  // }
 }

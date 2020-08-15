@@ -1,39 +1,49 @@
-<!--<div class="container">-->
-<!--  <div *ngIf="detallesPro">-->
-<!--    <h4>{{detallesPro['NOMBRE DEL PROYECTO']}}</h4>-->
-<!--    <hr>-->
-<!--    <div>anio de inicio: {{detallesPro['AÑO DE INICIO']}}</div>-->
-<!--    <hr>-->
-<!--    <div>Id personal: {{detallesPro['ID_personal']}}</div>-->
-<!--    <hr>-->
-<!--    <div>Estado actual: {{detallesPro['ESTADO ACTUAL']}}</div>-->
-<!--    <hr>-->
-<!--    <div>Enfoque: {{detallesPro['ENFOQUE']}}</div>-->
-<!--    <hr>-->
-<!--    <div>Pais: {{detallesPro['PAIS']}}</div>-->
-<!--    <div>Tipo de Sitio: {{detallesPro['TIPO DE SITIO']}}</div>-->
-<!--    <div>Titulo extendido: {{detallesPro['TITULO EXTENDIDO']}}</div>-->
-<!--  </div>-->
-<!--  <hr style="width:50%;text-align:left;margin-left:0">-->
+<div class="container">
+  <div *ngIf="detallesPro" class="mt-3 mb-5">
+    <h4>{{detallesPro['nombre']}}</h4>
+    <hr>
+    <div>anio de inicio: {{detallesPro['ano_inicio']}}</div>
+    <hr>
+    <!--    <div>Id personal: {{detallesPro['ID_personal']}}</div>-->
+    <!--    <hr>-->
+    <div>Estado actual: {{detallesPro['estado_actual']}}</div>
+    <hr>
+    <div>Enfoque: {{detallesPro['tipo_enfoque']}}</div>
+    <hr>
+    <div>Titulo extendido: {{detallesPro['titulo_extendido']}}</div>
+    <hr>
+    <div *ngIf="detallesPro['linksfotos']" class="card mt-1 mb-2">
+      <div class="card-title justify-content-md-center"><h5>Fotos</h5></div>
+      <div class="card-body">
+        <div *ngFor="let foto of detallesPro['linksfotos']">
+          <img [src]="foto['link']" class="img-fluid" alt="Responsive image" style="border: 1px solid #ddd;
+          border-radius: 4px;padding: 5px;width: 200px;">
+        </div>
+      </div>
+    </div>
+    <div>Coordenadas: {{detallesPro['coordenadas']}}</div>
+    <hr>
+    <div>Pais: {{detallesPro.pais}}</div>
+    <div>Tipo de Sitio: {{detallesPro['tipo_sitio']}}</div>
+    <div>Titulo extendido: {{detallesPro['ciudad']}}</div>
+  </div>
+  <hr style="width:50%;text-align:left;margin-left:0">
 
-<!--  <div *ngIf="faunaPro">-->
-<!--    <table class="table">-->
-<!--      <thead>-->
-<!--      <tr>-->
-<!--        <th scope="col">NOMBRE VULGAR</th>-->
-<!--        <th scope="col">Punteado web</th>-->
-<!--        <th scope="col">SPOB</th>-->
-<!--        <th scope="col">TSO</th>-->
-<!--      </tr>-->
-<!--      </thead>-->
-<!--      <tbody>-->
-<!--      <tr *ngFor="let especie of faunaPro">-->
-<!--        <td>{{especie['NOMBRE VULGAR']}}</td>-->
-<!--        <td>{{especie['Punteado web']}}</td>-->
-<!--        <td>{{especie['SPOB']}}</td>-->
-<!--        <td>{{especie['TSO']}}</td>-->
-
-<!--      </tbody>-->
-<!--    </table>-->
-<!--  </div>-->
-<!--</div>-->
+  <div *ngIf="sppObj">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">NOMBRE VULGAR</th>
+        <th scope="col">TSO</th>
+        <th scope="col">SPOB</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let especie of sppObj">
+        <td>{{especie['nombre_vulgar']}}</td>
+        <td>{{especie['tso']}}</td>
+        <td>{{especie['spob']}}</td>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {environment} from '../../environments/environment';
 import * as mapboxgl from 'mapbox-gl';
-
-// apiGoogle AIzaSyCCXLGfiyzjnY4yfwpf2g26tdNIrQucNKA
+import {ProyectoService} from '../editar-db/proyecto.service';
 
 
 @Component({
@@ -12,34 +11,44 @@ import * as mapboxgl from 'mapbox-gl';
 })
 
 export class MapaComponent implements OnInit {
-
+  public projObj;
+  public sppObj;
+  public idProject;
   mapa: mapboxgl.Map;
 
-  constructor() { }
+  constructor(private proyectoService: ProyectoService) { }
 
   ngOnInit() {
 
     mapboxgl.accessToken = environment.mapboxKey;
     this.mapa = new mapboxgl.Map({
       container: 'mapa-mapbox', // container id
-      style:     'mapbox://styles/nahuele/ckdmxn4np0izr1imq3jpl8d96',
+      style:     'mapbox://styles/iannbarbe/ckduoxxyy0u7d19teotam0daj',
       center:    [-68.5631238, -43.7027949], // starting position
       zoom:      3 // starting zoom
     });
     // agrego el boton  de zoom y norte
     this.mapa.addControl(new mapboxgl.NavigationControl());
 
-    // this.buscarCoordenadas();
+    this.buscarCoordenadas();
   }
 
-  // buscarCoordenadas() {
-  //   this.getProjects.getProyectos().subscribe(datos => {
-  //     for (const proyectoID in datos.detalles_proyectos) {
-  //       const coordenadas = datos.detalles_proyectos[proyectoID]['COORDENADAS'].split(',').map(Number);
-  //       this.addMarker(coordenadas, datos.detalles_proyectos[proyectoID]);
-  //     }
-  //   });
-  // }
+  buscarCoordenadas() {
+    this.proyectoService.getProjects().subscribe(proyectos => {
+      this.projObj = proyectos;
+      // this.idProject = this.projObj[0].projectID;
+
+      for (let proj of Object.keys(this.projObj)) {
+        const itemProj =  this.projObj[proj]
+        const coordenadas = itemProj[itemProj.projectID].coordenadas.split(',').map(Number)
+        console.log(itemProj[itemProj.projectID]);
+        this.addMarker(coordenadas,itemProj[itemProj.projectID])
+      }
+    });
+    this.proyectoService.getEspecies().subscribe(especies => {
+      this.sppObj = especies;
+    });
+  }
 
   addMarker(coordenadas: Array<number>, detalle) {
     // console.log(detalle);
@@ -55,14 +64,19 @@ export class MapaComponent implements OnInit {
   // creo una funcion q me hace el popup HTML
   setearHtmlPopUp(detalle) {
     const templateHtml = `<div class="card">
-  <img class="card-img-top"  src="https://elpais.com/elpais/imagenes/2017/06/19/ciencia/1497880506_898170_1497888043_noticia_fotograma.jpg" alt="Card image cap">
+    <div *ngIf=detalle['linksfotos']>
+    <div *ngFor="let foto of detalle['linksfotos']">
+          <img [src]="foto['link']" class="img-fluid" alt="Responsive image" style="border: 1px solid #ddd;
+          border-radius: 4px;padding: 5px;width: 200px;">
+        </div>
+</div>
+
   <div class="card-body">
-    <h3 class="card-title">${detalle['NOMBRE DEL PROYECTO']}</h3>
-    <p class="card-text"><div><strong>Titulo extendido:</strong></div> ${detalle['TITULO EXTENDIDO']}</p>
-    <a href="detalles/${detalle['proyect_ID']}" class="btn btn-primary btn-sm">Más Detalles</a>
+    <h3 class="card-title">${detalle['nombre']}</h3>
+    <p class="card-text"><div><strong>Titulo extendido:</strong></div> ${detalle['titulo_extendido']}</p>
+    <a href="detalles/${detalle['projectid']}" class="btn btn-primary btn-sm">Más Detalles</a>
   </div>
 </div>`;
     return templateHtml;
   }
-
 }

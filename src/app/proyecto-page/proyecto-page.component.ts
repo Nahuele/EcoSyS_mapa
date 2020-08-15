@@ -19,10 +19,10 @@ export class ProyectoPageComponent implements OnInit {
 
   ngOnInit() {
     const acc = this.route.snapshot.paramMap.get('id');
-    this.getProyectos(acc);
+    this.getProyecto(acc);
   }
 
-  getProyectos(acc) {
+  getProyecto(acc) {
     this.proyectoService.getProjects().subscribe(proyectos => {
       for (let proyecto of proyectos) {
         if (proyecto[acc]) {

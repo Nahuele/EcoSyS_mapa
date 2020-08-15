@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  mapboxKey: 'pk.eyJ1IjoibmFodWVsZSIsImEiOiJja2RteGl3dDYxZDg4MnFsY2JrbmczbTVyIn0.cmv_eh2S5gMk-jXPNbuDNg',
+  // mapboxKey: 'pk.eyJ1IjoibmFodWVsZSIsImEiOiJja2RteGl3dDYxZDg4MnFsY2JrbmczbTVyIn0.cmv_eh2S5gMk-jXPNbuDNg',
+  mapboxKey: 'pk.eyJ1IjoiaWFubmJhcmJlIiwiYSI6ImNrZHF0OXN5dDFxeGgzMXBlaGhjejgzeDYifQ.YoVZW3-DD0PLY3q4voJsPg',
   firebase: {
     apiKey: "AIzaSyCu0Uq4FqtPkgiblDUuGsOJ2_eq1LJtPmo",
     authDomain: "mapaproyectos-59125.firebaseapp.com",

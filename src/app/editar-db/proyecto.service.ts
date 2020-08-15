@@ -19,8 +19,6 @@ export class ProyectoService {
 
   constructor(public db: AngularFirestore, public DB: AngularFireModule) {
     this.projectsCollection = this.db.collection('proyectos_detalles')
-    // this.proyectos = this.db.collection('proyectos_detalles').valueChanges();
-    // this.especies = this.db.collection('especies').valueChanges();
     this.proyectos = this.projectsCollection.snapshotChanges()
       .pipe( // esto es para traer el ID , las de arriba no traian
         map(actions => {

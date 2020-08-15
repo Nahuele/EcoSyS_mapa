@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {environment} from '../../environments/environment';
 import * as mapboxgl from 'mapbox-gl';
 import {ProyectoService} from '../editar-db/proyecto.service';
@@ -16,7 +16,8 @@ export class MapaComponent implements OnInit {
   public idProject;
   mapa: mapboxgl.Map;
 
-  constructor(private proyectoService: ProyectoService) { }
+  constructor(private proyectoService: ProyectoService,
+              private view: ViewContainerRef) { }
 
   ngOnInit() {
 
@@ -63,17 +64,16 @@ export class MapaComponent implements OnInit {
   }
   // creo una funcion q me hace el popup HTML
   setearHtmlPopUp(detalle) {
+    const link = detalle.linksfotos[0].link
+    console.log(link);
     const templateHtml = `<div class="card">
-    <div *ngIf=detalle['linksfotos']>
-    <div *ngFor="let foto of detalle['linksfotos']">
-          <img [src]="foto['link']" class="img-fluid" alt="Responsive image" style="border: 1px solid #ddd;
-          border-radius: 4px;padding: 5px;width: 200px;">
-        </div>
+        <div *ngIf="${link}" class="card-header text-center">
+          <img src="${link}" class="img-fluid" alt="Responsive image" style="border: 1px solid #ddd;
+          border-radius: 4px;padding: 5px;width: 300px;">
 </div>
-
   <div class="card-body">
-    <h3 class="card-title">${detalle['nombre']}</h3>
-    <p class="card-text"><div><strong>Titulo extendido:</strong></div> ${detalle['titulo_extendido']}</p>
+    <h5 class="card-title">${detalle['nombre']}</h5>
+    <p class="card-text"><div><strong>Titulo:</strong></div> ${detalle['titulo_extendido']}</p>
     <a href="detalles/${detalle['projectid']}" class="btn btn-primary btn-sm">Más Detalles</a>
   </div>
 </div>`;

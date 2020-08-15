@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start-test": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -22,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~9.1.0",
     "@angular/router": "~9.1.0",
     "bootstrap": "^4.5.0",
+    "express": "^4.17.1",
     "firebase": "^7.17.2",
     "jquery": "^3.5.1",
     "mapbox-gl": "^1.11.1",

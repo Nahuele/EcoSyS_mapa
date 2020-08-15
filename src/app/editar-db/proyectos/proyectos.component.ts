@@ -51,8 +51,8 @@ export class ProyectosComponent implements OnInit, OnDestroy {
     });
   }
 
-  goToProject(){
-    this.router.navigate([`detalles/${this.idProject}`])
+  goToProject(id){
+    this.router.navigate([`detalles/${id}`])
   }
 
   confirmDelete():void {

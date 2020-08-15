@@ -17,7 +17,7 @@
 <!--            <div class="card-header">-->
 <!--              <p><strong>Titulo</strong></p>-->
 <!--            </div>-->
-            <div class="card-header text-info border-info" (click)="goToProject()" style="cursor: pointer">
+            <div class="card-header text-info border-info" (click)="goToProject(item.projectID)" style="cursor: pointer">
               <div class="row justify-content-md-center">
                 <div class="col-auto">
                   <p class="card-text"><strong>{{item[item.projectID]['titulo_extendido'] | json}}</strong></p>

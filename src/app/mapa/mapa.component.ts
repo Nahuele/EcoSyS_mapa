@@ -64,7 +64,10 @@ export class MapaComponent implements OnInit {
   }
   // creo una funcion q me hace el popup HTML
   setearHtmlPopUp(detalle) {
-    const link = detalle.linksfotos[0].link
+    let link = ''
+    if (detalle.linksfotos) {
+      link = detalle.linksfotos[0].link
+    }
     console.log(link);
     const templateHtml = `<div class="card">
         <div *ngIf="${link}" class="card-header text-center">

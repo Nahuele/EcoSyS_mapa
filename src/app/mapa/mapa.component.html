@@ -9,35 +9,35 @@
   <div class="map-overlay">
     <div class="custom-control custom-radio custom-control-inline">
       <input type="radio" id="customRadioInline2" name="customRadioInline" class="custom-control-input">
-      <label class="custom-control-label" for="customRadioInline2" (click)="switchLayer('dark-v10')">Dark</label>
+      <label class="custom-control-label" for="customRadioInline2" (click)="switchStyle('dark-v10')">Dark</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
       <input type="radio" id="customRadioInline3" name="customRadioInline" class="custom-control-input">
-      <label class="custom-control-label" for="customRadioInline3" (click)="switchLayer('light-v10')">Light</label>
+      <label class="custom-control-label" for="customRadioInline3" (click)="switchStyle('light-v10')">Light</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
       <input type="radio" id="customRadioInline4" name="customRadioInline" class="custom-control-input">
       <label class="custom-control-label" for="customRadioInline4"
-             (click)="switchLayer('outdoors-v11')">Outdoors</label>
+             (click)="switchStyle('outdoors-v11')">Outdoors</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline ">
       <input type="radio" id="customRadioInline5" name="customRadioInline" class="custom-control-input" checked>
       <label class="custom-control-label" for="customRadioInline5"
-             (click)="switchLayer('satellite-v9')">Satélite</label>
+             (click)="switchStyle('satellite-v9')">Satélite</label>
     </div>
     <hr>
 
     <div class="btn-group-toggle " data-toggle="buttons">
-      <a  id="conservacionfauna" (click)="mostrarCapa(featuresConservacionFauna)" ><label class="btn btn-outline-primary btn-sm">
-        <input name="featuresConservacionFauna" #featuresConservacionFauna type="checkbox"  value="0" checked/>
+      <a  id="conservacionfauna" (click)="mostrarCapa(featuresConservacionFauna);ftConsFau =!ftConsFau"><label class="btn btn-outline-primary btn-sm">
+        <input name="featuresConservacionFauna" #featuresConservacionFauna type="checkbox"  value="0" checked  [(ngModel)]="ftConsFau"/>
         Conservación de Fauna
       </label></a>
-      <a (click)="mostrarCapa(featuresConservacion)" id="conservacion" ><label class="btn btn-outline-primary btn-sm">
-        <input name="featuresConservacion" #featuresConservacion type="checkbox" value="0" checked/>
+      <a (click)="mostrarCapa(featuresConservacion);ftCons =!ftCons" id="conservacion" ><label class="btn btn-outline-primary btn-sm">
+        <input name="featuresConservacion" #featuresConservacion type="checkbox" value="0" checked [(ngModel)]="ftCons"/>
         Conservación General
       </label></a>
-      <a (click)="mostrarCapa(Huertas)" id="huertas"><label class="btn btn-outline-primary btn-sm" >
-        <input name="Huertas" #Huertas type="checkbox" value="0" checked />
+      <a (click)="mostrarCapa(Huertas);ftHuer =!ftHuer" id="huertas"><label class="btn btn-outline-primary btn-sm" >
+        <input name="Huertas" #Huertas type="checkbox" value="0" checked [(ngModel)]="ftHuer" />
         Huertas
       </label></a>
     </div>

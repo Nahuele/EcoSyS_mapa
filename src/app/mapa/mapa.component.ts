@@ -1,8 +1,7 @@
-import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import {environment} from '../../environments/environment';
 import * as mapboxgl from 'mapbox-gl';
 import {ProyectoService} from '../editar-db/proyecto.service';
-import {Observable} from 'rxjs';
 
 
 @Component({
@@ -16,6 +15,10 @@ export class MapaComponent implements OnInit {
   public sppObj;
   public idProject;
   mapa: mapboxgl.Map;
+  ftConsFau: boolean = true;
+  ftCons: boolean = true;
+  ftHuer: boolean = true;
+
 
   constructor(private proyectoService: ProyectoService,
               private view: ViewContainerRef) { }
@@ -31,37 +34,41 @@ export class MapaComponent implements OnInit {
 
   buscarCoordenadas() {
     this.proyectoService.getProjects().subscribe(proyectos => {
-      let featuresConservacion = []
-      let featuresConservacionFauna = []
-      let featuresHuertas = []
+      let featuresConservacion = [];
+      let featuresConservacionFauna = [];
+      let featuresHuertas = [];
       this.projObj = proyectos;
       for (let proj of Object.keys(this.projObj)) {
-        const itemProj =  this.projObj[proj]
-        const coordenadas = itemProj[itemProj.projectID].coordenadas.split(',').map(Number)
-        const detallesPro = itemProj[itemProj.projectID]
-        let objForLayer = {'type': 'Feature',
-          'properties': {
-            'title': detallesPro.nombre,
+        const itemProj = this.projObj[proj];
+        const coordenadas = itemProj[itemProj.projectID].coordenadas.split(',').map(Number);
+        const detallesPro = itemProj[itemProj.projectID];
+        let objForLayer = {
+          'type':        'Feature',
+          'properties':  {
+            'title':       detallesPro.nombre,
             // 'marker-color': '#3c4e5a',
             // 'marker-symbol': 'monument',
             // 'marker-size': 'large',
             // 'icon': 'theatre',
-            'description' : this.setearHtmlPopUp(detallesPro)
-          }, 'geometry': { 'coordinates' : coordenadas, 'type': 'Point'}
-        }
-        detallesPro.tipo_enfoque === 'Conservación' ?  featuresConservacion.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
+            'description': this.setearHtmlPopUp(detallesPro)
+          }, 'geometry': {'coordinates': coordenadas, 'type': 'Point'}
+        };
+        detallesPro.tipo_enfoque === 'Conservación' ? featuresConservacion.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
           featuresConservacionFauna.push(objForLayer) : detallesPro.tipo_enfoque === 'Huerta' ? featuresHuertas.push(objForLayer) : console.log('emtpy enfoque!!');
       }
       // return listaFeatures;
 
       this.mapa.on('load', () => {
-      // add layers from f(x)
-        this.mapa.addSource('featuresConservacion', this.getSourceAndLayer('featuresConservacion', featuresConservacion,).source)
-        this.mapa.addSource('featuresConservacionFauna', this.getSourceAndLayer('featuresConservacionFauna', featuresConservacionFauna,).source)
-        this.mapa.addSource('Huertas', this.getSourceAndLayer('Huertas', featuresHuertas,).source)
-        this.mapa.addLayer(this.getSourceAndLayer('featuresConservacion', featuresConservacion,'#006CFF').layerConfig)
-        this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionFauna', featuresConservacionFauna,'#FF0000').layerConfig)
-        this.mapa.addLayer(this.getSourceAndLayer('Huertas', featuresHuertas,'#00B811').layerConfig)
+        // add layers from f(x)
+        this.mapa.addSource('featuresConservacion', this.getSourceAndLayer('featuresConservacion', featuresConservacion,).source);
+        this.mapa.addSource('featuresConservacionFauna', this.getSourceAndLayer('featuresConservacionFauna', featuresConservacionFauna,).source);
+        this.mapa.addSource('Huertas', this.getSourceAndLayer('Huertas', featuresHuertas,).source);
+        this.mapa.addLayer(this.getSourceAndLayer('featuresConservacion', featuresConservacion, '#006CFF').layerConfig);
+        this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionFauna', featuresConservacionFauna, '#FF0000').layerConfig);
+        this.mapa.addLayer(this.getSourceAndLayer('Huertas', featuresHuertas, '#00B811').layerConfig);
+
+        this.showOrHideLayers();
+
       });
 
     });
@@ -86,9 +93,9 @@ export class MapaComponent implements OnInit {
   // creo una funcion q me hace el popup HTML
 
   setearHtmlPopUp(detalle) {
-    let link = ''
+    let link = '';
     if (detalle.linksfotos) {
-      link = detalle.linksfotos[0].link
+      link = detalle.linksfotos[0].link;
     }
     const templateHtml = `<div class="card">
         <div *ngIf="${link}" class="card-header text-center">
@@ -104,7 +111,7 @@ export class MapaComponent implements OnInit {
     return templateHtml;
   }
 
-  switchLayer(layerId) {
+  switchStyle(layerId) {
     this.mapa.remove();
     this.iniciarMapa(layerId);
     this.listenPopUps('featuresConservacionFauna');
@@ -113,31 +120,33 @@ export class MapaComponent implements OnInit {
   }
 
   getSourceAndLayer(nameLayer, featuresList, colorDot?) {
-    const source = {'type': 'geojson', 'data': {'type': 'FeatureCollection', 'features': featuresList}}
-    const layerConfig = {'id': `${nameLayer}`, 'type': 'circle', 'source': `${nameLayer}`,
+    const source = {'type': 'geojson', 'data': {'type': 'FeatureCollection', 'features': featuresList}};
+    const layerConfig = {
+      'id':     `${nameLayer}`, 'type': 'circle', 'source': `${nameLayer}`,
       'layout': {'visibility': 'visible'},
-      paint: {'circle-radius': 20,
-        'circle-color': colorDot, //'#223b53'
+      paint:    {
+        'circle-radius':       20,
+        'circle-color':        colorDot, //'#223b53'
         'circle-stroke-color': 'white',
         'circle-stroke-width': 1,
-        'circle-opacity': 0.7
+        'circle-opacity':      0.7
       }
-    }
-    return {source, layerConfig}
+    };
+    return {source, layerConfig};
   }
 
   mostrarCapa(event) {
     let visibility = event.checked;
-    let clickedLayerId = event.name
-  // toggle layer visibility by changing the layout object's visibility property
+    let clickedLayerId = event.name;
+    // toggle layer visibility by changing the layout object's visibility property
     if (visibility === true) {
-      this.mapa.setLayoutProperty(clickedLayerId,'visibility', 'none');
+      this.mapa.setLayoutProperty(clickedLayerId, 'visibility', 'none');
     } else {
       this.mapa.setLayoutProperty(clickedLayerId, 'visibility', 'visible');
     }
   }
 
-  private iniciarMapa(layer?:string) {
+  private iniciarMapa(layer?: string) {
     if (layer) {
       this.mapa = new mapboxgl.Map({
         container: 'mapa-mapbox', // container id
@@ -159,6 +168,7 @@ export class MapaComponent implements OnInit {
       // agrego el boton  de zoom y norte
       this.mapa.addControl(new mapboxgl.NavigationControl());
       this.buscarCoordenadas();
+
     }
 
   }
@@ -175,7 +185,7 @@ export class MapaComponent implements OnInit {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
 
-      new mapboxgl.Popup({ offset: 25, closeButton: false, className: "mapboxgl-popup", maxWidth: '400px'})
+      new mapboxgl.Popup({offset: 25, closeButton: false, className: 'mapboxgl-popup', maxWidth: '400px'})
         .setLngLat(coordinates)
         .setHTML(description)
         .addTo(this.mapa);
@@ -190,5 +200,23 @@ export class MapaComponent implements OnInit {
     });
   }
 
+  // settear visibilidad de capas cuando cambio de estilo de mapa
+  showOrHideLayers() {
+    if (this.ftConsFau === true) {
+      this.mapa.setLayoutProperty('featuresConservacionFauna', 'visibility', 'visible');
+    } else if (this.ftConsFau === false) {
+      this.mapa.setLayoutProperty('featuresConservacionFauna', 'visibility', 'none');
+    }
+    if (this.ftCons === true) {
+      this.mapa.setLayoutProperty('featuresConservacion', 'visibility', 'visible');
+    } else if (this.ftCons === false) {
+      this.mapa.setLayoutProperty('featuresConservacion', 'visibility', 'none');
+    }
+    if (this.ftHuer === true) {
+      this.mapa.setLayoutProperty('Huertas', 'visibility', 'visible');
+    } else if (this.ftHuer === false) {
+      this.mapa.setLayoutProperty('Huertas', 'visibility', 'none');
+    }
+  }
 
 }

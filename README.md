@@ -2,7 +2,7 @@
 
 Proyecto de Mapa ecológico de Arg.
 
-![image](http://i.imgur.com/1Zrlbal.png)
+![image](http://i.imgur.com/X4sTozA.png)
 
 
 ## Instrucciones

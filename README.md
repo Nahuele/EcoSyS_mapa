@@ -48,3 +48,10 @@ Luego editar el código con tu editor favorito, por ejemplo Visual Studio Code.
 - Si esta en rojo los agregamos en memoria: `git add .`
 - Si escribimos otra vez `git status` y salen en verde ya podemos commitear: `git commit -m 'mis cambios'`
 - Y ahora podemos incorporar cambios nuevos de otras personas: `git pull origin master` (reemplazar origin con el nombre que corresponda cuando escribimos `git remote`)
+### Como actualizar el repositorio:
+
+- Comprobamos el remoto y su url: `git remote -v`
+- Checkeamos el estado: `git status`
+- Si esta en rojo los agregamos en memoria: `git add .`
+- Si escribimos otra vez `git status` y salen en verde ya podemos commitear: `git commit -m 'mis cambios'`
+- Y ahora podemos incorporar cambios nuevos de otras personas: `git pull origin master` (reemplazar origin con el nombre que corresponda cuando escribimos `git remote`)

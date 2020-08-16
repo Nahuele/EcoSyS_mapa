@@ -71,7 +71,7 @@ export class ProyectFormComponent implements OnInit {
     this.proyectoService.addEspecies(formEspeciesFinal);
     this.borrarForm();
     this.alerta = true;
-    window.scrollTo(0,0)
+
   }
 
   isEmpty(value) {
@@ -136,6 +136,7 @@ export class ProyectFormComponent implements OnInit {
     this.linksfotos.controls.splice(0, this.linksfotos.length);
     this.especies.controls.splice(0,this.especies.length);
     this.personal.controls.splice(0, this.personal.length);
+    window.scrollTo(0,0)
   }
 
   agregarlinkimg() {
@@ -145,9 +146,11 @@ export class ProyectFormComponent implements OnInit {
     });
     this.linksfotos.push(linksFormGroup);
   }
+
   removerlinkimg(indice:number) {
     this.linksfotos.removeAt(indice);
   }
+
   agregarPersonal() {
     let personalFormGroup = this.formBuilder.group({
       nombre_apellido: '',
@@ -167,6 +170,7 @@ export class ProyectFormComponent implements OnInit {
     });
     this.personal.push(personalFormGroup);
   }
+
   removerPersonal(indice: number) {
     this.personal.removeAt(indice);
   }
@@ -179,6 +183,7 @@ export class ProyectFormComponent implements OnInit {
     this.especies.push(especiesFormGroup);
     // console.log(this.especies.value);
   }
+
   removerEspecie(indice: number) {
     this.especies.removeAt(indice)
   }

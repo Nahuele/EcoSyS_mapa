@@ -1,18 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
-.mapboxgl-popup{
-  transform:none !important;
-  top: 5%;
-  left: 5%;
-}
-.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
-.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
-.mapboxgl-popup-anchor-center .mapboxgl-popup-tip,
-.mapboxgl-popup-anchor-left .mapboxgl-popup-tip,
-.mapboxgl-popup-anchor-right .mapboxgl-popup-tip,
-.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip,
-.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
-.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip,
-.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip{
-  display:none !important;
-}
+/*.mapboxgl-popup{*/
+/*  transform:none !important;*/
+/*  top: 5%;*/
+/*  left: 5%;*/
+/*}*/
+/*.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,*/
+/*.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,*/
+/*.mapboxgl-popup-anchor-center .mapboxgl-popup-tip,*/
+/*.mapboxgl-popup-anchor-left .mapboxgl-popup-tip,*/
+/*.mapboxgl-popup-anchor-right .mapboxgl-popup-tip,*/
+/*.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip,*/
+/*.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,*/
+/*.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip,*/
+/*.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip{*/
+/*  display:none !important;*/
+/*}*/

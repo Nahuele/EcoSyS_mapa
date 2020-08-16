@@ -168,9 +168,7 @@ export class MapaComponent implements OnInit {
       // agrego el boton  de zoom y norte
       this.mapa.addControl(new mapboxgl.NavigationControl());
       this.buscarCoordenadas();
-
     }
-
   }
 
   listenPopUps(layerId) {

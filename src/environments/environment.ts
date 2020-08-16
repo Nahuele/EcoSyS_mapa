@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  // CUIDADO ESTA EN TRUE
+  production: true,
   // mapboxKey: 'pk.eyJ1IjoibmFodWVsZSIsImEiOiJja2RteGl3dDYxZDg4MnFsY2JrbmczbTVyIn0.cmv_eh2S5gMk-jXPNbuDNg', nahue
   // mapboxKey: 'pk.eyJ1IjoiaWFubmJhcmJlIiwiYSI6ImNrZHF0OXN5dDFxeGgzMXBlaGhjejgzeDYifQ.YoVZW3-DD0PLY3q4voJsPg', iana
   mapboxKey: 'pk.eyJ1IjoibmFodWVsZSIsImEiOiJja2RteGl3dDYxZDg4MnFsY2JrbmczbTVyIn0.cmv_eh2S5gMk-jXPNbuDNg', // eje capas

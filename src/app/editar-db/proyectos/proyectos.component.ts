@@ -3,6 +3,9 @@ import {ProyectoService} from '../proyecto.service';
 import {Router} from '@angular/router';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {AuthService} from '../auth/auth.service';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {User} from '../auth/user';
 
 @Component({
   selector:    'app-proyectos',
@@ -17,16 +20,22 @@ export class ProyectosComponent implements OnInit, OnDestroy {
   public projObj;
   public sppObj;
   public idProject;
+  public isAdmin: any = null;
+  public userUid: string;
+  public editForm: boolean = false;
 
   constructor(private proyectoService: ProyectoService,
               private router: Router,
-              private modalService: BsModalService) {  this.borrarConfirm = new BehaviorSubject<boolean>(false); }
+              private modalService: BsModalService,
+              private authService: AuthService) {  this.borrarConfirm = new BehaviorSubject<boolean>(false); }
 
   ngOnInit() {
     this.getMergedShit();
+    this.getCurrentUser();
   }
 
-  editarProyecto(p) {
+  editarProyecto() {
+    this.editForm = true;
   }
 
   borrarProyecto(e, project) {
@@ -40,8 +49,8 @@ export class ProyectosComponent implements OnInit, OnDestroy {
   getMergedShit() {
     this.proyectoService.getProjects().subscribe(proyectos => {
       this.projObj = proyectos;
-      this.idProject = this.projObj[0].projectID;
       console.log(this.projObj);
+      this.idProject = this.projObj[0].projectID;
 
     });
     this.proyectoService.getEspecies().subscribe(especies => {
@@ -76,4 +85,18 @@ export class ProyectosComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.borrarConfirm.unsubscribe();
   }
+
+  getCurrentUser() {
+    this.authService.isAuth().subscribe( auth => {
+      if (auth) {
+        // console.log(auth);
+        this.userUid = auth.uid;
+        this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
+          this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin')
+          // this.isAdmin = userRole.roles
+        })
+      }
+    })
+  }
+
 }

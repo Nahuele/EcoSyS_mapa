@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {User} from './user';
 import {Observable, of} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {RoleValidator} from './role-validator';
 
@@ -73,8 +73,19 @@ export class AuthService extends RoleValidator {
       uid: user.uid,
       email: user.email,
       emailVerified: user.emailVerified,
-      role: 'EDITOR'
+      roles: {
+        editor: true
+      }
     }
     return userRef.set(data, {merge: true});
   }
+
+  isUserAdmin(userUid) {
+    return this.afs.doc<User>(`users/${userUid}`).valueChanges();
+  }
+
+  isAuth() {
+    return this.afAuth.authState.pipe(map(auth => auth));
+  }
+
 }

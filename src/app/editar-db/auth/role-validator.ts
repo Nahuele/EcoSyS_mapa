@@ -2,9 +2,9 @@ import {User} from './user';
 
 export class RoleValidator {
   isEditor(user: User): boolean {
-    return user.role === 'EDITOR';
+    return user.roles.editor === true;
   }
   isAdmin(user: User): boolean {
-    return user.role === 'ADMIN';
+    return user.roles === 'ADMIN';
   }
 }

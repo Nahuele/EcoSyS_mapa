@@ -1,3 +1,9 @@
+admin? {{isAdmin}}
+
+<div *ngIf="editForm === true">
+  <app-proyect-form [userId]="userUid"></app-proyect-form>
+</div>
+
 
 <ng-template #spinner class="row justify-content-md-center" >
   <div class="col">
@@ -42,13 +48,21 @@
             </div>
             <div class="row justify-content-md-center">
               <div class="col-auto">
-                <button class="btn btn-warning" (click)="editarProyecto(idProject)" disabled> Editar
+                <button class="btn btn-warning" (click)="editarProyecto()" > Editar
                 </button>
               </div>
-              <div class="col-auto">
-                <button class="btn btn-danger" (click)="openModal(modalconfirm); borrarProyecto($event, item)"> Borrar
-                </button>
+              <div *ngIf="!isAdmin; else borrar ">
+                <div class="col-auto">
+                  <button class="btn btn-danger" disabled> Borrar
+                  </button>
+                </div>
               </div>
+              <ng-template #borrar>
+                <div class="col-auto">
+                  <button class="btn btn-danger" (click)="openModal(modalconfirm); borrarProyecto($event, item)"> Borrar
+                  </button>
+                </div>
+              </ng-template>
             </div>
 
           </div>

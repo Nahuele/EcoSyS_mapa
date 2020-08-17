@@ -25,8 +25,11 @@ export class ProyectoPageComponent implements OnInit {
   getProyecto(acc) {
     this.proyectoService.getProjects().subscribe(proyectos => {
       for (let proyecto of proyectos) {
-        if (proyecto[acc]) {
-          this.detallesPro = proyecto[acc];
+        console.log(proyecto);
+        if (proyecto.id === acc) {
+          // this.detallesPro = proyecto.id;
+          console.log(this.detallesPro);
+          return this.detallesPro
         }
       }
       console.log(this.detallesPro);

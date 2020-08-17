@@ -3,7 +3,10 @@ export interface User {
   email: string;
   emailVerified: boolean;
   password?: string;
-  role?: Role;
+  roles?: Roles;
 }
 
-export type Role = 'EDITOR' | 'ADMIN';
+export interface Roles {
+  editor?: boolean,
+  admin?: boolean,
+};

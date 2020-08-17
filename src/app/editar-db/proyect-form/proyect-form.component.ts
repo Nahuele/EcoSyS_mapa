@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProyectoService} from '../proyecto.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -10,6 +10,8 @@ import {AlertComponent} from 'ngx-bootstrap/alert';
   styleUrls: ['./proyect-form.component.css']
 })
 export class ProyectFormComponent implements OnInit {
+
+  @Input() userId: string;
 
   public alerta: boolean = false;
   alerts: any[] = [{
@@ -23,6 +25,7 @@ export class ProyectFormComponent implements OnInit {
               private modalService: BsModalService) { }
 
   ngOnInit(): void {
+    console.log(this.userId);
   }
 
   registerSpForm = this.formBuilder.group({

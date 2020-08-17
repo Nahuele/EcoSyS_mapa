@@ -17,7 +17,10 @@ export class ProyectoService {
   public especiesDoc: AngularFirestoreDocument;
   public especies: Observable<any>;
 
-  constructor(public db: AngularFirestore, public DB: AngularFireModule) {
+  constructor(public db: AngularFirestore,
+              public DB: AngularFireModule,
+              ) {
+
     this.projectsCollection = this.db.collection('proyectos_detalles')
     this.proyectos = this.projectsCollection.snapshotChanges()
       .pipe( // esto es para traer el ID , las de arriba no traian
@@ -79,4 +82,20 @@ export class ProyectoService {
     // elimino el proyecto y sp
     this.proyectoDoc.delete();
   }
+
+  // getOneProject(id) {
+  //   this.proyectoDoc = this.db.doc(`proyectos_detalles/${id}`);
+  //   return this.proyectos = this.proyectoDoc.snapshotChanges().pipe(
+  //     map(action => {
+  //       if(action.payload.exists === false) {
+  //         return null;
+  //       } else {
+  //         const data = action.payload.data();
+  //         data.id = action.payload.id;
+  //         return data;
+  //       }
+  //     })
+  //   )
+  // }
+
 }

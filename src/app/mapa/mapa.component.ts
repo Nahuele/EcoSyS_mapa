@@ -55,7 +55,6 @@ export class MapaComponent implements OnInit {
             'description': this.setearHtmlPopUp(detallesPro)
           }, 'geometry': {'coordinates': coordenadas, 'type': 'Point'}
         };
-        // TODO modificar el formulario opciones
         detallesPro.tipo_enfoque === 'Conservación General' ? featuresConservacion.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
           featuresConservacionFauna.push(objForLayer) : detallesPro.tipo_enfoque === 'Huertas' ? featuresHuertas.push(objForLayer) : console.log('emtpy enfoque!!');
       }

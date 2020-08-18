@@ -10,11 +10,14 @@ import {Observable} from 'rxjs';
 })
 export class NavbarComponent implements OnInit {
 
+  public uid: string;
+
   public user$: Observable<any> = this.authService.afAuth.user;
   constructor(private authService: AuthService,
               private router: Router) { }
 
   async ngOnInit() {
+    // this.user$.subscribe(data => this.uid = data.uid)
   }
 
   async onLogout() {

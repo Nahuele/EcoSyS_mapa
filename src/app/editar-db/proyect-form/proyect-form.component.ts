@@ -3,6 +3,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProyectoService} from '../proyecto.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import {AlertComponent} from 'ngx-bootstrap/alert';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-proyect-form',
@@ -11,7 +12,9 @@ import {AlertComponent} from 'ngx-bootstrap/alert';
 })
 export class ProyectFormComponent implements OnInit {
 
-  @Input() userId: string;
+  // @Input() userUid;
+  // public projId: string;
+  public userUid;
 
   public alerta: boolean = false;
   alerts: any[] = [{
@@ -21,19 +24,19 @@ export class ProyectFormComponent implements OnInit {
   }];
 
   constructor(private formBuilder: FormBuilder,
-              private proyectoService: ProyectoService,
-              private modalService: BsModalService) { }
+              public proyectoService: ProyectoService,
+              private modalService: BsModalService,
+              private authService: AuthService) { }
 
   ngOnInit(): void {
-    console.log(this.userId);
+    this.userUid = this.authService.userid;
+    // this.projId = this.projObj.projectID;
   }
 
-  registerSpForm = this.formBuilder.group({
-    especies: this.formBuilder.array([])})
 
   registerForm = this.formBuilder.group({
-    projectid: [''], // , [Validators.required, Validators.minLength(8)]
-    email: [''], //, [Validators.required, Validators.email]
+    projectid: ['', [Validators.required, Validators.minLength(6)]], // , [Validators.required, Validators.minLength(8)]
+    email: ['',[Validators.required, Validators.email]], //, [Validators.required, Validators.email]
     tipo_enfoque: ['', Validators.required], //, Validators.required
     nombre: [''],
     enfoque: [''],
@@ -52,26 +55,24 @@ export class ProyectFormComponent implements OnInit {
     provincia: [''],
     ciudad: [''],
     estado_actual: [''],
-    coordenadas: [''], // , Validators.required
+    coordenadas: ['', Validators.required], // , Validators.required
     ano_inicio: [''],
     web: [''],
     tipo_sitio:[''],
     resultados:[''],
     linksfotos: this.formBuilder.array([]),
-    personal: this.formBuilder.array([])
+    personal: this.formBuilder.array([]),
+    especies: this.formBuilder.array([])
 
   })
 
   submit() {
     const formProyecto = this.removeEmptyFields(this.registerForm.value)
-    const formProyectoFinal = {};
-    formProyectoFinal[formProyecto['projectid']] = formProyecto
-    const formEspecies = this.removeEmptyFields(this.registerSpForm.value)
-    const formEspeciesFinal = {};
-    formEspeciesFinal[formProyecto['projectid']] = formEspecies
-    console.log(formEspeciesFinal);
+    let formProyectoFinal = {};
+    formProyectoFinal['detalles'] = formProyecto
+    formProyectoFinal['userUid'] = this.userUid;
+    // console.log(formProyectoFinal);
     this.proyectoService.addProject(formProyectoFinal);
-    this.proyectoService.addEspecies(formEspeciesFinal);
     this.borrarForm();
     this.alerta = true;
 
@@ -115,10 +116,7 @@ export class ProyectFormComponent implements OnInit {
     return input
   }
 
-  get projectid() {
-    return this.registerForm.get('projectid')
-  }
-  get email() {
+   get email() {
     return this.registerForm.get('email');
   }
   get coordenadas() {
@@ -131,13 +129,13 @@ export class ProyectFormComponent implements OnInit {
     return this.registerForm.get('personal') as FormArray;
   }
   get especies() {
-    return this.registerSpForm.get('especies') as FormArray;
+    return this.registerForm.get('especies') as FormArray;
   }
 
   borrarForm() {
     this.registerForm.reset();
     this.linksfotos.controls.splice(0, this.linksfotos.length);
-    this.especies.controls.splice(0,this.especies.length);
+    // this.especies.controls.splice(0,this.especies.length);
     this.personal.controls.splice(0, this.personal.length);
     window.scrollTo(0,0)
   }
@@ -184,7 +182,6 @@ export class ProyectFormComponent implements OnInit {
         tso:['']
     });
     this.especies.push(especiesFormGroup);
-    // console.log(this.especies.value);
   }
 
   removerEspecie(indice: number) {

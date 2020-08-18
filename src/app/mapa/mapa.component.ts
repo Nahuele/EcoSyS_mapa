@@ -12,13 +12,11 @@ import {ProyectoService} from '../editar-db/proyecto.service';
 
 export class MapaComponent implements OnInit {
   public projObj;
-  public sppObj;
-  public idProject;
   mapa: mapboxgl.Map;
   ftConsFau: boolean = true;
   ftCons: boolean = true;
   ftHuer: boolean = true;
-
+  idproject: string;
 
   constructor(private proyectoService: ProyectoService,
               private view: ViewContainerRef) { }
@@ -38,10 +36,14 @@ export class MapaComponent implements OnInit {
       let featuresConservacionFauna = [];
       let featuresHuertas = [];
       this.projObj = proyectos;
+
       for (let proj of Object.keys(this.projObj)) {
-        const itemProj = this.projObj[proj];
-        const coordenadas = itemProj[itemProj.projectID].coordenadas.split(',').map(Number);
-        const detallesPro = itemProj[itemProj.projectID];
+        const itemProj = this.projObj[proj].detalles;
+        this.idproject = this.projObj[proj].id
+        console.log(this.projObj);
+        console.log(itemProj);
+        const coordenadas = itemProj.coordenadas.split(',').map(Number);
+        const detallesPro = itemProj;
         let objForLayer = {
           'type':        'Feature',
           'properties':  {
@@ -53,8 +55,9 @@ export class MapaComponent implements OnInit {
             'description': this.setearHtmlPopUp(detallesPro)
           }, 'geometry': {'coordinates': coordenadas, 'type': 'Point'}
         };
-        detallesPro.tipo_enfoque === 'Conservación' ? featuresConservacion.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
-          featuresConservacionFauna.push(objForLayer) : detallesPro.tipo_enfoque === 'Huerta' ? featuresHuertas.push(objForLayer) : console.log('emtpy enfoque!!');
+        // TODO modificar el formulario opciones
+        detallesPro.tipo_enfoque === 'Conservación General' ? featuresConservacion.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
+          featuresConservacionFauna.push(objForLayer) : detallesPro.tipo_enfoque === 'Huertas' ? featuresHuertas.push(objForLayer) : console.log('emtpy enfoque!!');
       }
       // return listaFeatures;
 
@@ -105,7 +108,7 @@ export class MapaComponent implements OnInit {
   <div class="card-body">
     <h5 class="card-title">${detalle['nombre']}</h5>
     <p class="card-text"><div><strong>Titulo:</strong></div> ${detalle['titulo_extendido']}</p>
-    <a href="detalles/${detalle['projectid']}" class="btn btn-primary btn-sm">Más Detalles</a>
+    <a href="detalles/${this.idproject}" class="btn btn-primary btn-sm">Más Detalles</a>
   </div>
 </div>`;
     return templateHtml;

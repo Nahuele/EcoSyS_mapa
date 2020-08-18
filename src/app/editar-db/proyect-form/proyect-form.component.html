@@ -9,21 +9,22 @@
     </div>
   </div>
   <br>
-  <form (submit)="submit()" [formGroup]="registerForm" >
+  <form (submit)="submit()" [formGroup]="registerForm" name="formPro" #formPro="ngForm" >
     <div class="row">
       <div class="col">
-        <div class="form-group">
+        <div class="form-group" >
           <label >Proyecto ID</label>
           <input type="text" class="form-control form-control-lg"
                  [ngClass]="{'is-invalid': registerForm.get('projectid').invalid}"
                  formControlName="projectid"
                  placeholder="PRO_Martín_García_ID" >
+
 <!--          <div *ngIf="projectid.invalid &&-->
 <!--          (projectid.dirty || projectid.touched)" >-->
 <!--            <p style="color: red">El ID del proyecto es requerido</p>-->
 <!--          </div>-->
           <div class="invalid-feedback">
-            El ID del proyecto es requerido (sin espacios, minimo 8 caracteres)
+            El ID del proyecto es requerido (sin espacios, minimo 6 caracteres)
           </div>
         </div>
       </div>
@@ -47,7 +48,6 @@
 <!--        <div *ngIf="email.invalid && !email.pristine">-->
 <!--          <p *ngIf="email.errors.email" style="color: red">Un email es requerido</p>-->
 <!--        </div>-->
-
       </div>
 
       <div class="col">
@@ -57,8 +57,9 @@
                   [ngClass]="{'is-invalid': registerForm.get('tipo_enfoque').invalid}"
                   formControlName="tipo_enfoque">
             <option disabled selected>Seleccione tipo</option>
-            <option>Conservacion</option>
+            <option>Conservacion General</option>
             <option>Huertas</option>
+            <option>Conservación de fauna</option>
           </select>
         </div>
       </div>
@@ -149,11 +150,11 @@
           <label ><span>Coordenadas</span></label>
           <input type="text" class="form-control"
                  formControlName="coordenadas"
-                 placeholder="-58.2595914,-34.1824176">
-          <div *ngIf="coordenadas.invalid &&
-          (coordenadas.dirty || coordenadas.touched)" >
-            <p style="color: red">Coordenadas Obligatorias, es un mapa!</p>
-          </div>
+                 placeholder="-58.2595914,-34.1824176"
+                 [ngClass]="{'is-invalid': registerForm.get('projectid').invalid}" >
+                    <div class="invalid-feedback">
+                      Coordenadas con formato especifico requeridas
+                    </div>
         </div>
         <div class="form-group col">
           <label>Año de inicio</label>
@@ -276,11 +277,10 @@
         <hr>
       </div>
     </div>
-    <h2>Registrar especies</h2>
 
-    <form class="form" (submit)="submit()" [formGroup]="registerSpForm" >
-      <div class="form-group" >
-        <a class="btn btn-warning" type="button" (click)="agregarEspecie()">Agregar Especies</a>
+    <h2>Registrar especies</h2>
+    <div class="form-group">
+      <a class="btn btn-warning" type="button" (click)="agregarEspecie()">Agregar Especies</a>
         <div formGroupName="especies" *ngFor="let spp of especies.controls; let i = index">
           <div [formGroupName]="i">
             <div class="row justify-content-md-center">
@@ -308,7 +308,6 @@
           </div>
         </div>
       </div>
-    </form>
     <hr>
     <div class="row justify-content-md-center ">
       <div class="col-auto">

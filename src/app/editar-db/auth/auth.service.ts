@@ -12,6 +12,7 @@ import {RoleValidator} from './role-validator';
 export class AuthService extends RoleValidator {
   public user$: Observable<User>;
   public user: User;
+  public userid : string
 
   constructor(public afAuth: AngularFireAuth,
               private afs: AngularFirestore) {
@@ -19,6 +20,7 @@ export class AuthService extends RoleValidator {
     this.user$ = this.afAuth.authState.pipe(
       switchMap( (user) => {
         if (user) {
+          this.userid = user.uid;
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           return of(null);

@@ -15,13 +15,10 @@ import {User} from '../auth/user';
 export class ProyectosComponent implements OnInit, OnDestroy {
   modalRef: BsModalRef;
   private borrarConfirm: BehaviorSubject<boolean>;
-  itemFromTemplate;
 
   public projObj;
-  public sppObj;
-  public idProject;
   public isAdmin: any = null;
-  public userUid: string;
+  public userUid: string = null;
   public editForm: boolean = false;
 
   constructor(private proyectoService: ProyectoService,
@@ -30,12 +27,14 @@ export class ProyectosComponent implements OnInit, OnDestroy {
               private authService: AuthService) {  this.borrarConfirm = new BehaviorSubject<boolean>(false); }
 
   ngOnInit() {
-    this.getMergedShit();
+    this.getProject();
     this.getCurrentUser();
   }
 
-  editarProyecto() {
+  editarProyecto(project) {
+    // console.log(project);
     this.editForm = true;
+    this.proyectoService.selectedProject = Object.assign({}, project);
   }
 
   borrarProyecto(e, project) {
@@ -46,19 +45,11 @@ export class ProyectosComponent implements OnInit, OnDestroy {
     })
   }
 
-  getMergedShit() {
+  getProject() {
     this.proyectoService.getProjects().subscribe(proyectos => {
       this.projObj = proyectos;
-      console.log(this.projObj);
-      this.idProject = this.projObj[0].projectID;
-
     });
-    this.proyectoService.getEspecies().subscribe(especies => {
-      console.log(especies);
-      this.sppObj = especies;
-
-    });
-  }
+     }
 
   goToProject(id){
     this.router.navigate([`detalles/${id}`])
@@ -68,7 +59,6 @@ export class ProyectosComponent implements OnInit, OnDestroy {
     this.borrarConfirm.next(true);
     this.modalRef.hide();
     // this.borrarProyecto();
-    console.log(this.borrarConfirm);
   }
   declineDelete():void {
     this.borrarConfirm.next(false);
@@ -82,9 +72,6 @@ export class ProyectosComponent implements OnInit, OnDestroy {
     return this.borrarConfirm.asObservable();
   }
 
-  ngOnDestroy() {
-    this.borrarConfirm.unsubscribe();
-  }
 
   getCurrentUser() {
     this.authService.isAuth().subscribe( auth => {
@@ -93,10 +80,13 @@ export class ProyectosComponent implements OnInit, OnDestroy {
         this.userUid = auth.uid;
         this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
           this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin')
-          // this.isAdmin = userRole.roles
+          // this.isAdmin = userRole.roles.editor
         })
       }
     })
   }
 
+  ngOnDestroy() {
+    this.borrarConfirm.unsubscribe();
+  }
 }

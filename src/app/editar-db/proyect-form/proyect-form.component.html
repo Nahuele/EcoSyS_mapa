@@ -180,15 +180,15 @@
             <div class="form-group row justify-content-md-center">
               <label class="col-auto" [attr.for]="'link' + i">Link</label>
               <div class="col-auto">
-                <input type="text" [attr.id]="'link' + i" class="form-control"  [value]="foto['link']" >
+                <input type="text" [attr.id]="'link' + i" class="form-control"  [value]="foto['link']" disabled>
               </div>
               <label class="col-auto" [attr.for]="'link' + i">Descripcion</label>
               <div class="col-auto">
-                <input type="text" [attr.id]="'link' + i" class="form-control"  [value]="foto['descripcion']">
+                <input type="text" [attr.id]="'link' + i" class="form-control"  [value]="foto['descripcion']" disabled>
                 <!--            <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="descripcionfoto" [(ngModel)]="this.proyectoService.selectedProject.detalles['linksfotos']['descripcion']">-->
               </div>
               <div class="col-auto">
-                <button class="btn btn-secondary btn-sm" (click)="removerlinkimg(i, 'anterior')">Remover anterior</button>
+                <button class="btn btn-danger btn-sm" (click)="removerItem(i, 'fotos', 'anterior')">Remover anterior</button>
               </div>
             </div>
 <!--          </div>-->
@@ -210,7 +210,7 @@
             <!--            <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="descripcionfoto" [(ngModel)]="this.proyectoService.selectedProject.detalles['linksfotos']['descripcion']">-->
           </div>
           <div class="col-auto">
-            <button class="btn btn-danger" (click)="removerlinkimg(i)">Remover</button>
+            <button class="btn btn-danger btn-sm" type="button" (click)="removerItem(i,'fotos', 'current')">Remover</button>
           </div>
         </div>
       </div>
@@ -298,20 +298,50 @@
     <h2>Registrar especies</h2>
     <div class="form-group">
       <a class="btn btn-warning" type="button" (click)="agregarEspecie()">Agregar Especies</a>
+      <div *ngIf="listasppFromDB as especies">
+        <div  *ngFor="let especie of especies; let i = index">
+          <div class="form-group row justify-content-md-center">
+            <div class="col-auto">
+              <label [attr.for]="'link' + i">SPOB</label>
+              <input type="text" [attr.id]="'link' + i" class="form-control" placeholder="Lontra provocax"  [value]="especie['spob']" disabled >
+            </div>
+            <div class="col-auto">
+              <label [attr.for]="'link' + i">Nombre vulgar</label>
+              <input type="text" [attr.id]="'link' + i" class="form-control"  [value]="especie['nombre_vulgar']"  disabled>
+            </div>
+            <div class="form-group col-auto">
+              <label [attr.for]="'link' + i">tso</label>
+              <select class="form-control" [attr.id]="'link' + i" [value]="especie['tso']" disabled>
+                <option  [ngValue]="null" selected></option>
+                <option>Nativa</option>
+                <option>Invasora</option>
+                <option>Otro</option>
+              </select>
+            </div>
+<!--            <button class="btn btn-secondary btn-sm align-bottom " (click)="removerItem(i, 'especies', 'anterior')">Remover anterior</button>-->
+                        <div class="col-auto align-text-bottom">
+              <button class="btn btn-danger btn-sm" (click)="removerItem(i, 'especies', 'anterior')">Remover anterior</button>
+            </div>
+          </div>
+          <!--          </div>-->
+        </div>
+      </div>
+
+
       <div formGroupName="especies" *ngFor="let spp of especies.controls; let i = index">
         <div [formGroupName]="i">
           <div class="row justify-content-md-center">
             <div class="col-auto">
               <label [attr.for]="'link' + i">SPOB</label>
-              <input type="text" [attr.id]="'link' + i" class="form-control" placeholder="Lontra provocax" formControlName="spob" [(ngModel)]="this.proyectoService.selectedProject.detalles['especies']['spob']">
+              <input type="text" [attr.id]="'link' + i" class="form-control" placeholder="Lontra provocax" formControlName="spob" >
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + i">Nombre vulgar</label>
-              <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="nombre_vulgar" [(ngModel)]="this.proyectoService.selectedProject.detalles['especies']['nombre_vulgar']">
+              <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="nombre_vulgar" >
             </div>
             <div class="form-group">
               <label [attr.for]="'link' + i">tso</label>
-              <select class="form-control" [attr.id]="'link' + i" formControlName="tso" [(ngModel)]="this.proyectoService.selectedProject.detalles['especies']['tso']" >
+              <select class="form-control" [attr.id]="'link' + i" formControlName="tso"  >
                 <option  [ngValue]="null" selected></option>
                 <option>Nativa</option>
                 <option>Invasora</option>
@@ -319,7 +349,7 @@
               </select>
             </div>
             <div class="col-auto">
-              <button class="btn btn-danger" (click)="removerEspecie(i)">Remover</button>
+              <button class="btn btn-danger btn-sm" (click)="removerEspecie(i)">Remover</button>
             </div>
           </div>
         </div>

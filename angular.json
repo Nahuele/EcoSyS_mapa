@@ -131,5 +131,8 @@
       }
     }
   },
-  "defaultProject": "ianchuProject"
+  "defaultProject": "ianchuProject",
+  "cli": {
+    "analytics": "34a3200d-b50e-46bc-a384-1d048a8df239"
+  }
 }

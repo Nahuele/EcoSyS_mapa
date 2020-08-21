@@ -10,9 +10,9 @@ import {ProyectFormComponent} from '../proyect-form/proyect-form.component';
 import {CamposFormulario} from '../proyect-form/campos-formulario';
 
 @Component({
-  selector:    'app-proyectos',
+  selector: 'app-proyectos',
   templateUrl: './proyectos.component.html',
-  styleUrls:   ['./proyectos.component.css']
+  styleUrls: ['./proyectos.component.css']
 })
 export class ProyectosComponent implements OnInit, OnDestroy {
   modalRef: BsModalRef;
@@ -21,12 +21,14 @@ export class ProyectosComponent implements OnInit, OnDestroy {
   public projObj;
   public isAdmin: any = null;
   public userUid: string = null;
-  public editForm: boolean = false;
+  public editForm = false;
 
   constructor(private proyectoService: ProyectoService,
               private router: Router,
               private modalService: BsModalService,
-              private authService: AuthService) {  this.borrarConfirm = new BehaviorSubject<boolean>(false); }
+              private authService: AuthService) {
+    this.borrarConfirm = new BehaviorSubject<boolean>(false);
+  }
 
   ngOnInit() {
     this.getProject();
@@ -43,60 +45,63 @@ export class ProyectosComponent implements OnInit, OnDestroy {
 
   borrarEditarProyecto(e, project, accion) {
     this.getConfirmacion().subscribe((value) => {
-      console.log('VALUe', value)
+      console.log('VALUe', value);
       if (value === true && accion === 'borrar') {
-        console.log('VALUE BORRAR?', value)
+        console.log('VALUE BORRAR?', value);
         this.proyectoService.deleteProject(project);
 
       } else if (value === true && accion === 'editar') {
-        this.editarProyecto(project)
-        console.log('puede editar')
+        this.editarProyecto(project);
+        console.log('puede editar');
 
 
         // this.proyectoService.editarProject(project);
       }
-    })
+    });
   }
 
   getProject() {
     this.proyectoService.getProjects().subscribe(proyectos => {
       this.projObj = proyectos;
     });
-     }
-
-  goToProject(id){
-    this.router.navigate([`detalles/${id}`])
   }
 
-  confirmDelete():void {
+  goToProject(id) {
+    this.router.navigate([`detalles/${id}`]);
+  }
+
+  confirmDelete(): void {
     this.borrarConfirm.next(true);
     this.modalRef.hide();
     // this.borrarProyecto();
   }
-  declineDelete():void {
+
+  declineDelete(): void {
     this.borrarConfirm.next(false);
     this.modalRef.hide();
     // console.log(this.borrarConfirm);
   }
+
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
+
   getConfirmacion() {
     return this.borrarConfirm.asObservable();
   }
 
 
   getCurrentUser() {
-    this.authService.isAuth().subscribe( auth => {
+    this.authService.isAuth().subscribe(auth => {
       if (auth) {
         // console.log(auth);
         this.userUid = auth.uid;
         this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
-          this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin')
+          this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
           // this.isAdmin = userRole.roles.editor
-        })
+        });
       }
-    })
+    });
   }
 
   // onPreUpdateProject(project) {

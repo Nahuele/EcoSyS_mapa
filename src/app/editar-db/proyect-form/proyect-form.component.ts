@@ -1,12 +1,12 @@
 import {Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProyectoService} from '../proyecto.service';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import {BsModalService, BsModalRef} from 'ngx-bootstrap/modal';
 import {AlertComponent} from 'ngx-bootstrap/alert';
 import {AuthService} from '../auth/auth.service';
 import {NgForm} from '@angular/forms';
 import {filter} from 'rxjs/operators';
-import {} from './campos-formulario';
+import {especies} from './campos-formulario';
 
 @Component({
   selector: 'app-proyect-form',
@@ -20,31 +20,36 @@ export class ProyectFormComponent implements OnInit, OnDestroy {
   @Input() projobj;
   private formProyecto;
   public userUid;
-  public formProyectoFinal = {};
-  public listafotosFromDB ;
+  public formProyectoFinal;
+  // 1) Nested: crear variables para mostrar en el template
+  public listafotosFromDB;
   public listasppFromDB;
   public listapersonalFromDb;
 
-  public alerta: boolean = false;
+  public LISTSP: especies;
+  public alerta = false;
+
   alerts: any[] = [{
     type: 'success',
     msg: `Gracias! se ha agregado el proyecto a la base de datos`,
     timeout: 3000
   }];
 
-  public opcionRoles: ['Guardaparque', 'Director', 'Audiovisual','Voluntario de campo', 'Codirector/a', 'Investigador principal', 'Otro']
+  public opcionRoles: ['Guardaparque', 'Director', 'Audiovisual', 'Voluntario de campo', 'Codirector/a', 'Investigador principal', 'Otro'];
 
   constructor(private formBuilder: FormBuilder,
               public proyectoService: ProyectoService,
               private modalService: BsModalService,
-              private authService: AuthService) { }
+              private authService: AuthService) {}
 
   ngOnInit(): void {
     this.userUid = this.authService.userid;
-    this.listafotosFromDB = this.proyectoService.selectedProject.detalles.linksfotos
+    this.listafotosFromDB = this.proyectoService.selectedProject.detalles.linksfotos;
+    this.listasppFromDB = this.proyectoService.selectedProject.detalles.especies;
+
     // this.registerForm.valueChanges.subscribe(value => {
-      // this.formProyecto = this.removeEmptyFields(value);
-      // console.log(this.formProyecto)
+    // this.formProyecto = this.removeEmptyFields(value);
+    // console.log(this.formProyecto)
     // })
 
     // if (this.proyectoService.selectedProject.detalles) {
@@ -57,14 +62,13 @@ export class ProyectFormComponent implements OnInit, OnDestroy {
     // } else {
     //   this.formProyectoFinal = {}
     // }
-    console.log(this.proyectoService.selectedProject)
   }
 
 
   registerForm = this.formBuilder.group({
     projectid: ['', [Validators.required, Validators.minLength(6)]], // , [Validators.required, Validators.minLength(8)]
-    email: ['',[Validators.required, Validators.email]], //, [Validators.required, Validators.email]
-    tipo_enfoque: ['', Validators.required], //, Validators.required
+    email: ['', [Validators.required, Validators.email]], //, [Validators.required, Validators.email]
+    tipo_enfoque: ['', Validators.required], // , Validators.required
     nombre: [''],
     enfoque: [''],
     institucion: [''],
@@ -86,45 +90,45 @@ export class ProyectFormComponent implements OnInit, OnDestroy {
     coordenadas: ['', Validators.required], // , Validators.required
     ano_inicio: [''],
     web: [''],
-    tipo_sitio:[''],
-    resultados:[''],
+    tipo_sitio: [''],
+    resultados: [''],
     linksfotos: this.formBuilder.array([]),
     personal: this.formBuilder.array([]),
     especies: this.formBuilder.array([])
 
-  })
+  });
 
   submit() {
-    // let formProyectoFinal = {};
+    let formProyectoFinal = {};
+    console.log('form DB original', this.proyectoService.selectedProject.detalles)
+    let fotosFinal = [...this.listafotosFromDB, ...this.registerForm.value.linksfotos];
+    let especiesFinal = [...this.listasppFromDB, ...this.registerForm.value.especies];
+    // 2) Nested: actualizar el objeto final
     this.formProyecto = this.removeEmptyFields(this.registerForm.value);
-    this.formProyectoFinal['detalles'] = this.formProyecto
-    this.formProyectoFinal['userUid'] = this.userUid;
-    // console.log(formProyectoFinal);
-
-    if (this.projobj && this.userUidEdit) {
-      console.log('EDITAR');
-      console.log(this.formProyecto );
+    formProyectoFinal['detalles'] =  this.formProyecto;
+    formProyectoFinal['detalles']['linksfotos'] = fotosFinal;
+    formProyectoFinal['detalles']['especies'] = especiesFinal;
+    formProyectoFinal['userUid'] = this.userUid;
+    console.log('EL FORMULARIO EDITADO', this.registerForm.value)
+    // console.log('detalles',formProyectoFinal['detalles']);
 
       // this.proyectoService.editarProject(this.proyectoService.selectedProject);
-
-    } else {
-      console.log('SE VA AAGREGAR', this.formProyectoFinal);
       // this.proyectoService.addProject(formProyectoFinal);
-    }
     // this.proyectoService.addProject(formProyectoFinal);
     // this.proyectoService.addProject(formPro);
     // this.borrarForm();
+    console.log('enviado correcto')
     this.alerta = true;
 
   }
 
-    removeEmptyFields(obj) {
+  removeEmptyFields(obj) {
     for (var key in obj) {
       if (obj[key] === undefined) {
         delete obj[key];
         continue;
       }
-      if (obj[key] && typeof obj[key] === "object") {
+      if (obj[key] && typeof obj[key] === 'object') {
         filter(obj[key]);
         if (!Object.keys(obj[key]).length) {
           delete obj[key];
@@ -134,18 +138,22 @@ export class ProyectFormComponent implements OnInit, OnDestroy {
     return obj;
   }
 
-   get email() {
+  get email() {
     return this.registerForm.get('email');
   }
+
   get coordenadas() {
     return this.registerForm.get('coordenadas');
   }
+
   get linksfotos() {
     return this.registerForm.get('linksfotos') as FormArray;
   }
+
   get personal() {
     return this.registerForm.get('personal') as FormArray;
   }
+
   get especies() {
     return this.registerForm.get('especies') as FormArray;
   }
@@ -155,7 +163,7 @@ export class ProyectFormComponent implements OnInit, OnDestroy {
     this.linksfotos.controls.splice(0, this.linksfotos.length);
     // this.especies.controls.splice(0,this.especies.length);
     this.personal.controls.splice(0, this.personal.length);
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
   }
 
   agregarlinkimg() {
@@ -165,21 +173,36 @@ export class ProyectFormComponent implements OnInit, OnDestroy {
     });
     this.linksfotos.push(linksFormGroup);
   }
-
-  removerlinkimg(indice:number, target?:string) {
-    if (target === 'anterior') {
+  // 3) Nested: funcion general que sirve para cualquier nested
+  removerItem(indice: number, asignarForm: string, target: string,) {
+    if (target === 'anterior' && indice !== -1) {
+      if (asignarForm === 'fotos') {
+        this.listafotosFromDB.splice(indice, 1);
+      } else if (asignarForm === 'especies') {
+        this.listasppFromDB.splice(indice, 1);
+      } else if (asignarForm === 'personal') {
+        console.log('borrar este personal');
+      }
       // this.listafotosFromDB = this.listafotosFromDB.filter(x => x != this.listafotosFromDB);
-      if (indice != -1) this.listafotosFromDB.splice(indice, 1);
+      // tslint:disable-next-line:triple-equals
       // this.listafotosFromDB.removeAt(indice);
       console.log('clickeado remover anterior');
-    } else {
-      this.linksfotos.removeAt(indice);
-
+    } else if (target === 'current' && indice !== -1) {
+      if (asignarForm === 'fotos') {
+        this.linksfotos.removeAt(indice);
+      } else if (asignarForm === 'spp') {
+        this.especies.removeAt(indice);
+        this.listasppFromDB.splice(indice, 1);
+      } else if (asignarForm === 'personal') {
+        this.personal.removeAt(indice);
+        console.log('borrar este personal');
+      }
+      console.log('not finished fx')
     }
   }
 
   agregarPersonal() {
-    let personalFormGroup = this.formBuilder.group({
+    const personalFormGroup = this.formBuilder.group({
       nombre_apellido: '',
       rol: '',
       genero: '',
@@ -201,17 +224,18 @@ export class ProyectFormComponent implements OnInit, OnDestroy {
   removerPersonal(indice: number) {
     this.personal.removeAt(indice);
   }
+
   agregarEspecie() {
-    let especiesFormGroup = this.formBuilder.group( {
-        spob:[''],
-        nombre_vulgar: [''],
-        tso:['']
+    let especiesFormGroup = this.formBuilder.group({
+      spob: [''],
+      nombre_vulgar: [''],
+      tso: ['']
     });
     this.especies.push(especiesFormGroup);
   }
 
   removerEspecie(indice: number) {
-    this.especies.removeAt(indice)
+    this.especies.removeAt(indice);
   }
 
   onClosed(dismissedAlert: AlertComponent): void {

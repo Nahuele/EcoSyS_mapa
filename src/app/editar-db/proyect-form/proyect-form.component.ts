@@ -1,20 +1,29 @@
-import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProyectoService} from '../proyecto.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import {AlertComponent} from 'ngx-bootstrap/alert';
 import {AuthService} from '../auth/auth.service';
+import {NgForm} from '@angular/forms';
+import {filter} from 'rxjs/operators';
+import {} from './campos-formulario';
 
 @Component({
   selector: 'app-proyect-form',
   templateUrl: './proyect-form.component.html',
   styleUrls: ['./proyect-form.component.css']
 })
-export class ProyectFormComponent implements OnInit {
+export class ProyectFormComponent implements OnInit, OnDestroy {
 
-  // @Input() userUid;
+  @Input() userUidEdit;
   // public projId: string;
+  @Input() projobj;
+  private formProyecto;
   public userUid;
+  public formProyectoFinal = {};
+  public listafotosFromDB ;
+  public listasppFromDB;
+  public listapersonalFromDb;
 
   public alerta: boolean = false;
   alerts: any[] = [{
@@ -23,6 +32,8 @@ export class ProyectFormComponent implements OnInit {
     timeout: 3000
   }];
 
+  public opcionRoles: ['Guardaparque', 'Director', 'Audiovisual','Voluntario de campo', 'Codirector/a', 'Investigador principal', 'Otro']
+
   constructor(private formBuilder: FormBuilder,
               public proyectoService: ProyectoService,
               private modalService: BsModalService,
@@ -30,7 +41,23 @@ export class ProyectFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.userUid = this.authService.userid;
-    // this.projId = this.projObj.projectID;
+    this.listafotosFromDB = this.proyectoService.selectedProject.detalles.linksfotos
+    // this.registerForm.valueChanges.subscribe(value => {
+      // this.formProyecto = this.removeEmptyFields(value);
+      // console.log(this.formProyecto)
+    // })
+
+    // if (this.proyectoService.selectedProject.detalles) {
+    //   this.formProyecto.patchValue(this.proyectoService.selectedProject.detalles);
+    // }
+    // int af (this.projobj) {
+    //   this.formProyecto = this.projobj;
+    //   console.log(this.formProyecto)
+    //   // this.formProyectoFinal = this.projobj
+    // } else {
+    //   this.formProyectoFinal = {}
+    // }
+    console.log(this.proyectoService.selectedProject)
   }
 
 
@@ -44,6 +71,7 @@ export class ProyectFormComponent implements OnInit {
     titulo_extendido: [''],
     descripcion: [''],
     resumen: [''],
+    tipo_estudio: [''],
     redes_sociales: this.formBuilder.group({
       facebook: [''],
       instagram: [''],
@@ -67,53 +95,43 @@ export class ProyectFormComponent implements OnInit {
   })
 
   submit() {
-    const formProyecto = this.removeEmptyFields(this.registerForm.value)
-    let formProyectoFinal = {};
-    formProyectoFinal['detalles'] = formProyecto
-    formProyectoFinal['userUid'] = this.userUid;
+    // let formProyectoFinal = {};
+    this.formProyecto = this.removeEmptyFields(this.registerForm.value);
+    this.formProyectoFinal['detalles'] = this.formProyecto
+    this.formProyectoFinal['userUid'] = this.userUid;
     // console.log(formProyectoFinal);
-    this.proyectoService.addProject(formProyectoFinal);
-    this.borrarForm();
+
+    if (this.projobj && this.userUidEdit) {
+      console.log('EDITAR');
+      console.log(this.formProyecto );
+
+      // this.proyectoService.editarProject(this.proyectoService.selectedProject);
+
+    } else {
+      console.log('SE VA AAGREGAR', this.formProyectoFinal);
+      // this.proyectoService.addProject(formProyectoFinal);
+    }
+    // this.proyectoService.addProject(formProyectoFinal);
+    // this.proyectoService.addProject(formPro);
+    // this.borrarForm();
     this.alerta = true;
 
   }
 
-  isEmpty(value) {
-    if (value === null)
-      return true;
-
-    if (typeof value == 'object' && Object.keys(value).length === 0)
-      return true;
-
-    if (typeof value == 'string' && value.trim() == '')
-      return true;
-
-    return false;
-  }
-
-  removeEmptyFields(input) {
-    if (Array.isArray(input)) {
-      for (let index = input.length - 1; index >= 0; index--) {
-        if (typeof input[index] == 'object') {
-          this.removeEmptyFields(input[index]);
-        }
-        if (this.isEmpty(input[index])) {
-          input.splice(index, 1);
+    removeEmptyFields(obj) {
+    for (var key in obj) {
+      if (obj[key] === undefined) {
+        delete obj[key];
+        continue;
+      }
+      if (obj[key] && typeof obj[key] === "object") {
+        filter(obj[key]);
+        if (!Object.keys(obj[key]).length) {
+          delete obj[key];
         }
       }
-    } else {
-      for (let index in input) {
-        if (typeof input[index] == 'object') {
-          this.removeEmptyFields(input[index]);
-        }
-        if (this.isEmpty(input[index])) {
-          delete input[index];
-        }
-
-      }
-
     }
-    return input
+    return obj;
   }
 
    get email() {
@@ -148,8 +166,16 @@ export class ProyectFormComponent implements OnInit {
     this.linksfotos.push(linksFormGroup);
   }
 
-  removerlinkimg(indice:number) {
-    this.linksfotos.removeAt(indice);
+  removerlinkimg(indice:number, target?:string) {
+    if (target === 'anterior') {
+      // this.listafotosFromDB = this.listafotosFromDB.filter(x => x != this.listafotosFromDB);
+      if (indice != -1) this.listafotosFromDB.splice(indice, 1);
+      // this.listafotosFromDB.removeAt(indice);
+      console.log('clickeado remover anterior');
+    } else {
+      this.linksfotos.removeAt(indice);
+
+    }
   }
 
   agregarPersonal() {
@@ -192,4 +218,10 @@ export class ProyectFormComponent implements OnInit {
     this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);
     this.alerta = false;
   }
+
+  ngOnDestroy() {
+    this.projobj = null;
+    this.formProyecto = null;
+  }
+
 }

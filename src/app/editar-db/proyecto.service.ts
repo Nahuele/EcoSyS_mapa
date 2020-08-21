@@ -3,6 +3,7 @@ import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} 
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {AngularFireModule} from '@angular/fire';
+import {CamposFormulario} from './proyect-form/campos-formulario';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,7 @@ export class ProyectoService {
   public projectsCollection: AngularFirestoreCollection;
   public proyectos: Observable<any>;
   public proyectoDoc: AngularFirestoreDocument;
-  public selectedProject = {
-    id: null
-  };
+  public selectedProject;
 
   constructor(public db: AngularFirestore,
               public DB: AngularFireModule,
@@ -26,7 +25,7 @@ export class ProyectoService {
         map(actions => {
           return actions.map(propiedad => {
             const data = propiedad.payload.doc.data();
-            data.projectID = Object.keys(data);
+            // data.projectID = Object.keys(data);
             data.id = propiedad.payload.doc.id;
             return data;
           });

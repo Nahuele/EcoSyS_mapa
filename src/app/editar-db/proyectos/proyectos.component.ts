@@ -6,6 +6,8 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {AuthService} from '../auth/auth.service';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {User} from '../auth/user';
+import {ProyectFormComponent} from '../proyect-form/proyect-form.component';
+import {CamposFormulario} from '../proyect-form/campos-formulario';
 
 @Component({
   selector:    'app-proyectos',
@@ -35,12 +37,23 @@ export class ProyectosComponent implements OnInit, OnDestroy {
     // console.log(project);
     this.editForm = true;
     this.proyectoService.selectedProject = Object.assign({}, project);
+
+    // this.proyectoService.selectedProject = project;
   }
 
-  borrarProyecto(e, project) {
+  borrarEditarProyecto(e, project, accion) {
     this.getConfirmacion().subscribe((value) => {
-      if (value === true) {
+      console.log('VALUe', value)
+      if (value === true && accion === 'borrar') {
+        console.log('VALUE BORRAR?', value)
         this.proyectoService.deleteProject(project);
+
+      } else if (value === true && accion === 'editar') {
+        this.editarProyecto(project)
+        console.log('puede editar')
+
+
+        // this.proyectoService.editarProject(project);
       }
     })
   }
@@ -63,7 +76,7 @@ export class ProyectosComponent implements OnInit, OnDestroy {
   declineDelete():void {
     this.borrarConfirm.next(false);
     this.modalRef.hide();
-    console.log(this.borrarConfirm);
+    // console.log(this.borrarConfirm);
   }
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
@@ -84,6 +97,29 @@ export class ProyectosComponent implements OnInit, OnDestroy {
         })
       }
     })
+  }
+
+  // onPreUpdateProject(project) {
+  //   console.log('PROJECTTT', project);
+  //   this.proyectoService.selectedProject = Object.assign({}, project);
+  // }
+
+  aceptarEditar() {
+    this.borrarConfirm.next(true);
+    // this.proyectoService.editarProject(project);
+  }
+
+  cancelarEditar() {
+    this.modalRef.hide();
+  }
+
+  openModalEdit(project: CamposFormulario) {
+    // this.editarProyecto(project);
+    // console.log('openmodal func', project);
+    // this.proyectoService.selectedProject = Object.assign({}, project);
+    // this.modalRef = this.modalService.show(ProyectFormComponent, {class: 'modal-xl'});
+    // this.modalRef.content = project
+
   }
 
   ngOnDestroy() {

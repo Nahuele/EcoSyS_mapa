@@ -1,8 +1,8 @@
 admin? {{isAdmin}}
-<!--<div *ngIf="editForm === true">-->
-<!--  <app-proyect-form [userUid]="userUid"></app-proyect-form>-->
-<!--</div>-->
 
+  <div *ngIf="editForm === true">
+    <app-proyect-form [projobj]="projObj"></app-proyect-form>
+  </div>
 
 <ng-template #spinner class="row justify-content-md-center">
   <div class="col">
@@ -15,7 +15,7 @@ admin? {{isAdmin}}
 <div class="container">
   <div *ngIf="projObj; else spinner">
     <div *ngIf="projObj && projObj.length > 0; else noprojectsfound">
-      <h3 class="text-center mt-3 mb-3 ">Lista de proyectos</h3>
+      <h3 class="text-center mt-3 mb-3 ">Tus proyectos</h3>
       <ul>
         <div *ngFor="let item of projObj">
 
@@ -44,9 +44,13 @@ admin? {{isAdmin}}
               </div>
             </div>
             <div class="row justify-content-md-center">
+              <div *ngIf="isAdmin || item.userUid === userUid; else noeditar ">
+                <button class="btn btn-warning" (click)="aceptarEditar();borrarEditarProyecto($event, item, 'editar')"> Editar
+                </button>
+              </div>
               <div *ngIf="isAdmin || item.userUid === userUid; else noborrar ">
                 <div class="col-auto">
-                  <button class="btn btn-danger" (click)="openModal(modalconfirm); borrarProyecto($event, item)"> Borrar
+                  <button class="btn btn-danger" (click)="openModal(modalconfirm); borrarEditarProyecto($event, item, 'borrar')"> Borrar
                   </button>
                 </div>
               </div>
@@ -54,7 +58,12 @@ admin? {{isAdmin}}
                 <div class="col-auto">
                   <button class="btn btn-danger" disabled> Borrar
                   </button>
-
+                </div>
+              </ng-template>
+              <ng-template #noeditar>
+                <div class="col-auto">
+                  <button class="btn btn-warning" disabled> Editar
+                  </button>
                 </div>
               </ng-template>
             </div>
@@ -78,3 +87,4 @@ admin? {{isAdmin}}
     <button type="button" class="btn btn-primary" (click)="declineDelete()">No</button>
   </div>
 </ng-template>
+

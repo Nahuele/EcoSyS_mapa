@@ -1,33 +1,31 @@
-import {Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ProyectoService} from '../proyecto.service';
-import {BsModalService, BsModalRef} from 'ngx-bootstrap/modal';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {CamposFormulario} from '../campos-formulario';
+import {FormArray, FormBuilder} from '@angular/forms';
+import {ProyectoService} from '../../editar-db/proyecto.service';
+import {BsModalService} from 'ngx-bootstrap/modal';
+import {AuthService} from '../../editar-db/auth/auth.service';
 import {AlertComponent} from 'ngx-bootstrap/alert';
-import {AuthService} from '../auth/auth.service';
-import {NgForm} from '@angular/forms';
-import {filter} from 'rxjs/operators';
-import {especies} from './campos-formulario';
 
 @Component({
-  selector: 'app-proyect-form',
-  templateUrl: './proyect-form.component.html',
-  styleUrls: ['./proyect-form.component.css']
+  selector: 'app-editar',
+  templateUrl: './editar.component.html',
+  styleUrls: ['./editar.component.css']
 })
-export class ProyectFormComponent implements OnInit, OnDestroy {
+export class EditarComponent implements OnInit, OnDestroy {
 
-  @Input() userUidEdit;
+@Input() userUidEdit;
   // public projId: string;
-  @Input() projobj;
-  private formProyecto;
-  public userUid;
-  public formProyectoFinal;
+@Output() cerrarForm = new EventEmitter();
+@Input() id;
+public formProyecto: CamposFormulario;
+public userUid;
+public formProyectoFinal;
   // 1) Nested: crear variables para mostrar en el template
-  public listafotosFromDB;
-  public listasppFromDB;
-  public listapersonalFromDb;
+public listafotosFromDB;
+public listasppFromDB;
+public listapersonalFromDb;
 
-  public LISTSP: especies;
-  public alerta = false;
+public alerta = false;
 
   alerts: any[] = [{
     type: 'success',
@@ -35,40 +33,29 @@ export class ProyectFormComponent implements OnInit, OnDestroy {
     timeout: 3000
   }];
 
-  public opcionRoles: ['Guardaparque', 'Director', 'Audiovisual', 'Voluntario de campo', 'Codirector/a', 'Investigador principal', 'Otro'];
 
   constructor(private formBuilder: FormBuilder,
-              public proyectoService: ProyectoService,
-              private modalService: BsModalService,
-              private authService: AuthService) {}
+    public proyectoService: ProyectoService,
+    private modalService: BsModalService,
+    private authService: AuthService) {}
 
   ngOnInit(): void {
     this.userUid = this.authService.userid;
-    this.listafotosFromDB = this.proyectoService.selectedProject.detalles.linksfotos;
-    this.listasppFromDB = this.proyectoService.selectedProject.detalles.especies;
-
+    this.proyectoService.selectedProject.detalles.linksfotos ? this.listafotosFromDB = this.proyectoService.selectedProject.detalles.linksfotos : this.listafotosFromDB = []
+    this.proyectoService.selectedProject.detalles.especies ? this.listasppFromDB = this.proyectoService.selectedProject.detalles.especies : this.listasppFromDB = []
+    this.proyectoService.selectedProject.detalles.personal ? this.listapersonalFromDb = this.proyectoService.selectedProject.detalles.personal : this.listapersonalFromDb = []
     // this.registerForm.valueChanges.subscribe(value => {
     // this.formProyecto = this.removeEmptyFields(value);
     // console.log(this.formProyecto)
     // })
 
-    // if (this.proyectoService.selectedProject.detalles) {
-    //   this.formProyecto.patchValue(this.proyectoService.selectedProject.detalles);
-    // }
-    // int af (this.projobj) {
-    //   this.formProyecto = this.projobj;
-    //   console.log(this.formProyecto)
-    //   // this.formProyectoFinal = this.projobj
-    // } else {
-    //   this.formProyectoFinal = {}
-    // }
   }
 
 
   registerForm = this.formBuilder.group({
-    projectid: ['', [Validators.required, Validators.minLength(6)]], // , [Validators.required, Validators.minLength(8)]
-    email: ['', [Validators.required, Validators.email]], //, [Validators.required, Validators.email]
-    tipo_enfoque: ['', Validators.required], // , Validators.required
+    projectid: [''], //, [Validators.required, Validators.minLength(6)]],
+    email: [''], // , [Validators.required, Validators.email]],
+    tipo_enfoque: [''], //, Validators.required],
     nombre: [''],
     enfoque: [''],
     institucion: [''],
@@ -87,7 +74,7 @@ export class ProyectFormComponent implements OnInit, OnDestroy {
     provincia: [''],
     ciudad: [''],
     estado_actual: [''],
-    coordenadas: ['', Validators.required], // , Validators.required
+    coordenadas: [''], // , Validators.required
     ano_inicio: [''],
     web: [''],
     tipo_sitio: [''],
@@ -103,39 +90,29 @@ export class ProyectFormComponent implements OnInit, OnDestroy {
     console.log('form DB original', this.proyectoService.selectedProject.detalles)
     let fotosFinal = [...this.listafotosFromDB, ...this.registerForm.value.linksfotos];
     let especiesFinal = [...this.listasppFromDB, ...this.registerForm.value.especies];
+    let personalFinal = [...this.listapersonalFromDb, ...this.registerForm.value.personal];
     // 2) Nested: actualizar el objeto final
     this.formProyecto = this.removeEmptyFields(this.registerForm.value);
     formProyectoFinal['detalles'] =  this.formProyecto;
     formProyectoFinal['detalles']['linksfotos'] = fotosFinal;
     formProyectoFinal['detalles']['especies'] = especiesFinal;
+    formProyectoFinal['detalles']['personal'] = personalFinal;
     formProyectoFinal['userUid'] = this.userUid;
-    console.log('EL FORMULARIO EDITADO', this.registerForm.value)
-    // console.log('detalles',formProyectoFinal['detalles']);
-
-      // this.proyectoService.editarProject(this.proyectoService.selectedProject);
-      // this.proyectoService.addProject(formProyectoFinal);
-    // this.proyectoService.addProject(formProyectoFinal);
-    // this.proyectoService.addProject(formPro);
-    // this.borrarForm();
+    formProyectoFinal['id'] = this.proyectoService.selectedProject.id
+    // formProyectoFinal['id'] = this.projobj.id;
+    console.log('detalles',formProyectoFinal);
+    this.proyectoService.editarProject(formProyectoFinal);
     console.log('enviado correcto')
+    window.scrollTo(0, 0);
+    this.cerrarForm.emit();
     this.alerta = true;
 
   }
 
   removeEmptyFields(obj) {
-    for (var key in obj) {
-      if (obj[key] === undefined) {
-        delete obj[key];
-        continue;
-      }
-      if (obj[key] && typeof obj[key] === 'object') {
-        filter(obj[key]);
-        if (!Object.keys(obj[key]).length) {
-          delete obj[key];
-        }
-      }
-    }
-    return obj;
+    return JSON.parse(JSON.stringify(obj, (key, value) => {
+      return (value === null ? undefined : value === '' ? undefined : value);
+    }));
   }
 
   get email() {
@@ -181,49 +158,41 @@ export class ProyectFormComponent implements OnInit, OnDestroy {
       } else if (asignarForm === 'especies') {
         this.listasppFromDB.splice(indice, 1);
       } else if (asignarForm === 'personal') {
-        console.log('borrar este personal');
+        this.listapersonalFromDb.splice(indice, 1);
       }
-      // this.listafotosFromDB = this.listafotosFromDB.filter(x => x != this.listafotosFromDB);
-      // tslint:disable-next-line:triple-equals
-      // this.listafotosFromDB.removeAt(indice);
-      console.log('clickeado remover anterior');
     } else if (target === 'current' && indice !== -1) {
       if (asignarForm === 'fotos') {
         this.linksfotos.removeAt(indice);
-      } else if (asignarForm === 'spp') {
+      } else if (asignarForm === 'especies') {
         this.especies.removeAt(indice);
-        this.listasppFromDB.splice(indice, 1);
+        // this.listasppFromDB.splice(indice, 1);
       } else if (asignarForm === 'personal') {
         this.personal.removeAt(indice);
-        console.log('borrar este personal');
       }
-      console.log('not finished fx')
     }
   }
 
   agregarPersonal() {
     const personalFormGroup = this.formBuilder.group({
-      nombre_apellido: '',
+      nombre_personal: '',
+      apellido_personal: '',
       rol: '',
       genero: '',
       fecha_nacimiento: '',
       pais_residencia: '',
       provincia_residencia: '',
       email_personal: [''], // , Validators.email
-      redes_sociales_personal: this.formBuilder.group({
-        facebook_personal: [''],
-        instagram_personal: [''],
-        twitter_personal: [''],
-        youtube_personal: [''],
-        researchgate_personal: [''],
-      }),
+      redes_sociales_personal: this.formBuilder.group( {
+        facebook_personal: '',
+        instagram_personal: '',
+        twitter_personal: '',
+        youtube_personal: '',
+        researchgate_personal: '',
+      })
     });
     this.personal.push(personalFormGroup);
   }
 
-  removerPersonal(indice: number) {
-    this.personal.removeAt(indice);
-  }
 
   agregarEspecie() {
     let especiesFormGroup = this.formBuilder.group({
@@ -234,9 +203,7 @@ export class ProyectFormComponent implements OnInit, OnDestroy {
     this.especies.push(especiesFormGroup);
   }
 
-  removerEspecie(indice: number) {
-    this.especies.removeAt(indice);
-  }
+
 
   onClosed(dismissedAlert: AlertComponent): void {
     this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);
@@ -244,7 +211,6 @@ export class ProyectFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.projobj = null;
     this.formProyecto = null;
   }
 

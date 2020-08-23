@@ -1,7 +1,13 @@
 admin? {{isAdmin}}
 
+<!--<div *ngIf="editForm === true">-->
+<!--  <div *ngFor="let alert of alerts">-->
+<!--    <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>-->
+<!--  </div>-->
+<!--</div>-->
+
   <div *ngIf="editForm === true">
-    <app-proyect-form [projobj]="projObj"></app-proyect-form>
+    <app-editar (cerrarForm)="cerrarEditar($event)"></app-editar>
   </div>
 
 <ng-template #spinner class="row justify-content-md-center">
@@ -18,56 +24,65 @@ admin? {{isAdmin}}
       <h3 class="text-center mt-3 mb-3 ">Tus proyectos</h3>
       <ul>
         <div *ngFor="let item of projObj">
-
-          <div class="card text-center mt-2 mb-2 border-info ">
-            <div class="card-header text-info border-info" (click)="goToProject(item.id)" style="cursor: pointer">
+<!--          <h3> {{item | json}}</h3>-->
+          <div *ngIf="isAdmin || item.userUid === userUid">
+            <div class="card text-center mt-2 mb-2 border-info">
+              <div class="card-header text-info border-info" (click)="goToProject(item.id)" style="cursor: pointer">
+                <div class="row justify-content-md-center">
+                  <div class="col-auto">
+                    <p class="card-text"><strong>{{item.detalles['titulo_extendido'] | json}}</strong></p>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <p><strong>user id:</strong> {{item.userUid}}</p>
+                  </div>
+                  <div class="col">
+                    <p><strong>nombre:</strong> {{item.detalles['nombre'] | json}} </p>
+                  </div>
+                  <div class="col">
+                    <p><strong>coordenadas:</strong> {{item.detalles['coordenadas'] | json}} </p>
+                  </div>
+                  <div class="col">
+                    <p><strong>ciudad:</strong> {{item.detalles['ciudad'] | json}} </p>
+                  </div>
+                </div>
+                <div class="row justify-content-md-center">
+                  <div class="col-auto">
+                    <p>Id proyecto: {{item.id}}</p>
+                  </div>
+                </div>
+              </div>
               <div class="row justify-content-md-center">
-                <div class="col-auto">
-                  <p class="card-text"><strong>{{item.detalles['titulo_extendido'] | json}}</strong></p>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <p><strong>user id:</strong> {{item.userUid}}</p>
-                </div>
-                <div class="col">
-                  <p><strong>nombre:</strong> {{item.detalles['nombre'] | json}} </p>
-                </div>
-                <div class="col">
-                  <p><strong>coordenadas:</strong> {{item.detalles['coordenadas'] | json}} </p>
-                </div>
-                <div class="col">
-                  <p><strong>ciudad:</strong> {{item.detalles['ciudad'] | json}} </p>
-                </div>
-              </div>
-            </div>
-            <div class="row justify-content-md-center">
-              <div *ngIf="isAdmin || item.userUid === userUid; else noeditar ">
-                <button class="btn btn-warning" (click)="aceptarEditar();borrarEditarProyecto($event, item, 'editar')"> Editar
-                </button>
-              </div>
-              <div *ngIf="isAdmin || item.userUid === userUid; else noborrar ">
-                <div class="col-auto">
-                  <button class="btn btn-danger" (click)="openModal(modalconfirm); borrarEditarProyecto($event, item, 'borrar')"> Borrar
+                <div *ngIf="isAdmin || item.userUid === userUid; else noeditar ">
+                  <button class="btn btn-warning"
+                          (click)="aceptarEditar();borrarEditarProyecto($event, item, 'editar')"> Editar
                   </button>
                 </div>
+                <div *ngIf="isAdmin || item.userUid === userUid; else noborrar ">
+                  <div class="col-auto">
+                    <button class="btn btn-danger"
+                            (click)="openModal(modalconfirm); borrarEditarProyecto($event, item, 'borrar')"> Borrar
+                    </button>
+                  </div>
+                </div>
+                <ng-template #noborrar>
+                  <div class="col-auto">
+                    <button class="btn btn-danger" disabled> Borrar
+                    </button>
+                  </div>
+                </ng-template>
+                <ng-template #noeditar>
+                  <div class="col-auto">
+                    <button class="btn btn-warning" disabled> Editar
+                    </button>
+                  </div>
+                </ng-template>
               </div>
-              <ng-template #noborrar>
-                <div class="col-auto">
-                  <button class="btn btn-danger" disabled> Borrar
-                  </button>
-                </div>
-              </ng-template>
-              <ng-template #noeditar>
-                <div class="col-auto">
-                  <button class="btn btn-warning" disabled> Editar
-                  </button>
-                </div>
-              </ng-template>
-            </div>
 
+            </div>
           </div>
         </div>
       </ul>
@@ -82,7 +97,7 @@ admin? {{isAdmin}}
 
 <ng-template #modalconfirm>
   <div class="modal-body text-center">
-    <p>Do you want to confirm?</p>
+    <p>Confirma la operación?</p>
     <button type="button" class="btn btn-default" (click)="confirmDelete()">Si</button>
     <button type="button" class="btn btn-primary" (click)="declineDelete()">No</button>
   </div>

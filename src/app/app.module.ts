@@ -12,11 +12,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { MapaComponent } from './mapa/mapa.component';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { SearchFormComponent } from './search-form/search-form.component';
 import { HomeComponent } from './home/home.component';
 import { ProyectoPageComponent } from './proyecto-page/proyecto-page.component';
 import { ProyectosComponent } from './editar-db/proyectos/proyectos.component';
-import { ProyectFormComponent } from './editar-db/proyect-form/proyect-form.component';
 
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFireModule} from '@angular/fire';
@@ -29,6 +27,8 @@ import { SendEmailComponent } from './editar-db/send-email/send-email.component'
 import { ResetPassComponent } from './editar-db/reset-pass/reset-pass.component';
 import {AuthService} from './editar-db/auth/auth.service';
 import {CanEditGuard} from './editar-db/auth/can-edit.guard';
+import { NuevoProyectoComponent } from './formularios/nuevo-proyecto/nuevo-proyecto.component';
+import { EditarComponent } from './formularios/editar/editar.component';
 
 
 @NgModule({
@@ -37,15 +37,15 @@ import {CanEditGuard} from './editar-db/auth/can-edit.guard';
     NavbarComponent,
     FooterComponent,
     MapaComponent,
-    SearchFormComponent,
     HomeComponent,
     ProyectoPageComponent,
     ProyectosComponent,
-    ProyectFormComponent,
     LoginComponent,
     RegisterComponent,
     SendEmailComponent,
     ResetPassComponent,
+    NuevoProyectoComponent,
+    EditarComponent,
   ],
   imports: [
     BrowserModule,

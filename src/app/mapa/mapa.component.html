@@ -32,13 +32,16 @@
         <input name="featuresConservacionFauna" #featuresConservacionFauna type="checkbox"  value="0" checked  [(ngModel)]="ftConsFau"/>
         Conservación de Fauna
       </label></a>
-      <a (click)="mostrarCapa(featuresConservacion);ftCons =!ftCons" id="conservacion" ><label class="btn btn-outline-primary btn-sm">
-        <input name="featuresConservacion" #featuresConservacion type="checkbox" value="0" checked [(ngModel)]="ftCons"/>
-        Conservación General
+      <a (click)="mostrarCapa(featuresConservacionFlora);ftConsFlor =!ftConsFlor" id="conservacion" ><label class="btn btn-outline-primary btn-sm">
+        <input name="featuresConservacionFlora" #featuresConservacionFlora type="checkbox" value="0" checked [(ngModel)]="ftConsFlor"/>
+        Conservación de Flora
       </label></a>
-      <a (click)="mostrarCapa(Huertas);ftHuer =!ftHuer" id="huertas"><label class="btn btn-outline-primary btn-sm" >
-        <input name="Huertas" #Huertas type="checkbox" value="0" checked [(ngModel)]="ftHuer" />
-        Huertas
+      <a (click)="mostrarCapa(agroeco);ftAgroEco =!ftAgroEco" id="agroeco"><label class="btn btn-outline-primary btn-sm" >
+        <input name="agroeco" #agroeco type="checkbox" value="0" checked [(ngModel)]="ftAgroEco" />
+        Agroeco y soberanía alimentaria
+      </label></a> <a (click)="mostrarCapa(ambienteYsoc);ftAmbSoc =!ftAmbSoc" id="ambienteYsoc"><label class="btn btn-outline-primary btn-sm" >
+        <input name="ambienteYsoc" #ambienteYsoc type="checkbox" value="0" checked [(ngModel)]="ftAmbSoc" />
+      Ambiente y sociedad
       </label></a>
     </div>
     <hr>

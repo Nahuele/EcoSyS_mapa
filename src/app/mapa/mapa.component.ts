@@ -14,8 +14,9 @@ export class MapaComponent implements OnInit {
   public projObj;
   mapa: mapboxgl.Map;
   ftConsFau: boolean = true;
-  ftCons: boolean = true;
-  ftHuer: boolean = true;
+  ftConsFlor: boolean = true;
+  ftAgroEco: boolean = true;
+  ftAmbSoc: boolean = true;
   idproject: string;
 
   constructor(private proyectoService: ProyectoService,
@@ -25,22 +26,24 @@ export class MapaComponent implements OnInit {
     mapboxgl.accessToken = environment.mapboxKey;
     this.iniciarMapa();
     this.listenPopUps('featuresConservacionFauna');
-    this.listenPopUps('featuresConservacion');
-    this.listenPopUps('Huertas');
+    this.listenPopUps('featuresConservacionFlora');
+    this.listenPopUps('ambienteYsoc');
+    this.listenPopUps('agroeco');
 
   }
 
   buscarCoordenadas() {
     this.proyectoService.getProjects().subscribe(proyectos => {
-      let featuresConservacion = [];
+      let featuresConservacionFlora = [];
       let featuresConservacionFauna = [];
-      let featuresHuertas = [];
+      let featuresAgroEco = [];
+      let featuresAmbSoc = [];
       this.projObj = proyectos;
 
       for (let proj of Object.keys(this.projObj)) {
         const itemProj = this.projObj[proj].detalles;
         this.idproject = this.projObj[proj].id
-        console.log(this.projObj);
+        // console.log(this.projObj);
         console.log(itemProj);
         const coordenadas = itemProj.coordenadas.split(',').map(Number);
         const detallesPro = itemProj;
@@ -55,19 +58,23 @@ export class MapaComponent implements OnInit {
             'description': this.setearHtmlPopUp(detallesPro)
           }, 'geometry': {'coordinates': coordenadas, 'type': 'Point'}
         };
-        detallesPro.tipo_enfoque === 'Conservación General' ? featuresConservacion.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
-          featuresConservacionFauna.push(objForLayer) : detallesPro.tipo_enfoque === 'Huertas' ? featuresHuertas.push(objForLayer) : console.log('emtpy enfoque!!');
+        detallesPro.tipo_enfoque === 'Agroecología y soberanía alimentaria' ? featuresAgroEco.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
+          featuresConservacionFauna.push(objForLayer) : detallesPro.tipo_enfoque === 'Ambiente y sociedad' ? featuresAmbSoc.push(objForLayer) :
+            detallesPro.tipo_enfoque === 'Conservación de flora' ? featuresConservacionFlora.push(objForLayer)
+            : console.log('emtpy enfoque!!');
       }
       // return listaFeatures;
 
       this.mapa.on('load', () => {
         // add layers from f(x)
-        this.mapa.addSource('featuresConservacion', this.getSourceAndLayer('featuresConservacion', featuresConservacion,).source);
+        this.mapa.addSource('featuresConservacionFlora', this.getSourceAndLayer('featuresConservacionFlora', featuresConservacionFlora,).source);
         this.mapa.addSource('featuresConservacionFauna', this.getSourceAndLayer('featuresConservacionFauna', featuresConservacionFauna,).source);
-        this.mapa.addSource('Huertas', this.getSourceAndLayer('Huertas', featuresHuertas,).source);
-        this.mapa.addLayer(this.getSourceAndLayer('featuresConservacion', featuresConservacion, '#006CFF').layerConfig);
+        this.mapa.addSource('ambienteYsoc', this.getSourceAndLayer('ambienteYsoc', featuresAmbSoc,).source);
+        this.mapa.addSource('agroeco', this.getSourceAndLayer('agroeco', featuresAgroEco,).source);
+        this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionFlora', featuresConservacionFlora, '#006CFF').layerConfig);
         this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionFauna', featuresConservacionFauna, '#FF0000').layerConfig);
-        this.mapa.addLayer(this.getSourceAndLayer('Huertas', featuresHuertas, '#00B811').layerConfig);
+        this.mapa.addLayer(this.getSourceAndLayer('ambienteYsoc', featuresAmbSoc, '#00B811').layerConfig);
+        this.mapa.addLayer(this.getSourceAndLayer('agroeco', featuresAgroEco, '#F3B32A').layerConfig);
 
         this.showOrHideLayers();
 
@@ -95,11 +102,10 @@ export class MapaComponent implements OnInit {
   // creo una funcion q me hace el popup HTML
 
   setearHtmlPopUp(detalle) {
-    let link = '';
-    if (detalle.linksfotos) {
-      link = detalle.linksfotos[0].link;
-    }
-    const templateHtml = `<div class="card">
+    let link:string;
+    detalle.linksfotos.length > 0 ? link = detalle.linksfotos[0].link  : link = 'https://icon-library.com/images/no-image-available-icon/no-image-available-icon-7.jpg';
+
+    let templateHtml = `<div class="card">
         <div *ngIf="${link}" class="card-header text-center">
           <img src="${link}" class="img-fluid" alt="Responsive image" style="border: 1px solid #ddd;
           border-radius: 4px;padding: 5px;width: 300px;">
@@ -117,8 +123,9 @@ export class MapaComponent implements OnInit {
     this.mapa.remove();
     this.iniciarMapa(layerId);
     this.listenPopUps('featuresConservacionFauna');
-    this.listenPopUps('featuresConservacion');
-    this.listenPopUps('Huertas');
+    this.listenPopUps('featuresConservacionFlora');
+    this.listenPopUps('ambienteYsoc');
+    this.listenPopUps('agroeco');
   }
 
   getSourceAndLayer(nameLayer, featuresList, colorDot?) {
@@ -147,6 +154,7 @@ export class MapaComponent implements OnInit {
       this.mapa.setLayoutProperty(clickedLayerId, 'visibility', 'visible');
     }
   }
+
 
   private iniciarMapa(layer?: string) {
     if (layer) {
@@ -207,15 +215,20 @@ export class MapaComponent implements OnInit {
     } else if (this.ftConsFau === false) {
       this.mapa.setLayoutProperty('featuresConservacionFauna', 'visibility', 'none');
     }
-    if (this.ftCons === true) {
-      this.mapa.setLayoutProperty('featuresConservacion', 'visibility', 'visible');
-    } else if (this.ftCons === false) {
-      this.mapa.setLayoutProperty('featuresConservacion', 'visibility', 'none');
+    if (this.ftConsFlor === true) {
+      this.mapa.setLayoutProperty('featuresConservacionFlora', 'visibility', 'visible');
+    } else if (this.ftConsFlor === false) {
+      this.mapa.setLayoutProperty('featuresConservacionFlora', 'visibility', 'none');
     }
-    if (this.ftHuer === true) {
-      this.mapa.setLayoutProperty('Huertas', 'visibility', 'visible');
-    } else if (this.ftHuer === false) {
-      this.mapa.setLayoutProperty('Huertas', 'visibility', 'none');
+    if (this.ftAgroEco === true) {
+      this.mapa.setLayoutProperty('agroeco', 'visibility', 'visible');
+    } else if (this.ftAgroEco === false) {
+      this.mapa.setLayoutProperty('agroeco', 'visibility', 'none');
+    }
+    if (this.ftAmbSoc === true) {
+      this.mapa.setLayoutProperty('ambienteYsoc', 'visibility', 'visible');
+    } else if (this.ftAmbSoc === false) {
+      this.mapa.setLayoutProperty('ambienteYsoc', 'visibility', 'none');
     }
   }
 

@@ -3,7 +3,7 @@ import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} 
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {AngularFireModule} from '@angular/fire';
-import {CamposFormulario} from './proyect-form/campos-formulario';
+import {CamposFormulario} from '../formularios/campos-formulario';
 
 @Injectable({
   providedIn: 'root'

@@ -6,8 +6,8 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {AuthService} from '../auth/auth.service';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {User} from '../auth/user';
-import {ProyectFormComponent} from '../proyect-form/proyect-form.component';
-import {CamposFormulario} from '../proyect-form/campos-formulario';
+import {CamposFormulario} from '../../formularios/campos-formulario';
+import {AlertComponent} from 'ngx-bootstrap/alert';
 
 @Component({
   selector: 'app-proyectos',
@@ -22,6 +22,15 @@ export class ProyectosComponent implements OnInit, OnDestroy {
   public isAdmin: any = null;
   public userUid: string = null;
   public editForm = false;
+
+  // public alerta = false;
+  //
+  // alerts: any[] = [{
+  //   type: 'success',
+  //   msg: `Gracias! se ha agregado el proyecto a la base de datos`,
+  //   timeout: 3000
+  // }];
+
 
   constructor(private proyectoService: ProyectoService,
               private router: Router,
@@ -45,14 +54,12 @@ export class ProyectosComponent implements OnInit, OnDestroy {
 
   borrarEditarProyecto(e, project, accion) {
     this.getConfirmacion().subscribe((value) => {
-      console.log('VALUe', value);
       if (value === true && accion === 'borrar') {
-        console.log('VALUE BORRAR?', value);
         this.proyectoService.deleteProject(project);
 
       } else if (value === true && accion === 'editar') {
         this.editarProyecto(project);
-        console.log('puede editar');
+        window.scrollTo(0, 0);
 
 
         // this.proyectoService.editarProject(project);
@@ -118,14 +125,16 @@ export class ProyectosComponent implements OnInit, OnDestroy {
     this.modalRef.hide();
   }
 
-  openModalEdit(project: CamposFormulario) {
-    // this.editarProyecto(project);
-    // console.log('openmodal func', project);
-    // this.proyectoService.selectedProject = Object.assign({}, project);
-    // this.modalRef = this.modalService.show(ProyectFormComponent, {class: 'modal-xl'});
-    // this.modalRef.content = project
 
+
+  cerrarEditar(e) {
+    this.editForm = false;
   }
+
+  // onClosed(dismissedAlert: AlertComponent): void {
+  //   this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);
+  //   this.alerta = false;
+  // }
 
   ngOnDestroy() {
     this.borrarConfirm.unsubscribe();

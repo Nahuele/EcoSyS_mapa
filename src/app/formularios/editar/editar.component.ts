@@ -24,6 +24,7 @@ public formProyectoFinal;
 public listafotosFromDB;
 public listasppFromDB;
 public listapersonalFromDb;
+public listacoordenadasFromDb;
 
 public alerta = false;
 
@@ -44,6 +45,7 @@ public alerta = false;
     this.proyectoService.selectedProject.detalles.linksfotos ? this.listafotosFromDB = this.proyectoService.selectedProject.detalles.linksfotos : this.listafotosFromDB = []
     this.proyectoService.selectedProject.detalles.especies ? this.listasppFromDB = this.proyectoService.selectedProject.detalles.especies : this.listasppFromDB = []
     this.proyectoService.selectedProject.detalles.personal ? this.listapersonalFromDb = this.proyectoService.selectedProject.detalles.personal : this.listapersonalFromDb = []
+    this.proyectoService.selectedProject.detalles.coordenadas ? this.listacoordenadasFromDb = this.proyectoService.selectedProject.detalles.coordenadas : this.listacoordenadasFromDb = []
     // this.registerForm.valueChanges.subscribe(value => {
     // this.formProyecto = this.removeEmptyFields(value);
     // console.log(this.formProyecto)
@@ -74,7 +76,7 @@ public alerta = false;
     provincia: [''],
     ciudad: [''],
     estado_actual: [''],
-    coordenadas: [''], // , Validators.required
+    coordenadas: this.formBuilder.array([]), // , Validators.required
     ano_inicio: [''],
     web: [''],
     tipo_sitio: [''],
@@ -91,12 +93,14 @@ public alerta = false;
     let fotosFinal = [...this.listafotosFromDB, ...this.registerForm.value.linksfotos];
     let especiesFinal = [...this.listasppFromDB, ...this.registerForm.value.especies];
     let personalFinal = [...this.listapersonalFromDb, ...this.registerForm.value.personal];
+    let coordsFinal = [...this.listacoordenadasFromDb, ...this.registerForm.value.coordenadas];
     // 2) Nested: actualizar el objeto final
     this.formProyecto = this.removeEmptyFields(this.registerForm.value);
     formProyectoFinal['detalles'] =  this.formProyecto;
     formProyectoFinal['detalles']['linksfotos'] = fotosFinal;
     formProyectoFinal['detalles']['especies'] = especiesFinal;
     formProyectoFinal['detalles']['personal'] = personalFinal;
+    formProyectoFinal['detalles']['coordenadas'] = coordsFinal;
     formProyectoFinal['userUid'] = this.userUid;
     formProyectoFinal['id'] = this.proyectoService.selectedProject.id
     // formProyectoFinal['id'] = this.projobj.id;
@@ -120,7 +124,7 @@ public alerta = false;
   }
 
   get coordenadas() {
-    return this.registerForm.get('coordenadas');
+    return this.registerForm.get('coordenadas') as FormArray;
   }
 
   get linksfotos() {
@@ -134,6 +138,7 @@ public alerta = false;
   get especies() {
     return this.registerForm.get('especies') as FormArray;
   }
+
 
   borrarForm() {
     this.registerForm.reset();
@@ -159,6 +164,8 @@ public alerta = false;
         this.listasppFromDB.splice(indice, 1);
       } else if (asignarForm === 'personal') {
         this.listapersonalFromDb.splice(indice, 1);
+      } else if (asignarForm === 'coordenadas') {
+        this.listacoordenadasFromDb.splice(indice, 1);
       }
     } else if (target === 'current' && indice !== -1) {
       if (asignarForm === 'fotos') {
@@ -168,6 +175,8 @@ public alerta = false;
         // this.listasppFromDB.splice(indice, 1);
       } else if (asignarForm === 'personal') {
         this.personal.removeAt(indice);
+      } else if (asignarForm === 'coordenadas') {
+        this.coordenadas.removeAt(indice);
       }
     }
   }
@@ -203,7 +212,13 @@ public alerta = false;
     this.especies.push(especiesFormGroup);
   }
 
-
+  agregarCoordenadas() {
+    let coordenadasFormGroup = this.formBuilder.group({
+      latitud: [''],
+      longitud: ['']
+    });
+    this.coordenadas.push(coordenadasFormGroup);
+  }
 
   onClosed(dismissedAlert: AlertComponent): void {
     this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);

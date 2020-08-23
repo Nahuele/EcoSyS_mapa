@@ -42,27 +42,31 @@ export class MapaComponent implements OnInit {
 
       for (let proj of Object.keys(this.projObj)) {
         const itemProj = this.projObj[proj].detalles;
-        this.idproject = this.projObj[proj].id
-        // console.log(this.projObj);
+        this.idproject = this.projObj[proj].id;
         console.log(itemProj);
-        const coordenadas = itemProj.coordenadas.split(',').map(Number);
-        const detallesPro = itemProj;
-        let objForLayer = {
-          'type':        'Feature',
-          'properties':  {
-            'title':       detallesPro.nombre,
-            // 'marker-color': '#3c4e5a',
-            // 'marker-symbol': 'monument',
-            // 'marker-size': 'large',
-            // 'icon': 'theatre',
-            'description': this.setearHtmlPopUp(detallesPro)
-          }, 'geometry': {'coordinates': coordenadas, 'type': 'Point'}
-        };
-        detallesPro.tipo_enfoque === 'Agroecología y soberanía alimentaria' ? featuresAgroEco.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
-          featuresConservacionFauna.push(objForLayer) : detallesPro.tipo_enfoque === 'Ambiente y sociedad' ? featuresAmbSoc.push(objForLayer) :
-            detallesPro.tipo_enfoque === 'Conservación de flora' ? featuresConservacionFlora.push(objForLayer)
-            : console.log('emtpy enfoque!!');
+
+        itemProj.coordenadas.forEach((element) => {
+          // const coordenadas = itemProj.coordenadas.split(',').map(Number);
+          const coordenadas = [+element.latitud, +element.longitud];
+          const detallesPro = itemProj;
+          let objForLayer = {
+            'type':        'Feature',
+            'properties':  {
+              'title':       detallesPro.nombre,
+              // 'marker-color': '#3c4e5a',
+              // 'marker-symbol': 'monument',
+              // 'marker-size': 'large',
+              // 'icon': 'theatre',
+              'description': this.setearHtmlPopUp(detallesPro)
+            }, 'geometry': {'coordinates': coordenadas, 'type': 'Point'}
+          };
+          detallesPro.tipo_enfoque === 'Agroecología y soberanía alimentaria' ? featuresAgroEco.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
+            featuresConservacionFauna.push(objForLayer) : detallesPro.tipo_enfoque === 'Ambiente y sociedad' ? featuresAmbSoc.push(objForLayer) :
+              detallesPro.tipo_enfoque === 'Conservación de flora' ? featuresConservacionFlora.push(objForLayer)
+                : console.log('emtpy enfoque!!');
+        });
       }
+
       // return listaFeatures;
 
       this.mapa.on('load', () => {
@@ -102,8 +106,9 @@ export class MapaComponent implements OnInit {
   // creo una funcion q me hace el popup HTML
 
   setearHtmlPopUp(detalle) {
-    let link:string;
-    detalle.linksfotos.length > 0 ? link = detalle.linksfotos[0].link  : link = 'https://icon-library.com/images/no-image-available-icon/no-image-available-icon-7.jpg';
+    let link: string;
+    detalle.linksfotos !== undefined && detalle.linksfotos.length > 0 ? link = detalle.linksfotos[0].link :
+      link = 'https://icon-library.com/images/no-image-available-icon/no-image-available-icon-7.jpg';
 
     let templateHtml = `<div class="card">
         <div *ngIf="${link}" class="card-header text-center">

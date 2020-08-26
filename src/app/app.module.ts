@@ -5,6 +5,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule} from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import {HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -61,6 +62,7 @@ import { EditarComponent } from './formularios/editar/editar.component';
     AngularFireAuthModule,
     ModalModule.forRoot(),
     AlertModule.forRoot(),
+    HttpClientModule,
   ],
   exports:[],
   providers: [AuthService, CanEditGuard],

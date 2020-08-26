@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start-test": "ng serve --open",
+    "start-test": "ng serve",
     "start": "node server.js",
     "build": "ng build",
     "test": "ng test",

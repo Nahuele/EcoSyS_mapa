@@ -5,108 +5,143 @@ import {ProyectoService} from '../../editar-db/proyecto.service';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {AuthService} from '../../editar-db/auth/auth.service';
 import {AlertComponent} from 'ngx-bootstrap/alert';
+import {IucnApiService} from '../iucn-api.service';
+import {
+  bufferTime,
+  catchError,
+  concatMap, defaultIfEmpty,
+  delay, filter, last,
+  map,
+  mapTo, mergeAll, mergeMap,
+  scan, share,
+  startWith,
+  switchMap,
+  switchMapTo, take, takeLast,
+  takeWhile,
+  timeout
+} from 'rxjs/operators';
+import {BehaviorSubject, concat, forkJoin, interval, merge, Observable, of, Subject, timer} from 'rxjs';
+import {EMPTY} from 'rxjs';
 
 @Component({
-  selector: 'app-editar',
+  selector:    'app-editar',
   templateUrl: './editar.component.html',
-  styleUrls: ['./editar.component.css']
+  styleUrls:   ['./editar.component.css']
 })
 export class EditarComponent implements OnInit, OnDestroy {
 
-@Input() userUidEdit;
+  @Input() userUidEdit;
   // public projId: string;
-@Output() cerrarForm = new EventEmitter();
-@Input() id;
-public formProyecto: CamposFormulario;
-public userUid;
-public formProyectoFinal;
+  @Output() cerrarForm = new EventEmitter();
+  @Input() id;
+  public formProyecto: CamposFormulario;
+  public userUid;
+  public formProyectoFinal;
   // 1) Nested: crear variables para mostrar en el template
-public listafotosFromDB;
-public listasppFromDB;
-public listapersonalFromDb;
-public listacoordenadasFromDb;
+  public listafotosFromDB;
+  public listasppFromDB;
+  public listapersonalFromDb;
+  public listacoordenadasFromDb;
+  public iucndetalles;
+  public iucndetalleslist = {};
+  strtemp = '';
+  iucndetails$ = new BehaviorSubject('');
 
-public alerta = false;
+  public alerta = false;
 
   alerts: any[] = [{
-    type: 'success',
-    msg: `Gracias! se ha agregado el proyecto a la base de datos`,
+    type:    'success',
+    msg:     `Gracias! se ha agregado el proyecto a la base de datos`,
     timeout: 3000
   }];
 
 
   constructor(private formBuilder: FormBuilder,
-    public proyectoService: ProyectoService,
-    private modalService: BsModalService,
-    private authService: AuthService) {}
+              public proyectoService: ProyectoService,
+              private modalService: BsModalService,
+              private authService: AuthService,
+              public iucnService: IucnApiService) {}
 
   ngOnInit(): void {
     this.userUid = this.authService.userid;
-    this.proyectoService.selectedProject.detalles.linksfotos ? this.listafotosFromDB = this.proyectoService.selectedProject.detalles.linksfotos : this.listafotosFromDB = []
-    this.proyectoService.selectedProject.detalles.especies ? this.listasppFromDB = this.proyectoService.selectedProject.detalles.especies : this.listasppFromDB = []
-    this.proyectoService.selectedProject.detalles.personal ? this.listapersonalFromDb = this.proyectoService.selectedProject.detalles.personal : this.listapersonalFromDb = []
-    this.proyectoService.selectedProject.detalles.coordenadas ? this.listacoordenadasFromDb = this.proyectoService.selectedProject.detalles.coordenadas : this.listacoordenadasFromDb = []
+    this.proyectoService.selectedProject.detalles.linksfotos ? this.listafotosFromDB = this.proyectoService.selectedProject.detalles.linksfotos : this.listafotosFromDB = [];
+    this.proyectoService.selectedProject.detalles.especies ? this.listasppFromDB = this.proyectoService.selectedProject.detalles.especies : this.listasppFromDB = [];
+    this.proyectoService.selectedProject.detalles.personal ? this.listapersonalFromDb = this.proyectoService.selectedProject.detalles.personal : this.listapersonalFromDb = [];
+    this.proyectoService.selectedProject.detalles.coordenadas ? this.listacoordenadasFromDb = this.proyectoService.selectedProject.detalles.coordenadas : this.listacoordenadasFromDb = [];
+
+    // let contador = [];
     // this.registerForm.valueChanges.subscribe(value => {
-    // this.formProyecto = this.removeEmptyFields(value);
-    // console.log(this.formProyecto)
+    // // this.formProyecto = this.removeEmptyFields(value);
+    // value.especies.forEach( sp => {
+    //   if (sp.spob.includes(' ')) {
+    //     // contador.push(sp.spob);
+    //     this.iucnservice$ = this.iucnService.getEspecieAPI(sp.spob).subscribe(x => {
+    //       if (x.result[0]) {
+    //         this.iucnservice$ = x.result[0];
+    //       }
+    //       console.log(this.iucndetalles)
+    //     });
+    //   }
     // })
+    // })
+
 
   }
 
 
   registerForm = this.formBuilder.group({
-    projectid: [''], //, [Validators.required, Validators.minLength(6)]],
-    email: [''], // , [Validators.required, Validators.email]],
-    tipo_enfoque: [''], //, Validators.required],
-    nombre: [''],
-    enfoque: [''],
-    institucion: [''],
+    projectid:        [''], //, [Validators.required, Validators.minLength(6)]],
+    email:            [''], // , [Validators.required, Validators.email]],
+    tipo_enfoque:     [''], //, Validators.required],
+    nombre:           [''],
+    enfoque:          [''],
+    institucion:      [''],
     titulo_extendido: [''],
-    descripcion: [''],
-    resumen: [''],
-    tipo_estudio: [''],
-    redes_sociales: this.formBuilder.group({
-      facebook: [''],
-      instagram: [''],
-      twitter: [''],
-      youtube: [''],
+    descripcion:      [''],
+    resumen:          [''],
+    tipo_estudio:     [''],
+    redes_sociales:   this.formBuilder.group({
+      facebook:     [''],
+      instagram:    [''],
+      twitter:      [''],
+      youtube:      [''],
       researchgate: [''],
     }),
-    pais: [''],
-    provincia: [''],
-    ciudad: [''],
-    estado_actual: [''],
-    coordenadas: this.formBuilder.array([]), // , Validators.required
-    ano_inicio: [''],
-    web: [''],
-    tipo_sitio: [''],
-    resultados: [''],
-    linksfotos: this.formBuilder.array([]),
-    personal: this.formBuilder.array([]),
-    especies: this.formBuilder.array([])
+    pais:             [''],
+    provincia:        [''],
+    ciudad:           [''],
+    estado_actual:    [''],
+    coordenadas:      this.formBuilder.array([]), // , Validators.required
+    ano_inicio:       [''],
+    web:              [''],
+    tipo_sitio:       [''],
+    resultados:       [''],
+    linksfotos:       this.formBuilder.array([]),
+    personal:         this.formBuilder.array([]),
+    especies:         this.formBuilder.array([])
 
   });
 
   submit() {
     let formProyectoFinal = {};
-    console.log('form DB original', this.proyectoService.selectedProject.detalles)
+    console.log('form DB original', this.proyectoService.selectedProject.detalles);
     let fotosFinal = [...this.listafotosFromDB, ...this.registerForm.value.linksfotos];
     let especiesFinal = [...this.listasppFromDB, ...this.registerForm.value.especies];
     let personalFinal = [...this.listapersonalFromDb, ...this.registerForm.value.personal];
     let coordsFinal = [...this.listacoordenadasFromDb, ...this.registerForm.value.coordenadas];
     // 2) Nested: actualizar el objeto final
     this.formProyecto = this.removeEmptyFields(this.registerForm.value);
-    formProyectoFinal['detalles'] =  this.formProyecto;
+    formProyectoFinal['detalles'] = this.formProyecto;
     formProyectoFinal['detalles']['linksfotos'] = fotosFinal;
     formProyectoFinal['detalles']['especies'] = especiesFinal;
     formProyectoFinal['detalles']['personal'] = personalFinal;
     formProyectoFinal['detalles']['coordenadas'] = coordsFinal;
     formProyectoFinal['userUid'] = this.userUid;
-    formProyectoFinal['id'] = this.proyectoService.selectedProject.id
+    formProyectoFinal['id'] = this.proyectoService.selectedProject.id;
     // formProyectoFinal['id'] = this.projobj.id;
-    console.log('detalles',formProyectoFinal);
+    console.log('detalles', formProyectoFinal);
     this.proyectoService.editarProject(formProyectoFinal);
-    console.log('enviado correcto')
+    console.log('enviado correcto');
     window.scrollTo(0, 0);
     this.cerrarForm.emit();
     this.alerta = true;
@@ -143,18 +178,19 @@ public alerta = false;
   borrarForm() {
     this.registerForm.reset();
     this.linksfotos.controls.splice(0, this.linksfotos.length);
-    // this.especies.controls.splice(0,this.especies.length);
+    this.especies.controls.splice(0, this.especies.length);
     this.personal.controls.splice(0, this.personal.length);
     window.scrollTo(0, 0);
   }
 
   agregarlinkimg() {
     let linksFormGroup = this.formBuilder.group({
-      link: '',
+      link:        '',
       descripcion: '',
     });
     this.linksfotos.push(linksFormGroup);
   }
+
   // 3) Nested: funcion general que sirve para cualquier nested
   removerItem(indice: number, asignarForm: string, target: string,) {
     if (target === 'anterior' && indice !== -1) {
@@ -183,19 +219,19 @@ public alerta = false;
 
   agregarPersonal() {
     const personalFormGroup = this.formBuilder.group({
-      nombre_personal: '',
-      apellido_personal: '',
-      rol: '',
-      genero: '',
-      fecha_nacimiento: '',
-      pais_residencia: '',
-      provincia_residencia: '',
-      email_personal: [''], // , Validators.email
-      redes_sociales_personal: this.formBuilder.group( {
-        facebook_personal: '',
-        instagram_personal: '',
-        twitter_personal: '',
-        youtube_personal: '',
+      nombre_personal:         '',
+      apellido_personal:       '',
+      rol:                     '',
+      genero:                  '',
+      fecha_nacimiento:        '',
+      pais_residencia:         '',
+      provincia_residencia:    '',
+      email_personal:          [''], // , Validators.email
+      redes_sociales_personal: this.formBuilder.group({
+        facebook_personal:     '',
+        instagram_personal:    '',
+        twitter_personal:      '',
+        youtube_personal:      '',
         researchgate_personal: '',
       })
     });
@@ -205,16 +241,16 @@ public alerta = false;
 
   agregarEspecie() {
     let especiesFormGroup = this.formBuilder.group({
-      spob: [''],
+      spob:          [''],
       nombre_vulgar: [''],
-      tso: ['']
+      tso:           ['']
     });
     this.especies.push(especiesFormGroup);
   }
 
   agregarCoordenadas() {
     let coordenadasFormGroup = this.formBuilder.group({
-      latitud: [''],
+      latitud:  [''],
       longitud: ['']
     });
     this.coordenadas.push(coordenadasFormGroup);
@@ -225,8 +261,42 @@ public alerta = false;
     this.alerta = false;
   }
 
+  iucnGet(index, especie?: string) {
+    // let obs1;
+    let spptest;
+    if (especie.length > 2) {
+      spptest = especie
+    }
+    this.iucndetalles = null
+    console.log(this.iucndetalleslist)
+    console.log('FUNCION DISPARADA CONTROl')
+
+    const obs1 = this.registerForm.valueChanges // .pipe(bufferTime(5000))
+      .subscribe(value => {
+        let search = value['especies'][index].spob
+        if (search.length > 2) {
+          // console.log('subs del form value', search)
+          this.strtemp = search
+          this.iucndetails$.next(search);
+        }
+      })
+
+    let tiempo = interval(1000).pipe(take(6))
+    concat(tiempo, this.iucndetails$).subscribe((x) => {
+      if (typeof x === 'string') {
+        const detalleFromSv = this.iucnService.busquedaApi(x).subscribe(y => {
+          const result = y.result[0];
+          this.iucndetalleslist[x] = result;
+        });
+      }
+    })
+  }
+
+
+
   ngOnDestroy() {
     this.formProyecto = null;
+    this.iucndetails$.unsubscribe();
   }
 
 }

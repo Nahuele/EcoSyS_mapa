@@ -1,0 +1,368 @@
+<div class="container mb-5 mt-3" >
+  <h3 class="text-center">Registrar proyecto</h3>
+  <br>
+  <div class="row justify-content-md-center">
+    <div *ngIf="alerta === true">
+      <div *ngFor="let alert of alerts">
+        <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+      </div>
+    </div>
+  </div>
+  <br>
+  <!--  <h2>{{this.proyectoService.selectedProject['userUid']}}</h2>-->
+  <form (submit)="submit()" [formGroup]="registerForm" name="formPro" >
+    <div class="row">
+      <div class="col">
+        <div class="form-group" >
+          <label >Proyecto ID</label>
+          <input type="text" class="form-control form-control-lg"
+
+                 formControlName="projectid"
+                 placeholder="PRO_Martín_García_ID"  name="projectid">
+          <div class="invalid-feedback">
+            El ID del proyecto es requerido (sin espacios, minimo 6 caracteres)
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label>Nombre del Proyecto</label>
+          <input type="text" class="form-control" formControlName="nombre" name="nombre">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>email principal</label>
+          <input type="email" class="form-control"
+                 [ngClass]="{'is-invalid': registerForm.get('email').invalid}"
+                 formControlName="email" >
+          <!--          <div class="invalid-feedback">-->
+          <!--            email requerido-->
+          <!--          </div>-->
+        </div>
+        <!--        <div *ngIf="email.invalid && !email.pristine">-->
+        <!--          <p *ngIf="email.errors.email" style="color: red">Un email es requerido</p>-->
+        <!--        </div>-->
+      </div>
+
+      <div class="col">
+        <div class="form-group" >
+          <label for="tipo_enfoque">Tipo</label>
+          <select class="form-control" id="tipo_enfoque"
+                  [ngClass]="{'is-invalid': registerForm.get('tipo_enfoque').invalid}"
+                  formControlName="tipo_enfoque" >
+            <option disabled selected>Seleccione tipo</option>
+            <option>Conservación de fauna</option>
+            <option>Agroecología y soberanía alimentaria</option>
+            <option>Conservación de flora</option>
+            <option>Ambiente y sociedad</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Enfoque</label>
+        <input type="text" class="form-control" placeholder="Ecologia" formControlName="enfoque" >
+      </div>
+      <div class="col">
+        <label>Estado actual</label>
+        <input type="text" class="form-control" placeholder="En curso" formControlName="estado_actual" >
+      </div>
+
+      <div class="col">
+        <label>Institucion</label>
+        <input type="text" class="form-control" placeholder="Universidad del Litoral"  formControlName="institucion" >
+      </div>
+    </div>
+    <hr>
+    <div class="form-group">
+      <label for="titulo_extendido">Titulo extendido</label>
+      <textarea class="form-control" id="titulo_extendido" formControlName="titulo_extendido" rows="1" ></textarea>
+    </div>
+    <div class="form-group">
+      <label for="descripcion_proyecto">Descripción</label>
+      <textarea class="form-control" id="descripcion_proyecto" formControlName="descripcion" rows="2" ></textarea>
+    </div>
+    <div class="form-group">
+      <label for="resumen">Resumen</label>
+      <textarea class="form-control" id="resumen" formControlName="resumen" rows="2" ></textarea>
+    </div>
+    <div class="form-group">
+      <label for="resultados">Resultados</label>
+      <textarea class="form-control" id="resultados" formControlName="resultados" rows="1" ></textarea>
+    </div>
+    <div formGroupName="redes_sociales">
+      <div class="row">
+        <div class="form-group col">
+          <label>Facebook</label>
+          <!--          <input type="text" class="form-control" formControlName="facebook" id="facebook" 'facebook']">-->
+          <input type="text" class="form-control" formControlName="facebook" id="facebook" >
+        </div>
+        <div class="form-group col">
+          <label>Instagram</label>
+          <!--          <input type="text" class="form-control" formControlName="instagram"   'instagram']" >-->
+          <input type="text" class="form-control" formControlName="instagram"  >
+        </div>
+        <div class="form-group col">
+          <label>Twitter</label>
+          <!--          <input type="text" class="form-control" formControlName="twitter"   'twitter']" >-->
+          <input type="text" class="form-control" formControlName="twitter"  >
+        </div>
+        <div class="form-group col">
+          <label>Youtube</label>
+          <!--          <input type="text" class="form-control" formControlName="youtube"   'youtube']" >-->
+          <input type="text" class="form-control" formControlName="youtube"   >
+        </div>
+        <div class="form-group col">
+          <label>Research Gate</label>
+          <!--          <input type="text" class="form-control" formControlName="researchgate"   'researchgate']">-->
+          <input type="text" class="form-control" formControlName="researchgate"  >
+        </div>
+      </div>
+    </div>
+
+      <a class="btn btn-warning" type="button" (click)="agregarCoordenadas()">Agregar Coordenadas</a>
+      <div class="row justify-content-md-center" formGroupName="coordenadas" *ngFor="let link of coordenadas.controls; let u = index">
+              <div [formGroupName]="u">
+        <div class="row justify-content-md-center form-group" >
+          <label class="col-auto" [attr.for]="'link' + u"><strong>Latitud</strong></label>
+          <div class="col-auto">
+            <input type="text" [attr.id]="'link' + u" class="form-control" formControlName="latitud" name="latitud">
+          </div>
+          <label class="col-auto" [attr.for]="'link' + u"><strong>Longitud</strong></label>
+          <div class="col-auto">
+            <input type="text" [attr.id]="'link' + u" class="form-control" formControlName="longitud" name="longitud">
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-danger btn-sm" type="button" (click)="removerItem(u,'coordenadas', 'current')">Ⓧ</button>
+          </div>
+        </div>
+    </div>
+    </div>
+    <hr>
+    <div >
+      <div class="row justify-content-md-center"> <h5>Datos del lugar</h5> </div>
+      <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Pais" formControlName="pais" >
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Provincia" formControlName="provincia" >
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Ciudad" formControlName="ciudad" >
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <select class="form-control" formControlName="tipo_sitio" >
+              <option value="" selected disabled>Seleccione tipo de sitio</option>
+              <option>Parque Nacional</option>
+              <option>Reserva Nacional</option>
+              <option>Otro</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row justify-content-md-center ">
+<!--        <div class="form-group col" tooltip="Lat,Long (sin espacios, separados por coma) Es a la inversa de Google">-->
+<!--          <label ><span>Coordenadas</span></label>-->
+<!--          <input type="text" class="form-control"-->
+<!--                 formControlName="coordenadas"-->
+<!--                 placeholder="-58.2595914,-34.1824176"-->
+
+<!--                 [ngClass]="{'is-invalid': registerForm.get('projectid').invalid}" >-->
+<!--          <div class="invalid-feedback">-->
+<!--            Coordenadas con formato especifico requeridas-->
+<!--          </div>-->
+<!--        </div>-->
+        <div class="form-group col">
+          <label>Año de inicio</label>
+          <input type="text" class="form-control" formControlName="ano_inicio" placeholder="2020" >
+        </div>
+        <div class="form-group col">
+          <label>Tipo de estudio</label>
+          <input type="text" class="form-control" formControlName="tipo_estudio" placeholder="Especie exótica invasora" >
+        </div>
+        <div class="form-group col">
+          <label>Web</label>
+          <input type="text" class="form-control" formControlName="web"  >
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="form-group">
+      <a class="btn btn-warning" type="button" (click)="agregarlinkimg()">Agregar Imagenes</a>
+    </div>
+
+    <div formGroupName="linksfotos" *ngFor="let link of linksfotos.controls; let i = index">
+      <!--      <h1>{{link.value['link']}}</h1>-->
+      <div [formGroupName]="i">
+        <div class="form-group row justify-content-md-center">
+          <label class="col-auto" [attr.for]="'link' + i">Link</label>
+          <div class="col-auto">
+            <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="link" name="link" >
+          </div>
+          <label class="col-auto" [attr.for]="'link' + i">Descripcion</label>
+          <div class="col-auto">
+            <input type="text" [attr.id]="'link' + i" class="form-control"  name="descripcionfoto" formControlName="descripcionfoto">
+            <!--            <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="descripcionfoto" 'descripcion']">-->
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-danger btn-sm" type="button" (click)="removerItem(i,'fotos', 'current')">Ⓧ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="form-group" >
+      <a class="btn btn-warning " type="button" (click)="agregarPersonal()">Agregar Personal</a>
+
+      <div formGroupName="personal" *ngFor="let person of personal.controls; let x = index">
+        <div [formGroupName]="x">
+          <div class="row justify-content-md-center">
+            <div class="col-auto">
+              <label  [attr.for]="'link' + x">Nombre/s</label>
+              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="nombre_personal" >
+            </div> <div class="col-auto">
+            <label  [attr.for]="'link' + x">Apellido/s</label>
+            <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="apellido_personal" >
+          </div>
+            <div class="col-auto">
+              <label  [attr.for]="'link' + x">Rol</label>
+              <!--            <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="rol">-->
+              <div class="form-group">
+                <select class="form-control" [attr.id]="'link' + x" formControlName="rol" >
+                  <option value="" selected disabled>Seleccione el rol</option>
+                  <option>Guardaparque</option>
+                  <option>Director</option>
+                  <option>Audiovisual</option>
+                  <option>Voluntario de campo</option>
+                  <option>Codirector/a</option>
+                  <option>Investigador principal</option>
+                  <option>Otro</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label [attr.for]="'link' + x">Género</label>
+              <select class="form-control" [attr.id]="'link' + x" formControlName="genero" >
+                <option value="" selected disabled></option>
+                <option>Femenino</option>
+                <option>Masculino</option>
+                <option>Otro</option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <label [attr.for]="'link' + x">Fecha de nacimiento</label>
+              <input type="text"  class="form-control" bsDatepicker
+                     formControlName="fecha_nacimiento"[attr.id]="'link' + x" >
+            </div>
+          </div>
+          <div class="row justify-content-md-center">
+            <div class="col-auto">
+              <label  [attr.for]="'link' + x">Pais de residencia</label>
+              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="pais_residencia">
+            </div>
+            <div class="col-auto">
+              <label  [attr.for]="'link' + x">Provincia de residencia</label>
+              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="provincia_residencia">
+            </div>
+            <div class="col-auto">
+              <label  [attr.for]="'link' + x">email</label>
+              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="email_personal">
+            </div>
+            <div class="col-auto align-self-end">
+              <button class="btn btn-danger" (click)="removerItem(x,'personal','current')">Ⓧ</button>
+            </div>
+          </div>
+          <br>
+          <div class="row " formGroupName="redes_sociales_personal">
+            <div class="form-group col">
+              <label [attr.for]="'link' + x">Facebook</label>
+              <input type="text" [attr.id]="'link' + x" class="form-control"  formControlName="facebook_personal">
+            </div>
+            <div class="form-group col">
+              <label [attr.for]="'link' + x">Instagram</label>
+              <input type="text" [attr.id]="'link' + x" class="form-control"  formControlName="instagram_personal">
+            </div>
+            <div class="form-group col">
+              <label [attr.for]="'link' + x">Twitter</label>
+              <input type="text" [attr.id]="'link' + x" class="form-control"  formControlName="twitter_personal">
+            </div>
+            <div class="form-group col">
+              <label [attr.for]="'link' + x">Youtube</label>
+              <input type="text" [attr.id]="'link' + x" class="form-control"  formControlName="youtube_personal" >
+            </div>
+            <div class="form-group col">
+              <label [attr.for]="'link' + x">Research Gate</label>
+              <input type="text" [attr.id]="'link' + x" class="form-control"  formControlName="researchgate_personal" >
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+
+    </div>
+    <hr>
+
+    <div *ngIf="this.registerForm.value.tipo_enfoque != 'Agroecología y soberanía alimentaria' && this.registerForm.value.tipo_enfoque != 'Ambiente y sociedad'">
+      <h2>Registrar especies</h2>
+      <div class="form-group">
+        <a class="btn btn-warning" type="button" (click)="agregarEspecie()">Agregar Especies</a>
+
+        <div formGroupName="especies" *ngFor="let spp of especies.controls; let p = index">
+          <div [formGroupName]="p">
+            <div class="row justify-content-md-center">
+              <div class="col-auto">
+                <label [attr.for]="'link' + p">SPOB</label>
+                <input type="text" [attr.id]="'link' + p" class="form-control" placeholder="Lontra provocax"
+                       formControlName="spob">
+              </div>
+              <div class="col-auto">
+                <label [attr.for]="'link' + p">Nombre vulgar</label>
+                <input type="text" [attr.id]="'link' + p" class="form-control" formControlName="nombre_vulgar">
+              </div>
+              <div class="form-group">
+                <label [attr.for]="'link' + p">tso</label>
+                <select class="form-control" [attr.id]="'link' + p" formControlName="tso">
+                  <option [ngValue]="null" selected></option>
+                  <option>Nativa</option>
+                  <option>Invasora</option>
+                  <option>Otro</option>
+                </select>
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-danger btn-sm" (click)="removerItem(p, 'especies', 'current')">Ⓧ</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+
+
+    <div class="row justify-content-md-center ">
+      <div class="col-auto">
+        <button class="btn btn-primary btn-lg"
+                type="submit"
+                [disabled]="!registerForm.valid"
+                style="margin-top: 3rem">Enviar
+        </button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-light btn-lg"
+                type="button"
+                (click)="borrarForm()"
+                style="margin-top: 3rem">Resetear
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+

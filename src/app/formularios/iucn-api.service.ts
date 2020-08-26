@@ -26,18 +26,4 @@ export class IucnApiService {
     }
   }
 
-
-  private getEspecieApi(especie) {
-    if (especie.includes(' ')) {
-      // return result;
-      // let especie$ = this.busquedaApi(especie).subscribe(data => {
-      //   if (data.result[0]) {
-      //     console.log('encontrada', data.result[0])
-      //    return this.especieFound = JSON.stringify(data.result[0])
-      //   }
-      // })
-    }
-  }
-
-
 }

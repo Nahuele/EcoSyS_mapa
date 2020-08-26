@@ -69,23 +69,6 @@ export class EditarComponent implements OnInit, OnDestroy {
     this.proyectoService.selectedProject.detalles.personal ? this.listapersonalFromDb = this.proyectoService.selectedProject.detalles.personal : this.listapersonalFromDb = [];
     this.proyectoService.selectedProject.detalles.coordenadas ? this.listacoordenadasFromDb = this.proyectoService.selectedProject.detalles.coordenadas : this.listacoordenadasFromDb = [];
 
-    // let contador = [];
-    // this.registerForm.valueChanges.subscribe(value => {
-    // // this.formProyecto = this.removeEmptyFields(value);
-    // value.especies.forEach( sp => {
-    //   if (sp.spob.includes(' ')) {
-    //     // contador.push(sp.spob);
-    //     this.iucnservice$ = this.iucnService.getEspecieAPI(sp.spob).subscribe(x => {
-    //       if (x.result[0]) {
-    //         this.iucnservice$ = x.result[0];
-    //       }
-    //       console.log(this.iucndetalles)
-    //     });
-    //   }
-    // })
-    // })
-
-
   }
 
 

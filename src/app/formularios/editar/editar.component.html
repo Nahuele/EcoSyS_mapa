@@ -535,11 +535,6 @@
                 <button class="btn btn-danger btn-sm" (click)="removerItem(p, 'especies', 'current')">Remover</button>
               </div>
             </div>
-<!--            <div [attr.for]="'link' + p" *ngIf="spp.value.spob then iucnGet(spp.value.spob)">-->
-<!--              <div [attr.id]="'link' + p" *ngFor="let item of this.listaApiFound">-->
-<!--                <h4 *ngIf="item[spp.value.spob] === spp.value.spob">encontrado {{spp.value.spob}}</h4>-->
-<!--              </div>-->
-<!--            </div>-->
             <div class="row justify-content-md-center" >
                 <div *ngIf="iucndetalleslist[spp.value.spob] as value">
                   <span><p style="font-size:12px; color:red">Especie reconocida por la iucnredlist !</p>

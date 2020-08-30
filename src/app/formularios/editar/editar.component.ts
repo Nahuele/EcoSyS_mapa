@@ -280,6 +280,7 @@ export class EditarComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.formProyecto = null;
     this.iucndetails$.unsubscribe();
+    
   }
 
 }

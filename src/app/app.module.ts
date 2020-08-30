@@ -30,6 +30,7 @@ import {AuthService} from './editar-db/auth/auth.service';
 import {CanEditGuard} from './editar-db/auth/can-edit.guard';
 import { NuevoProyectoComponent } from './formularios/nuevo-proyecto/nuevo-proyecto.component';
 import { EditarComponent } from './formularios/editar/editar.component';
+import {BUCKET, AngularFireStorageModule} from '@angular/fire/storage';
 
 
 @NgModule({
@@ -63,9 +64,10 @@ import { EditarComponent } from './formularios/editar/editar.component';
     ModalModule.forRoot(),
     AlertModule.forRoot(),
     HttpClientModule,
+    AngularFireStorageModule,
   ],
   exports:[],
-  providers: [AuthService, CanEditGuard],
+  providers: [AuthService, CanEditGuard, { provide: BUCKET, useValue: 'gs://mapaproyectos-59125.appspot.com'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

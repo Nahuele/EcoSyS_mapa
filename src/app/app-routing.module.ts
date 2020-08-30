@@ -20,6 +20,7 @@ const routes: Routes = [
   {path: 'verifemail', component: SendEmailComponent},
   {path: 'resetpass', component: ResetPassComponent},
   {path: 'proyectos', component: ProyectosComponent, canActivate: [CanEditGuard]},
+  { path: 'upload-image', loadChildren: () => import('./upload-image/upload-image.module').then(m => m.UploadImageModule) },
 
 ];
 

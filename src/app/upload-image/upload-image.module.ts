@@ -8,7 +8,10 @@ import { DirectivaimagenDirective } from './directives/directivaimagen.directive
 
 @NgModule({
   declarations: [UploadImageComponent, DirectivaimagenDirective],
-  imports: [
+  exports:      [
+    UploadImageComponent
+  ],
+  imports:      [
     CommonModule,
     UploadImageRoutingModule
   ]

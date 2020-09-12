@@ -6,11 +6,12 @@ import {BsModalService} from 'ngx-bootstrap/modal';
 import {AuthService} from '../../editar-db/auth/auth.service';
 import {filter, skip} from 'rxjs/operators';
 import {AlertComponent} from 'ngx-bootstrap/alert';
+import {BehaviorSubject, Subject} from 'rxjs';
 
 @Component({
   selector: 'app-nuevo-proyecto',
   templateUrl: './nuevo-proyecto.component.html',
-  styleUrls: ['./nuevo-proyecto.component.css']
+  styleUrls: ['./nuevo-proyecto.component.scss']
 })
 
 
@@ -21,9 +22,8 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   // public projId: string;
   @Input() projobj;
   public formProyecto;
-  public userUid;
+  public userUid$ = new BehaviorSubject('');
   public formProyectoFinal;
-
 
   public alerta = false;
 
@@ -40,7 +40,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
               private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.userUid = this.authService.userid;
+    this.userUid$.next( this.authService.userid);
     }
 
 
@@ -72,7 +72,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     web: [''],
     tipo_sitio: [''],
     resultados: [''],
-    linksfotos: this.formBuilder.array([]),
+    linksvideos: this.formBuilder.array([]),
     personal: this.formBuilder.array([]),
     especies: this.formBuilder.array([])
 
@@ -82,11 +82,10 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     let formProyectoFinal = {};
     // 2) Nested: actualizar el objeto final
     formProyectoFinal['detalles'] = this.removeEmptyFields(this.registerForm.value);
-    formProyectoFinal['userUid'] = this.userUid;
+    formProyectoFinal['userUid'] = this.userUid$.value;
     console.log('detalles',formProyectoFinal);
 
     this.proyectoService.addProject(formProyectoFinal);
-    console.log('enviado correcto')
     this.alerta = true;
     window.scrollTo(0, 0);
     this.ngOnDestroy();
@@ -102,8 +101,8 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     return this.registerForm.get('email');
   }
 
-  get linksfotos() {
-    return this.registerForm.get('linksfotos') as FormArray;
+  get linksvideos() {
+    return this.registerForm.get('linksvideos') as FormArray;
   }
 
   get personal() {
@@ -119,24 +118,24 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
   borrarForm() {
     this.registerForm.reset();
-    this.linksfotos.controls.splice(0, this.linksfotos.length);
+    this.linksvideos.controls.splice(0, this.linksvideos.length);
     // this.especies.controls.splice(0,this.especies.length);
     this.personal.controls.splice(0, this.personal.length);
     window.scrollTo(0, 0);
   }
 
-  agregarlinkimg() {
+  agregarvideos() {
     let linksFormGroup = this.formBuilder.group({
-      link: '',
-      descripcionfoto: '',
+      link:             '',
+      descripcionvideo: '',
     });
-    this.linksfotos.push(linksFormGroup);
+    this.linksvideos.push(linksFormGroup);
   }
   // 3) Nested: funcion general que sirve para cualquier nested
   removerItem(indice: number, asignarForm: string, target: string,) {
    if (target === 'current' && indice !== -1) {
-      if (asignarForm === 'fotos') {
-        this.linksfotos.removeAt(indice);
+      if (asignarForm === 'videos') {
+        this.linksvideos.removeAt(indice);
       } else if (asignarForm === 'especies') {
         this.especies.removeAt(indice);
         // this.listasppFromDB.splice(indice, 1);

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FileItem} from './models/file-item';
 import {StorageService} from './storage.service';
+import {BehaviorSubject, from, Observable, of} from 'rxjs';
+import {distinctUntilChanged} from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload-image',
@@ -8,16 +10,35 @@ import {StorageService} from './storage.service';
   styleUrls: ['./upload-image.component.scss'],
   providers: [StorageService]
 })
-export class UploadImageComponent implements OnInit {
+export class UploadImageComponent implements OnInit, OnChanges {
 
   files: FileItem[] = [];
   isOverDrop = false;
-  constructor(private readonly storageSvc: StorageService) { }
+  @Input() idNewProject;
+  @Input() idUser;
+  private obs$;
 
-  ngOnInit(): void {
+  constructor(private readonly storageSvc: StorageService) {
+
   }
 
-  onUpload(): void {
-    this.storageSvc.uploadImage(this.files);
+  ngOnInit() {
+    this.obs$ = from(this.idNewProject) // .pipe((distinctUntilChanged()))
+    this.obs$.subscribe();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    let idProject = changes['idNewProject'].currentValue
+    if (idProject !== '0' && this.idUser.length > 1) {
+      this.onUpload(idProject, this.idUser)
+    }
+  }
+
+  onUpload(idProject: string, idUser: string) {
+      this.storageSvc.uploadImage(this.files, idProject, idUser);
+  }
+
+  onDestroy() {
+  this.obs$.unsubscribe();
   }
 }

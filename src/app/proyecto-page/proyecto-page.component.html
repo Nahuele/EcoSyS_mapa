@@ -12,11 +12,11 @@
     <div>Estado actual: {{detallesPro['estado_actual']}}</div>
 
     <hr>
-    <div *ngIf="detallesPro['linksfotos']" class="card mt-1 mb-2">
+    <div *ngIf="imagenes" class="card mt-1 mb-2">
       <div class="card-title justify-content-md-center"><h5>Fotos</h5></div>
       <div class="card-body">
-        <div *ngFor="let foto of detallesPro['linksfotos']">
-          <img [src]="foto['link']" class="img-fluid" alt="Responsive image" style="border: 1px solid #ddd;
+        <div *ngFor="let foto of imagenes">
+          <img [src]="foto" class="img-fluid" alt="Responsive image" style="border: 1px solid #ddd;
           border-radius: 4px;padding: 5px;width: 200px;">
         </div>
       </div>

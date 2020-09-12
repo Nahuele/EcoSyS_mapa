@@ -31,6 +31,7 @@ import {CanEditGuard} from './editar-db/auth/can-edit.guard';
 import { NuevoProyectoComponent } from './formularios/nuevo-proyecto/nuevo-proyecto.component';
 import { EditarComponent } from './formularios/editar/editar.component';
 import {BUCKET, AngularFireStorageModule} from '@angular/fire/storage';
+import {UploadImageModule} from './upload-image/upload-image.module';
 
 
 @NgModule({
@@ -49,23 +50,24 @@ import {BUCKET, AngularFireStorageModule} from '@angular/fire/storage';
     NuevoProyectoComponent,
     EditarComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    GoogleMapsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TooltipModule.forRoot(),
-    BsDatepickerModule.forRoot(),
-    BrowserAnimationsModule,
-    AngularFireAuthModule,
-    ModalModule.forRoot(),
-    AlertModule.forRoot(),
-    HttpClientModule,
-    AngularFireStorageModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        GoogleMapsModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFirestoreModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TooltipModule.forRoot(),
+        BsDatepickerModule.forRoot(),
+        BrowserAnimationsModule,
+        AngularFireAuthModule,
+        ModalModule.forRoot(),
+        AlertModule.forRoot(),
+        HttpClientModule,
+        AngularFireStorageModule,
+        UploadImageModule,
+    ],
   exports:[],
   providers: [AuthService, CanEditGuard, { provide: BUCKET, useValue: 'gs://mapaproyectos-59125.appspot.com'}],
   bootstrap: [AppComponent]

@@ -64,7 +64,7 @@ export class EditarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userUid = this.authService.userid;
-    this.proyectoService.selectedProject.detalles.linksfotos ? this.listafotosFromDB = this.proyectoService.selectedProject.detalles.linksfotos : this.listafotosFromDB = [];
+    this.proyectoService.selectedProject.detalles.linksvideos ? this.listafotosFromDB = this.proyectoService.selectedProject.detalles.linksvideos : this.listafotosFromDB = [];
     this.proyectoService.selectedProject.detalles.especies ? this.listasppFromDB = this.proyectoService.selectedProject.detalles.especies : this.listasppFromDB = [];
     this.proyectoService.selectedProject.detalles.personal ? this.listapersonalFromDb = this.proyectoService.selectedProject.detalles.personal : this.listapersonalFromDb = [];
     this.proyectoService.selectedProject.detalles.coordenadas ? this.listacoordenadasFromDb = this.proyectoService.selectedProject.detalles.coordenadas : this.listacoordenadasFromDb = [];
@@ -108,7 +108,7 @@ export class EditarComponent implements OnInit, OnDestroy {
   submit() {
     let formProyectoFinal = {};
     console.log('form DB original', this.proyectoService.selectedProject.detalles);
-    let fotosFinal = [...this.listafotosFromDB, ...this.registerForm.value.linksfotos];
+    let fotosFinal = [...this.listafotosFromDB, ...this.registerForm.value.linksvideos];
     let especiesFinal = [...this.listasppFromDB, ...this.registerForm.value.especies];
     let personalFinal = [...this.listapersonalFromDb, ...this.registerForm.value.personal];
     let coordsFinal = [...this.listacoordenadasFromDb, ...this.registerForm.value.coordenadas];
@@ -280,7 +280,7 @@ export class EditarComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.formProyecto = null;
     this.iucndetails$.unsubscribe();
-    
+
   }
 
 }

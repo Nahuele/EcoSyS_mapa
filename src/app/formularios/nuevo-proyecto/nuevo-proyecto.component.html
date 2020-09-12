@@ -123,7 +123,7 @@
       </div>
     </div>
 
-      <a class="btn btn-warning" type="button" (click)="agregarCoordenadas()">Agregar Coordenadas</a>
+      <a class="btn button-dos pulse mb-2" type="button" (click)="agregarCoordenadas()">Agregar Coordenadas</a>
       <div class="row justify-content-md-center" formGroupName="coordenadas" *ngFor="let link of coordenadas.controls; let u = index">
               <div [formGroupName]="u">
         <div class="row justify-content-md-center form-group" >
@@ -194,11 +194,16 @@
     </div>
     <hr>
 
+    <div class="mb-3">
+      <app-upload-image [idNewProject]="this.proyectoService.idProjectSubmitted$ | async"
+      [idUser]="userUid$.value"></app-upload-image>
+    </div>
+  <hr>
     <div class="form-group">
-      <a class="btn btn-warning" type="button" (click)="agregarlinkimg()">Agregar Imagenes</a>
+      <a class="btn btn-warning" type="button" (click)="agregarvideos()">Agregar Videos</a>
     </div>
 
-    <div formGroupName="linksfotos" *ngFor="let link of linksfotos.controls; let i = index">
+    <div formGroupName="linksvideos" *ngFor="let link of linksvideos.controls; let i = index">
       <!--      <h1>{{link.value['link']}}</h1>-->
       <div [formGroupName]="i">
         <div class="form-group row justify-content-md-center">
@@ -208,11 +213,11 @@
           </div>
           <label class="col-auto" [attr.for]="'link' + i">Descripcion</label>
           <div class="col-auto">
-            <input type="text" [attr.id]="'link' + i" class="form-control"  name="descripcionfoto" formControlName="descripcionfoto">
+            <input type="text" [attr.id]="'link' + i" class="form-control"  name="descripcionvideo" formControlName="descripcionvideo">
             <!--            <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="descripcionfoto" 'descripcion']">-->
           </div>
           <div class="col-auto">
-            <button class="btn btn-danger btn-sm" type="button" (click)="removerItem(i,'fotos', 'current')">Ⓧ</button>
+            <button class="btn btn-danger btn-sm" type="button" (click)="removerItem(i,'videos', 'current')">Ⓧ</button>
           </div>
         </div>
       </div>

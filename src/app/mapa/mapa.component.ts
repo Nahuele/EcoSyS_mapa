@@ -34,13 +34,13 @@ export class MapaComponent implements OnInit {
 
   buscarCoordenadas() {
     this.proyectoService.getProjects().subscribe(proyectos => {
-      let featuresConservacionFlora = [];
-      let featuresConservacionFauna = [];
-      let featuresAgroEco = [];
-      let featuresAmbSoc = [];
+      const featuresConservacionFlora = [];
+      const featuresConservacionFauna = [];
+      const featuresAgroEco = [];
+      const featuresAmbSoc = [];
       this.projObj = proyectos;
 
-      for (let proj of Object.keys(this.projObj)) {
+      for (const proj of Object.keys(this.projObj)) {
         const itemProj = this.projObj[proj].detalles;
         this.idproject = this.projObj[proj].id;
         console.log(itemProj);
@@ -110,7 +110,7 @@ export class MapaComponent implements OnInit {
     detalle.linksfotos !== undefined && detalle.linksfotos.length > 0 ? link = detalle.linksfotos[0].link :
       link = 'https://icon-library.com/images/no-image-available-icon/no-image-available-icon-7.jpg';
 
-    let templateHtml = `<div class="card">
+    const templateHtml = `<div class="card">
         <div *ngIf="${link}" class="card-header text-center">
           <img src="${link}" class="img-fluid" alt="Responsive image" style="border: 1px solid #ddd;
           border-radius: 4px;padding: 5px;width: 300px;">

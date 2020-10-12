@@ -4,9 +4,10 @@ import {FormArray, FormBuilder} from '@angular/forms';
 import {ProyectoService} from '../../editar-db/proyecto.service';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {AuthService} from '../../editar-db/auth/auth.service';
-import {filter, skip} from 'rxjs/operators';
+import {filter, skip, take} from 'rxjs/operators';
 import {AlertComponent} from 'ngx-bootstrap/alert';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {BehaviorSubject, concat, interval, Subject} from 'rxjs';
+import {IucnApiService} from '../iucn-api.service';
 
 @Component({
   selector: 'app-nuevo-proyecto',
@@ -23,7 +24,9 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   @Input() projobj;
   public formProyecto;
   public userUid$ = new BehaviorSubject('');
-  public formProyectoFinal;
+  public iucndetalleslist = {};
+  strtemp = '';
+  iucndetails$ = new BehaviorSubject('');
 
   public alerta = false;
 
@@ -37,6 +40,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   constructor(private formBuilder: FormBuilder,
               public proyectoService: ProyectoService,
               private modalService: BsModalService,
+              public iucnService: IucnApiService,
               private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -189,6 +193,37 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   onClosed(dismissedAlert: AlertComponent): void {
     this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);
     this.alerta = false;
+  }
+
+  iucnGet(index, especie?: string) {
+    // let obs1;
+    let spptest;
+    if (especie.length > 2) {
+      spptest = especie
+    }
+    this.iucndetalles = null
+    console.log(this.iucndetalleslist)
+    console.log('FUNCION DISPARADA CONTROl')
+
+    const obs1 = this.registerForm.valueChanges // .pipe(bufferTime(5000))
+      .subscribe(value => {
+        let search = value['especies'][index].spob
+        if (search.length > 2) {
+          // console.log('subs del form value', search)
+          this.strtemp = search
+          this.iucndetails$.next(search);
+        }
+      })
+
+    let tiempo = interval(1000).pipe(take(6))
+    concat(tiempo, this.iucndetails$).subscribe((x) => {
+      if (typeof x === 'string') {
+        const detalleFromSv = this.iucnService.busquedaApi(x).subscribe(y => {
+          const result = y.result[0];
+          this.iucndetalleslist[x] = result;
+        });
+      }
+    });
   }
 
   ngOnDestroy() {

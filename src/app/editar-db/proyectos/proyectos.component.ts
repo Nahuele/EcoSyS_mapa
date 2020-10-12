@@ -56,12 +56,10 @@ export class ProyectosComponent implements OnInit, OnDestroy {
     this.getConfirmacion().subscribe((value) => {
       if (value === true && accion === 'borrar') {
         this.proyectoService.deleteProject(project);
-
+        this.borrarConfirm.next(false);
       } else if (value === true && accion === 'editar') {
         this.editarProyecto(project);
         window.scrollTo(0, 0);
-
-
         // this.proyectoService.editarProject(project);
       }
     });

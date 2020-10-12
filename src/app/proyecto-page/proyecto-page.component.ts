@@ -26,12 +26,13 @@ export class ProyectoPageComponent implements OnInit {
 
   getProyectoFromServ(acc) {
     this.proyectoService.getProjects().subscribe(proyectos => {
-      for (let proyecto of proyectos) {
+      for (const proyecto of proyectos) {
         if (proyecto.id === acc) {
           this.detallesPro = proyecto.detalles;
           console.log('detalles,', proyecto);
           // este me trae las imagenes desde el servicio
           this.imagenes = this.storageSvc.getImages(proyecto.id, proyecto.userUid);
+          console.log(`images ${this.imagenes.length}`, this.imagenes);
           return this.detallesPro;
         }
       }

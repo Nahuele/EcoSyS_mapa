@@ -242,24 +242,24 @@
     <hr>
 
     <div class="form-group">
-      <a class="btn btn-warning" type="button" (click)="agregarlinkimg()">Agregar Imagenes</a>
+      <a class="btn btn-warning" type="button" (click)="agregarlinkvideo()">Agregar Videos</a>
     </div>
-    <div *ngIf="listafotosFromDB as fotos">
-      <div *ngFor="let foto of fotos; let i = index">
+    <div *ngIf="listafotosFromDB as videos">
+      <div *ngFor="let video of videos; let i = index">
         <!--      <h1>{{link.value['link']}}</h1>-->
         <!--          <div [formGroupName]="i">-->
         <div class="form-group row justify-content-md-center">
           <label class="col-auto" [attr.for]="'link' + i">Link</label>
           <div class="col-auto">
-            <input type="text" [attr.id]="'link' + i" class="form-control" [value]="foto['link']" disabled>
+            <input type="text" [attr.id]="'link' + i" class="form-control" [value]="video['link']" disabled>
           </div>
           <label class="col-auto" [attr.for]="'link' + i">Descripcion</label>
           <div class="col-auto">
-            <input type="text" [attr.id]="'link' + i" class="form-control" [value]="foto['descripcion']" disabled>
+            <input type="text" [attr.id]="'link' + i" class="form-control" [value]="video['descripcion']" disabled>
             <!--            <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="descripcionfoto" [(ngModel)]="this.proyectoService.selectedProject.detalles['linksfotos']['descripcion']">-->
           </div>
           <div class="col-auto">
-            <button class="btn btn-danger btn-sm" (click)="removerItem(i, 'fotos', 'anterior')">Remover anterior
+            <button class="btn btn-danger btn-sm" (click)="removerItem(i, 'videos', 'anterior')">Remover anterior
             </button>
           </div>
         </div>
@@ -268,7 +268,7 @@
     </div>
 
 
-    <div formGroupName="linksfotos" *ngFor="let link of linksfotos.controls; let i = index">
+    <div formGroupName="linksvideos" *ngFor="let link of linksvideos.controls; let i = index">
       <!--      <h1>{{link.value['link']}}</h1>-->
       <div [formGroupName]="i">
         <div class="form-group row justify-content-md-center">
@@ -282,7 +282,7 @@
             <!--            <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="descripcionfoto" [(ngModel)]="this.proyectoService.selectedProject.detalles['linksfotos']['descripcion']">-->
           </div>
           <div class="col-auto">
-            <button class="btn btn-danger btn-sm" type="button" (click)="removerItem(i,'fotos', 'current')">Remover
+            <button class="btn btn-danger btn-sm" type="button" (click)="removerItem(i,'videos', 'current')">Remover
             </button>
           </div>
         </div>
@@ -560,7 +560,7 @@
         <button class="btn btn-light btn-lg"
                 type="button"
                 (click)="borrarForm()"
-                style="margin-top: 3rem">Resetear
+                style="margin-top: 3rem">Vaciar Campos
         </button>
       </div>
     </div>

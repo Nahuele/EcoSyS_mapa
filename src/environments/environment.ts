@@ -5,9 +5,8 @@
 export const environment = {
   // CUIDADO ESTA EN TRUE
   production: true,
-  // mapboxKey: 'pk.eyJ1IjoibmFodWVsZSIsImEiOiJja2RteGl3dDYxZDg4MnFsY2JrbmczbTVyIn0.cmv_eh2S5gMk-jXPNbuDNg', nahue
   // mapboxKey: 'pk.eyJ1IjoiaWFubmJhcmJlIiwiYSI6ImNrZHF0OXN5dDFxeGgzMXBlaGhjejgzeDYifQ.YoVZW3-DD0PLY3q4voJsPg', iana
-  mapboxKey: 'pk.eyJ1IjoibmFodWVsZSIsImEiOiJja2RteGl3dDYxZDg4MnFsY2JrbmczbTVyIn0.cmv_eh2S5gMk-jXPNbuDNg', // eje capas
+  mapboxKey: 'pk.eyJ1IjoibmFodWVsZSIsImEiOiJja2ZxbjI2aG4wdDV6MndwZmFidzJxMWw3In0.YMyGQyu9IGKFqqtA-pf0wA', // eje capas
   firebase: {
     apiKey: "AIzaSyCu0Uq4FqtPkgiblDUuGsOJ2_eq1LJtPmo",
     authDomain: "mapaproyectos-59125.firebaseapp.com",

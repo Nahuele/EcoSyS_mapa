@@ -21,7 +21,20 @@
         </div>
       </div>
     </div>
-    <div>Coordenadas: {{detallesPro['coordenadas']}}</div>
+    <div>Coordenadas: </div>
+    <table class="table table-sm">
+      <thead>
+      <tr>
+        <th scope="col">longitud</th>
+        <th scope="col">latitud</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let coord of detallesPro['coordenadas']">
+        <td>{{coord.latitud}}</td>
+        <td>{{coord.longitud}}</td>
+      </tbody>
+    </table>
     <hr>
     <div>Pais: {{detallesPro.pais}}</div>
     <div>Tipo de Sitio: {{detallesPro['tipo_sitio']}}</div>

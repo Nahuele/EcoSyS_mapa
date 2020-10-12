@@ -99,7 +99,7 @@ export class EditarComponent implements OnInit, OnDestroy {
     web:              [''],
     tipo_sitio:       [''],
     resultados:       [''],
-    linksfotos:       this.formBuilder.array([]),
+    linksvideos:       this.formBuilder.array([]),
     personal:         this.formBuilder.array([]),
     especies:         this.formBuilder.array([])
 
@@ -108,14 +108,14 @@ export class EditarComponent implements OnInit, OnDestroy {
   submit() {
     let formProyectoFinal = {};
     console.log('form DB original', this.proyectoService.selectedProject.detalles);
-    let fotosFinal = [...this.listafotosFromDB, ...this.registerForm.value.linksvideos];
+    let videosFinal = [...this.listafotosFromDB, ...this.registerForm.value.linksvideos];
     let especiesFinal = [...this.listasppFromDB, ...this.registerForm.value.especies];
     let personalFinal = [...this.listapersonalFromDb, ...this.registerForm.value.personal];
     let coordsFinal = [...this.listacoordenadasFromDb, ...this.registerForm.value.coordenadas];
     // 2) Nested: actualizar el objeto final
     this.formProyecto = this.removeEmptyFields(this.registerForm.value);
     formProyectoFinal['detalles'] = this.formProyecto;
-    formProyectoFinal['detalles']['linksfotos'] = fotosFinal;
+    formProyectoFinal['detalles']['linksvideos'] = videosFinal;
     formProyectoFinal['detalles']['especies'] = especiesFinal;
     formProyectoFinal['detalles']['personal'] = personalFinal;
     formProyectoFinal['detalles']['coordenadas'] = coordsFinal;
@@ -145,8 +145,8 @@ export class EditarComponent implements OnInit, OnDestroy {
     return this.registerForm.get('coordenadas') as FormArray;
   }
 
-  get linksfotos() {
-    return this.registerForm.get('linksfotos') as FormArray;
+  get linksvideos() {
+    return this.registerForm.get('linksvideos') as FormArray;
   }
 
   get personal() {
@@ -160,24 +160,24 @@ export class EditarComponent implements OnInit, OnDestroy {
 
   borrarForm() {
     this.registerForm.reset();
-    this.linksfotos.controls.splice(0, this.linksfotos.length);
+    this.linksvideos.controls.splice(0, this.linksvideos.length);
     this.especies.controls.splice(0, this.especies.length);
     this.personal.controls.splice(0, this.personal.length);
     window.scrollTo(0, 0);
   }
 
-  agregarlinkimg() {
+  agregarlinkvideo() {
     let linksFormGroup = this.formBuilder.group({
       link:        '',
       descripcion: '',
     });
-    this.linksfotos.push(linksFormGroup);
+    this.linksvideos.push(linksFormGroup);
   }
 
   // 3) Nested: funcion general que sirve para cualquier nested
   removerItem(indice: number, asignarForm: string, target: string,) {
     if (target === 'anterior' && indice !== -1) {
-      if (asignarForm === 'fotos') {
+      if (asignarForm === 'videos') {
         this.listafotosFromDB.splice(indice, 1);
       } else if (asignarForm === 'especies') {
         this.listasppFromDB.splice(indice, 1);
@@ -187,8 +187,8 @@ export class EditarComponent implements OnInit, OnDestroy {
         this.listacoordenadasFromDb.splice(indice, 1);
       }
     } else if (target === 'current' && indice !== -1) {
-      if (asignarForm === 'fotos') {
-        this.linksfotos.removeAt(indice);
+      if (asignarForm === 'videos') {
+        this.linksvideos.removeAt(indice);
       } else if (asignarForm === 'especies') {
         this.especies.removeAt(indice);
         // this.listasppFromDB.splice(indice, 1);
@@ -272,7 +272,7 @@ export class EditarComponent implements OnInit, OnDestroy {
           this.iucndetalleslist[x] = result;
         });
       }
-    })
+    });
   }
 
 

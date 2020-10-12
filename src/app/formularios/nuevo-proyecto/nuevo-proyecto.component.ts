@@ -19,11 +19,38 @@ import {IucnApiService} from '../iucn-api.service';
 
 export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
+
+  constructor(private formBuilder: FormBuilder,
+              public proyectoService: ProyectoService,
+              private modalService: BsModalService,
+              public iucnService: IucnApiService,
+              private authService: AuthService) {}
+
+  get email() {
+    return this.registerForm.get('email');
+  }
+
+  get linksvideos() {
+    return this.registerForm.get('linksvideos') as FormArray;
+  }
+
+  get personal() {
+    return this.registerForm.get('personal') as FormArray;
+  }
+  get coordenadas() {
+    return this.registerForm.get('coordenadas') as FormArray;
+  }
+
+  get especies() {
+    return this.registerForm.get('especies') as FormArray;
+  }
+
   @Input() userUidEdit;
   // public projId: string;
   @Input() projobj;
   public formProyecto;
   public userUid$ = new BehaviorSubject('');
+  public iucndetalles;
   public iucndetalleslist = {};
   strtemp = '';
   iucndetails$ = new BehaviorSubject('');
@@ -37,22 +64,11 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   }];
 
 
-  constructor(private formBuilder: FormBuilder,
-              public proyectoService: ProyectoService,
-              private modalService: BsModalService,
-              public iucnService: IucnApiService,
-              private authService: AuthService) {}
-
-  ngOnInit(): void {
-    this.userUid$.next( this.authService.userid);
-    }
-
-
 
   registerForm = this.formBuilder.group({
-    projectid: [''], //, [Validators.required, Validators.minLength(6)]],
+    projectid: [''], // , [Validators.required, Validators.minLength(6)]],
     email: [''], // , [Validators.required, Validators.email]],
-    tipo_enfoque: [''], //, Validators.required],
+    tipo_enfoque: [''], // , Validators.required],
     nombre: [''],
     enfoque: [''],
     institucion: [''],
@@ -82,12 +98,16 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
   });
 
+  ngOnInit(): void {
+    this.userUid$.next( this.authService.userid);
+    }
+
   submit() {
     let formProyectoFinal = {};
     // 2) Nested: actualizar el objeto final
     formProyectoFinal['detalles'] = this.removeEmptyFields(this.registerForm.value);
     formProyectoFinal['userUid'] = this.userUid$.value;
-    console.log('detalles',formProyectoFinal);
+    console.log('detalles', formProyectoFinal);
 
     this.proyectoService.addProject(formProyectoFinal);
     this.alerta = true;
@@ -101,25 +121,6 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     }));
   }
 
-  get email() {
-    return this.registerForm.get('email');
-  }
-
-  get linksvideos() {
-    return this.registerForm.get('linksvideos') as FormArray;
-  }
-
-  get personal() {
-    return this.registerForm.get('personal') as FormArray;
-  }
-  get coordenadas() {
-    return this.registerForm.get('coordenadas') as FormArray;
-  }
-
-  get especies() {
-    return this.registerForm.get('especies') as FormArray;
-  }
-
   borrarForm() {
     this.registerForm.reset();
     this.linksvideos.controls.splice(0, this.linksvideos.length);
@@ -129,14 +130,14 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   }
 
   agregarvideos() {
-    let linksFormGroup = this.formBuilder.group({
+    const linksFormGroup = this.formBuilder.group({
       link:             '',
       descripcionvideo: '',
     });
     this.linksvideos.push(linksFormGroup);
   }
   // 3) Nested: funcion general que sirve para cualquier nested
-  removerItem(indice: number, asignarForm: string, target: string,) {
+  removerItem(indice: number, asignarForm: string, target: string, ) {
    if (target === 'current' && indice !== -1) {
       if (asignarForm === 'videos') {
         this.linksvideos.removeAt(indice);
@@ -152,7 +153,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   }
 
   agregarPersonal() {
-    let personalFormGroup = this.formBuilder.group({
+    const personalFormGroup = this.formBuilder.group({
       nombre_personal: '',
       apellido_personal: '',
       rol: '',
@@ -173,7 +174,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   }
 
   agregarEspecie() {
-    let especiesFormGroup = this.formBuilder.group({
+    const especiesFormGroup = this.formBuilder.group({
       spob: [''],
       nombre_vulgar: [''],
       tso: ['']
@@ -182,7 +183,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   }
 
   agregarCoordenadas() {
-    let coordenadasFormGroup = this.formBuilder.group({
+    const coordenadasFormGroup = this.formBuilder.group({
       latitud: [''],
       longitud: ['']
     });
@@ -199,23 +200,23 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     // let obs1;
     let spptest;
     if (especie.length > 2) {
-      spptest = especie
+      spptest = especie;
     }
-    this.iucndetalles = null
-    console.log(this.iucndetalleslist)
-    console.log('FUNCION DISPARADA CONTROl')
+    this.iucndetalles = null;
+    console.log(this.iucndetalleslist);
+    console.log('FUNCION DISPARADA CONTROl');
 
     const obs1 = this.registerForm.valueChanges // .pipe(bufferTime(5000))
       .subscribe(value => {
-        let search = value['especies'][index].spob
+        const search = value.especies[index].spob;
         if (search.length > 2) {
           // console.log('subs del form value', search)
-          this.strtemp = search
+          this.strtemp = search;
           this.iucndetails$.next(search);
         }
-      })
+      });
 
-    let tiempo = interval(1000).pipe(take(6))
+    const tiempo = interval(1000).pipe(take(6));
     concat(tiempo, this.iucndetails$).subscribe((x) => {
       if (typeof x === 'string') {
         const detalleFromSv = this.iucnService.busquedaApi(x).subscribe(y => {

@@ -9,4 +9,4 @@ export interface User {
 export interface Roles {
   editor?: boolean,
   admin?: boolean,
-};
+}

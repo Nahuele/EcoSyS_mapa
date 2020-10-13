@@ -47,7 +47,7 @@ export class MapaComponent implements OnInit {
 
         itemProj.coordenadas.forEach((element) => {
           // const coordenadas = itemProj.coordenadas.split(',').map(Number);
-          const coordenadas = [+element.latitud, +element.longitud];
+          const coordenadas = [+element.longitud, +element.latitud];
           const detallesPro = itemProj;
           let objForLayer = {
             'type':        'Feature',

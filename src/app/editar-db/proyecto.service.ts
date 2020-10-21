@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 import {AngularFireModule} from '@angular/fire';
 import {CamposFormulario} from '../formularios/campos-formulario';
 import {AngularFireStorage} from '@angular/fire/storage';
+import {StorageService} from '../upload-image/storage.service';
 
 
 
@@ -22,6 +23,7 @@ export class ProyectoService {
   constructor(public db: AngularFirestore,
               public DB: AngularFireModule,
               private storage: AngularFireStorage,
+              private storageSvc: StorageService
   ) {
 
     this.projectsCollection = this.db.collection('proyectos_detalles');

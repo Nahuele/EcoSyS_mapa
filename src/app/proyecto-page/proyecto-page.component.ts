@@ -7,7 +7,6 @@ import {StorageService} from '../upload-image/storage.service';
   selector:    'app-proyecto-page',
   templateUrl: './proyecto-page.component.html',
   styleUrls:   ['./proyecto-page.component.css'],
-  providers: [StorageService]
 })
 export class ProyectoPageComponent implements OnInit {
 

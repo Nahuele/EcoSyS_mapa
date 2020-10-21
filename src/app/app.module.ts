@@ -32,6 +32,7 @@ import { NuevoProyectoComponent } from './formularios/nuevo-proyecto/nuevo-proye
 import { EditarComponent } from './formularios/editar/editar.component';
 import {BUCKET, AngularFireStorageModule} from '@angular/fire/storage';
 import {UploadImageModule} from './upload-image/upload-image.module';
+import {StorageService} from './upload-image/storage.service';
 
 
 @NgModule({
@@ -69,7 +70,7 @@ import {UploadImageModule} from './upload-image/upload-image.module';
         UploadImageModule,
     ],
   exports:[],
-  providers: [AuthService, CanEditGuard, { provide: BUCKET, useValue: 'gs://mapaproyectos-59125.appspot.com'}],
+  providers: [AuthService, CanEditGuard, { provide: BUCKET, useValue: 'gs://mapaproyectos-59125.appspot.com'}, StorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

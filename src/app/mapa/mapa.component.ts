@@ -2,25 +2,27 @@ import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import {environment} from '../../environments/environment';
 import * as mapboxgl from 'mapbox-gl';
 import {ProyectoService} from '../editar-db/proyecto.service';
+import {StorageService} from '../upload-image/storage.service';
 
 
 @Component({
   selector:    'app-mapa',
   templateUrl: './mapa.component.html',
-  styleUrls:   ['./mapa.component.css']
+  styleUrls:   ['./mapa.component.css'],
 })
 
 export class MapaComponent implements OnInit {
-  public projObj;
   mapa: mapboxgl.Map;
   ftConsFau: boolean = true;
   ftConsFlor: boolean = true;
   ftAgroEco: boolean = true;
   ftAmbSoc: boolean = true;
   idproject: string;
+  private projectsList = [];
 
   constructor(private proyectoService: ProyectoService,
-              private view: ViewContainerRef) { }
+              private view: ViewContainerRef,
+              private storageSvc: StorageService) { }
 
   ngOnInit() {
     mapboxgl.accessToken = environment.mapboxKey;
@@ -34,19 +36,20 @@ export class MapaComponent implements OnInit {
 
   buscarCoordenadas() {
     this.proyectoService.getProjects().subscribe(proyectos => {
+      let projects = proyectos;
       const featuresConservacionFlora = [];
       const featuresConservacionFauna = [];
       const featuresAgroEco = [];
       const featuresAmbSoc = [];
-      this.projObj = proyectos;
 
-      for (const proj of Object.keys(this.projObj)) {
-        const itemProj = this.projObj[proj].detalles;
-        this.idproject = this.projObj[proj].id;
-        console.log(itemProj);
+      for (let proj of Object.keys(projects)) {
+        const itemProj = projects[proj].detalles;
+        this.idproject = projects[proj].id;
+
+        this.projectsList.push(projects[proj]);
 
         itemProj.coordenadas.forEach((element) => {
-          // const coordenadas = itemProj.coordenadas.split(',').map(Number);
+
           const coordenadas = [+element.longitud, +element.latitud];
           const detallesPro = itemProj;
           let objForLayer = {
@@ -57,7 +60,7 @@ export class MapaComponent implements OnInit {
               // 'marker-symbol': 'monument',
               // 'marker-size': 'large',
               // 'icon': 'theatre',
-              'description': this.setearHtmlPopUp(detallesPro)
+              'description': this.setearHtmlPopUp(projects[proj]),
             }, 'geometry': {'coordinates': coordenadas, 'type': 'Point'}
           };
           detallesPro.tipo_enfoque === 'Agroecología y soberanía alimentaria' ? featuresAgroEco.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
@@ -66,8 +69,6 @@ export class MapaComponent implements OnInit {
                 : console.log('emtpy enfoque!!');
         });
       }
-
-      // return listaFeatures;
 
       this.mapa.on('load', () => {
         // add layers from f(x)
@@ -79,49 +80,30 @@ export class MapaComponent implements OnInit {
         this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionFauna', featuresConservacionFauna, '#FF0000').layerConfig);
         this.mapa.addLayer(this.getSourceAndLayer('ambienteYsoc', featuresAmbSoc, '#00B811').layerConfig);
         this.mapa.addLayer(this.getSourceAndLayer('agroeco', featuresAgroEco, '#F3B32A').layerConfig);
-
         this.showOrHideLayers();
-
       });
 
     });
-    // this.proyectoService.getEspecies().subscribe(especies => {
-    //   this.sppObj = especies;
-    // });
-
   }
 
-  // addMarker(coordenadas: Array<number>, detalle) {
-  //   // console.log(detalle);
-  //   // create the popup from the function
-  //   var popup = new mapboxgl.Popup({ offset: 2, closeButton: false, className: "mapboxgl-popup", maxWidth: '400px'})
-  //     .setHTML(this.setearHtmlPopUp(detalle));
-  //   // agrega un marcador
-  //   new mapboxgl.Marker()
-  //     .setLngLat(coordenadas) // [12.550343, 55.665957]
-  //     .setPopup(popup)
-  //     .addTo(this.mapa);
-  // }
-
   // creo una funcion q me hace el popup HTML
+  setearHtmlPopUp(proyecto) {
 
-  setearHtmlPopUp(detalle) {
-    let link: string;
-    detalle.linksfotos !== undefined && detalle.linksfotos.length > 0 ? link = detalle.linksfotos[0].link :
-      link = 'https://icon-library.com/images/no-image-available-icon/no-image-available-icon-7.jpg';
+    let link = 'https://icon-library.com/images/no-image-available-icon/no-image-available-icon-7.jpg';
 
-    const templateHtml = `<div class="card">
-        <div *ngIf="${link}" class="card-header text-center">
+    return `<div class="card">
+        <div class="card-header text-center">
           <img src="${link}" class="img-fluid" alt="Responsive image" style="border: 1px solid #ddd;
-          border-radius: 4px;padding: 5px;width: 300px;">
+          border-radius: 4px;padding: 5px;width: 250px;">
 </div>
   <div class="card-body">
-    <h5 class="card-title">${detalle['nombre']}</h5>
-    <p class="card-text"><div><strong>Titulo:</strong></div> ${detalle['titulo_extendido']}</p>
-    <a href="detalles/${this.idproject}" class="btn btn-primary btn-sm">Más Detalles</a>
+    <h5 class="card-title">${proyecto.detalles.nombre}</h5>
+    <p class="card-text"><div><strong>Titulo:</strong></div> ${proyecto.detalles.titulo_extendido}</p>
+    <a href="detalles/${proyecto.id}" class="btn btn-primary btn-sm">Más Detalles</a>
   </div>
+  <div id="user/${proyecto.userUid}"></div>
 </div>`;
-    return templateHtml;
+
   }
 
   switchStyle(layerId) {
@@ -187,22 +169,44 @@ export class MapaComponent implements OnInit {
   }
 
   listenPopUps(layerId) {
+
     this.mapa.on('click', layerId, (e) => {
-      var coordinates = e.features[0].geometry.coordinates.slice();
+
+      let coordinates = e.features[0].geometry.coordinates.slice();
       var description = e.features[0].properties.description;
 
-// Ensure that if the this.mapa is zoomed out such that multiple
+      const project = description.split('"');
+      let projectID;
+      let userId;
+
+      // Ensure that if the this.mapa is zoomed out such that multiple
 // copies of the feature are visible, the popup appears
 // over the copy being pointed to.
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
 
-      new mapboxgl.Popup({offset: 25, closeButton: false, className: 'mapboxgl-popup', maxWidth: '400px'})
-        .setLngLat(coordinates)
-        .setHTML(description)
-        .addTo(this.mapa);
+      for (let itemHtml of project) {
+        if (itemHtml.includes('detalles/')) {
+          projectID = itemHtml.split('/')[1];
+        } else if (itemHtml.includes('user/')) {
+          userId = itemHtml.split('/')[1];
+        }
+      }
+
+      this.storageSvc.getSingleImage(projectID, userId).then(url => {
+        // aca reemplazo la imagen por defecto cuando se le da el click al icono
+        if (url.includes('http')) {
+          description = description.replace('https://icon-library.com/images/no-image-available-icon/no-image-available-icon-7.jpg', url);
+        }
+
+        new mapboxgl.Popup({offset: 25, closeButton: false, className: 'mapboxgl-popup', maxWidth: '400px'})
+          .setLngLat(coordinates)
+          .setHTML(description)
+          .addTo(this.mapa);
+      });
     });
+
 // Change the cursor to a pointer when the mouse is over the places layer.
     this.mapa.on('mouseenter', layerId, () => {
       this.mapa.getCanvas().style.cursor = 'pointer';
@@ -213,7 +217,7 @@ export class MapaComponent implements OnInit {
     });
   }
 
-  // settear visibilidad de capas cuando cambio de estilo de mapa
+// settear visibilidad de capas cuando cambio de estilo de mapa
   showOrHideLayers() {
     if (this.ftConsFau === true) {
       this.mapa.setLayoutProperty('featuresConservacionFauna', 'visibility', 'visible');
@@ -237,4 +241,7 @@ export class MapaComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    // this.images$.unsubscribe();
+  }
 }

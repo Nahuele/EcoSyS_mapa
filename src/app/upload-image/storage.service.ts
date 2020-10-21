@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {FileItem} from './models/file-item';
 import {finalize} from 'rxjs/operators';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 
 @Injectable()
 
@@ -37,19 +38,39 @@ export class StorageService {
     const filePath = this.storage.storage.ref(`uploads/${userID}/${projectId}`);
     let imgList = [];
     // Now we get the references of these images
-    filePath.listAll().then(function(result) {
-      result.items.forEach(function(imageRef) {
+    filePath.listAll().then(result => {
+      result.items.forEach(imageRef => {
         // And finally display them
-        imageRef.getDownloadURL().then(function(url) {
+        imageRef.getDownloadURL().then(url => {
           imgList.push(url);
           // console.log('la url', url)
-        }).catch(function(error) {
-          // Handle any errors
-        });
+        })
       });
-    }).catch(function(error) {
-      // Handle any errors
-    });
+    })
+    console.log('dsd serv', imgList);
     return imgList;
+  }
+
+
+  // async getSingleImage(projectId: string, userID: string) {
+  //
+  //   const filePath = this.storage.storage.ref(`uploads/${userID}/${projectId}`);
+  //
+  //   let response = await filePath.listAll()
+  //   if (response) {
+  //     return await response.items[0].getDownloadURL()
+  //   }
+  // }
+
+
+  async getSingleImage(projectId: string, userID: string) {
+    const filePath = this.storage.storage.ref(`uploads/${userID}/${projectId}`);
+
+    let response = await filePath.listAll()
+    if (response.items[0]) {
+      return await response.items[0].getDownloadURL()
+    } else {
+      return 'error';
+    }
   }
 }

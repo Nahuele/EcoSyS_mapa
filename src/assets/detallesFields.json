@@ -1,0 +1,70 @@
+[
+  {
+    "label": "e-mail",
+    "field": "email"
+  },
+  {
+    "label": "Tipo de enfoque",
+    "field": "tipo_enfoque"
+  },
+  {
+    "label": "Enfoque",
+    "field": "enfoque"
+  },
+  {
+    "label": "Institución",
+    "field": "institucion"
+  },
+  {
+    "label": "Título extendido",
+    "field": "titulo_extendido"
+  },
+  {
+    "label": "Descripción",
+    "field": "descripcion"
+  },
+  {
+    "label": "Resumen",
+    "field": "resumen"
+  },
+  {
+    "label": "Tipo de estudio",
+    "field": "tipo_estudio"
+  },
+  {
+    "label": "País",
+    "field": "pais"
+  },
+  {
+    "label": "Provincia",
+    "field": "provincia"
+  },
+  {
+    "label": "Ciudad",
+    "field": "ciudad"
+  },
+  {
+    "label": "Estado actual",
+    "field": "estado_actual"
+  },
+  {
+    "label": "Año de inicio",
+    "field": "ano_inicio"
+  },
+  {
+    "label": "Sitio web",
+    "field": "web"
+  },
+  {
+    "label": "Tipo de sitio",
+    "field": "tipo_sitio"
+  },
+  {
+    "label": "Resultados",
+    "field": "resultados"
+  },
+  {
+    "label": "Redes sociales",
+    "field": "redes_sociales"
+  }
+]

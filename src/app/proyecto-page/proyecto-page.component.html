@@ -1,18 +1,22 @@
 <br>
-<div class="container mt-3 mb-7">
-  <div *ngIf="detallesPro" class=" ">
-    <h4>{{detallesPro['nombre']}}</h4>
+<div class="container mt-3 mb-6">
+  <div *ngIf="detallesPro">
+    <div class="mb-5"><h4>{{detallesPro['nombre']}}</h4></div>
 
-    <hr>
-    <div>Titulo extendido: {{detallesPro['titulo_extendido']}}</div>
+    <div class="container mt-3">
+      <div class="row">
+        <div *ngFor="let item of fieldsNames" class="col-md-6 mt-3">
+          <p *ngIf="(detallesPro[item.field]) && (item.field != 'resumen') && (item.field != 'redes_sociales')"><b>{{item.label}}</b>: {{detallesPro[item.field]}} </p>
+        </div>
+      </div>
+      <div *ngIf="detallesPro['resumen']" class="row">
+        <p class="font-weight-bold">Resumen:</p>
+        <p>{{detallesPro['resumen']}}</p>
+      </div>
+    </div>
+  <hr>
 
-    <hr>
-    <div>Enfoque: {{detallesPro['tipo_enfoque']}}</div>
-    <hr>
-    <div>Estado actual: {{detallesPro['estado_actual']}}</div>
-
-    <hr>
-    <div *ngIf="imagenes" class="card mt-1 mb-2">
+    <div *ngIf="imagenes.length > 0" class="card mt-1 mb-3">
       <div class="card-title justify-content-md-center"><h5>Fotos</h5></div>
       <div class="card-body">
         <div *ngFor="let foto of imagenes">
@@ -21,30 +25,33 @@
         </div>
       </div>
     </div>
-    <div>Coordenadas: </div>
-    <table class="table table-sm">
-      <thead>
-      <tr>
-        <th scope="col">longitud</th>
-        <th scope="col">latitud</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let coord of detallesPro['coordenadas']">
-        <td>{{coord.latitud}}</td>
-        <td>{{coord.longitud}}</td>
-      </tbody>
-    </table>
+
+    <div class="mt-2 mb-2"><b>Coordenadas: </b></div>
+    <div class="row justify-content-center">
+      <div class="col-6">
+        <table class="table table-sm">
+          <thead>
+          <tr>
+            <th scope="col">Longitud</th>
+            <th scope="col">Latitud</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let coord of detallesPro['coordenadas']">
+            <td>{{coord.latitud}}</td>
+            <td>{{coord.longitud}}</td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
     <hr>
-    <div>Pais: {{detallesPro.pais}}</div>
-    <div>Tipo de Sitio: {{detallesPro['tipo_sitio']}}</div>
-    <div>Titulo extendido: {{detallesPro['ciudad']}}</div>
   </div>
   <br>
   <!--  <hr style="width:50%;text-align:left;margin-left:0">-->
 
-  <div *ngIf="detallesPro['especies']; else spinner">
-    <table class="table">
+    <table *ngIf="detallesPro.especies" class="table">
       <thead>
       <tr>
         <th scope="col">NOMBRE VULGAR</th>
@@ -59,15 +66,26 @@
         <td>{{especie['spob']}}</td>
       </tbody>
     </table>
-  </div>
   <hr>
-  <div>
-    Resumen: {{detallesPro['resumen']}}
-  </div>
-  <hr>
-  <div>anio de inicio: {{detallesPro['ano_inicio']}}</div>
-</div>
 <br>
+
+
+
+  <div *ngIf="videos.length > 0" class="mb-2 row">
+      <div *ngFor="let video of videos" class="embed-responsive embed-responsive-16by9  col-4">
+        <youtube-player
+          [videoId]="video"
+          suggestedQuality="highres"
+          [height]="250"
+          [width]="500"
+          [startSeconds]="4"
+          [endSeconds]="8">
+        </youtube-player>
+      </div>
+  </div>
+</div>
+
+
 
 
 <ng-template #spinner class="row justify-content-md-center">

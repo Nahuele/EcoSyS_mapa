@@ -33,6 +33,7 @@ import { EditarComponent } from './formularios/editar/editar.component';
 import {BUCKET, AngularFireStorageModule} from '@angular/fire/storage';
 import {UploadImageModule} from './upload-image/upload-image.module';
 import {StorageService} from './upload-image/storage.service';
+import { YouTubePlayerModule } from "@angular/youtube-player";
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import {StorageService} from './upload-image/storage.service';
         HttpClientModule,
         AngularFireStorageModule,
         UploadImageModule,
+        YouTubePlayerModule,
     ],
   exports:[],
   providers: [AuthService, CanEditGuard, { provide: BUCKET, useValue: 'gs://mapaproyectos-59125.appspot.com'}, StorageService],

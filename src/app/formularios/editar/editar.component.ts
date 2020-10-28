@@ -88,7 +88,6 @@ export class EditarComponent implements OnInit, OnDestroy {
       instagram:    [''],
       twitter:      [''],
       youtube:      [''],
-      researchgate: [''],
     }),
     pais:             [''],
     provincia:        [''],

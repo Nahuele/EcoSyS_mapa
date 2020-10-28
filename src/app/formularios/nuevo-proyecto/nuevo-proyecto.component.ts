@@ -1,20 +1,18 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {CamposFormulario} from '../campos-formulario';
 import {FormArray, FormBuilder} from '@angular/forms';
 import {ProyectoService} from '../../editar-db/proyecto.service';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {AuthService} from '../../editar-db/auth/auth.service';
-import {filter, skip, take} from 'rxjs/operators';
+import {take} from 'rxjs/operators';
 import {AlertComponent} from 'ngx-bootstrap/alert';
-import {BehaviorSubject, concat, interval, Subject} from 'rxjs';
+import {BehaviorSubject, concat, interval} from 'rxjs';
 import {IucnApiService} from '../iucn-api.service';
 
 @Component({
-  selector: 'app-nuevo-proyecto',
+  selector:    'app-nuevo-proyecto',
   templateUrl: './nuevo-proyecto.component.html',
-  styleUrls: ['./nuevo-proyecto.component.scss']
+  styleUrls:   ['./nuevo-proyecto.component.scss']
 })
-
 
 
 export class NuevoProyectoComponent implements OnInit, OnDestroy {
@@ -37,6 +35,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   get personal() {
     return this.registerForm.get('personal') as FormArray;
   }
+
   get coordenadas() {
     return this.registerForm.get('coordenadas') as FormArray;
   }
@@ -58,49 +57,47 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   public alerta = false;
 
   alerts: any[] = [{
-    type: 'success',
-    msg: `Gracias! se ha agregado el proyecto a la base de datos`,
+    type:    'success',
+    msg:     `Gracias! se ha agregado el proyecto a la base de datos`,
     timeout: 3000
   }];
 
 
-
   registerForm = this.formBuilder.group({
-    projectid: [''], // , [Validators.required, Validators.minLength(6)]],
-    email: [''], // , [Validators.required, Validators.email]],
-    tipo_enfoque: [''], // , Validators.required],
-    nombre: [''],
-    enfoque: [''],
-    institucion: [''],
+    projectid:        [''], // , [Validators.required, Validators.minLength(6)]],
+    email:            [''], // , [Validators.required, Validators.email]],
+    tipo_enfoque:     [''], // , Validators.required],
+    nombre:           [''],
+    enfoque:          [''],
+    institucion:      [''],
     titulo_extendido: [''],
-    descripcion: [''],
-    resumen: [''],
-    tipo_estudio: [''],
-    redes_sociales: this.formBuilder.group({
-      facebook: [''],
+    descripcion:      [''],
+    resumen:          [''],
+    tipo_estudio:     [''],
+    redes_sociales:   this.formBuilder.group({
+      facebook:  [''],
       instagram: [''],
-      twitter: [''],
-      youtube: [''],
-      researchgate: [''],
+      twitter:   [''],
+      youtube:   [''],
     }),
-    pais: [''],
-    provincia: [''],
-    ciudad: [''],
-    estado_actual: [''],
-    coordenadas: this.formBuilder.array([]), // , Validators.required
-    ano_inicio: [''],
-    web: [''],
-    tipo_sitio: [''],
-    resultados: [''],
-    linksvideos: this.formBuilder.array([]),
-    personal: this.formBuilder.array([]),
-    especies: this.formBuilder.array([])
+    pais:             [''],
+    provincia:        [''],
+    ciudad:           [''],
+    estado_actual:    [''],
+    coordenadas:      this.formBuilder.array([]), // , Validators.required
+    ano_inicio:       [''],
+    web:              [''],
+    tipo_sitio:       [''],
+    resultados:       [''],
+    linksvideos:      this.formBuilder.array([]),
+    personal:         this.formBuilder.array([]),
+    especies:         this.formBuilder.array([])
 
   });
 
   ngOnInit(): void {
-    this.userUid$.next( this.authService.userid);
-    }
+    this.userUid$.next(this.authService.userid);
+  }
 
   submit() {
     let formProyectoFinal = {};
@@ -136,9 +133,10 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     });
     this.linksvideos.push(linksFormGroup);
   }
+
   // 3) Nested: funcion general que sirve para cualquier nested
-  removerItem(indice: number, asignarForm: string, target: string, ) {
-   if (target === 'current' && indice !== -1) {
+  removerItem(indice: number, asignarForm: string, target: string,) {
+    if (target === 'current' && indice !== -1) {
       if (asignarForm === 'videos') {
         this.linksvideos.removeAt(indice);
       } else if (asignarForm === 'especies') {
@@ -154,19 +152,19 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
   agregarPersonal() {
     const personalFormGroup = this.formBuilder.group({
-      nombre_personal: '',
-      apellido_personal: '',
-      rol: '',
-      genero: '',
-      fecha_nacimiento: '',
-      pais_residencia: '',
-      provincia_residencia: '',
-      email_personal: [''], // , Validators.email
+      nombre_personal:         '',
+      apellido_personal:       '',
+      rol:                     '',
+      genero:                  '',
+      fecha_nacimiento:        '',
+      pais_residencia:         '',
+      provincia_residencia:    '',
+      email_personal:          [''], // , Validators.email
       redes_sociales_personal: this.formBuilder.group({
-        facebook_personal: [''],
-        instagram_personal: [''],
-        twitter_personal: [''],
-        youtube_personal: [''],
+        facebook_personal:     [''],
+        instagram_personal:    [''],
+        twitter_personal:      [''],
+        youtube_personal:      [''],
         researchgate_personal: [''],
       })
     });
@@ -175,16 +173,16 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
   agregarEspecie() {
     const especiesFormGroup = this.formBuilder.group({
-      spob: [''],
+      spob:          [''],
       nombre_vulgar: [''],
-      tso: ['']
+      tso:           ['']
     });
     this.especies.push(especiesFormGroup);
   }
 
   agregarCoordenadas() {
     const coordenadasFormGroup = this.formBuilder.group({
-      latitud: [''],
+      latitud:  [''],
       longitud: ['']
     });
     this.coordenadas.push(coordenadasFormGroup);

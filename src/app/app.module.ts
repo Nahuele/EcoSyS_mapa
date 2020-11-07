@@ -34,6 +34,11 @@ import {BUCKET, AngularFireStorageModule} from '@angular/fire/storage';
 import {UploadImageModule} from './upload-image/upload-image.module';
 import {StorageService} from './upload-image/storage.service';
 import { YouTubePlayerModule } from "@angular/youtube-player";
+import { CarouselComponent } from './carousel/carousel.component';
+import {CarouselModule} from 'ngx-bootstrap/carousel';
+import {CollapseModule} from 'ngx-bootstrap/collapse';
+import { IntegrantesComponent } from './proyecto-page/integrantes/integrantes.component';
+import { RedesSocialesComponent } from './proyecto-page/redes-sociales/redes-sociales.component';
 
 
 @NgModule({
@@ -51,26 +56,33 @@ import { YouTubePlayerModule } from "@angular/youtube-player";
     ResetPassComponent,
     NuevoProyectoComponent,
     EditarComponent,
+    CarouselComponent,
+    IntegrantesComponent,
+    RedesSocialesComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        GoogleMapsModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFirestoreModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TooltipModule.forRoot(),
-        BsDatepickerModule.forRoot(),
-        BrowserAnimationsModule,
-        AngularFireAuthModule,
-        ModalModule.forRoot(),
-        AlertModule.forRoot(),
-        HttpClientModule,
-        AngularFireStorageModule,
-        UploadImageModule,
-        YouTubePlayerModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    GoogleMapsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TooltipModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    BrowserAnimationsModule,
+    AngularFireAuthModule,
+    ModalModule.forRoot(),
+    AlertModule.forRoot(),
+    HttpClientModule,
+    AngularFireStorageModule,
+    UploadImageModule,
+    YouTubePlayerModule,
+    CarouselModule.forRoot(),
+    ModalModule.forRoot(),
+    BrowserAnimationsModule,
+    CollapseModule.forRoot(),
+  ],
   exports:[],
   providers: [AuthService, CanEditGuard, { provide: BUCKET, useValue: 'gs://mapaproyectos-59125.appspot.com'}, StorageService],
   bootstrap: [AppComponent]

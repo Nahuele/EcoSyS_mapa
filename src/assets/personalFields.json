@@ -1,0 +1,38 @@
+[
+  {
+    "label": "Nombre",
+    "field": "nombre_personal"
+  },
+  {
+    "label": "Apellido",
+    "field": "apellido_personal"
+  },
+  {
+    "label": "Rol",
+    "field": "rol"
+  },
+  {
+    "label": "Género",
+    "field": "genero"
+  },
+  {
+    "label": "Fecha de Nacimiento",
+    "field": "fecha_nacimiento"
+  },
+  {
+    "label": "País de Residencia",
+    "field": "pais_residencia"
+  },
+  {
+    "label": "Provincia de Residencia",
+    "field": "provincia_residencia"
+  },
+  {
+    "label": "e-mail",
+    "field": "email_personal"
+  },
+  {
+    "label": "Redes Sociales",
+    "field": "redes_sociales_personal"
+  }
+]

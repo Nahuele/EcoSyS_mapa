@@ -1,0 +1,17 @@
+<div class="well well-lg card card-block card-header mb-2">
+  <div class="container">
+    <div class="container mt-2">
+      <div class="row">
+        <div *ngFor="let item of personalFields">
+          <div *ngIf="(person[item.field]) && (item.field != 'redes_sociales_personal')">
+            <div *ngIf="item.label" class="col-auto mt-4 mr-5">
+              <p class="text-muted font-italic">{{item.label}}</p>
+              <p>{{person[item.field]}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-redes-sociales [redes]="person['redes_sociales_personal']" class="mt-4"></app-redes-sociales>
+    </div>
+  </div>
+</div>

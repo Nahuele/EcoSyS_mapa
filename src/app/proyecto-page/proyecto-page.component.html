@@ -1,97 +1,131 @@
-<br>
 <div class="container mt-3 mb-6">
   <div *ngIf="detallesPro">
-    <div class="mb-5"><h4>{{detallesPro['nombre']}}</h4></div>
+    <div class="mb-5">
+      <h4>{{detallesPro['nombre']}}</h4>
+    </div>
 
     <div class="container mt-3">
       <div class="row">
-        <div *ngFor="let item of fieldsNames" class="col-md-6 mt-3">
-          <p *ngIf="(detallesPro[item.field]) && (item.field != 'resumen') && (item.field != 'redes_sociales')"><b>{{item.label}}</b>: {{detallesPro[item.field]}} </p>
+        <div *ngFor="let item of fieldsNames">
+          <div *ngIf="(detallesPro[item.field]) && (item.field != 'resumen') && (item.field != 'redes_sociales')">
+            <div *ngIf="item.label" class="col-auto mt-4 mr-5">
+              <p class="text-muted font-italic">{{item.label}}</p>
+              <p>{{detallesPro[item.field]}}</p>
+            </div>
+          </div>
         </div>
       </div>
-      <div *ngIf="detallesPro['resumen']" class="row">
-        <p class="font-weight-bold">Resumen:</p>
+      <div *ngIf="detallesPro['redes_sociales']" class="row">
+        <div class="col mt-4 mr-5 justify-content-center">
+          <app-redes-sociales [redes]="detallesPro['redes_sociales']"></app-redes-sociales>
+        </div>
+      </div>
+
+      <div *ngIf="detallesPro['resumen']" class="row mt-5">
+        <h6 class="font-weight-bold text-muted mb-3 font-italic">Resumen</h6>
         <p>{{detallesPro['resumen']}}</p>
       </div>
     </div>
-  <hr>
+    <hr>
 
-    <div *ngIf="imagenes.length > 0" class="card mt-1 mb-3">
-      <div class="card-title justify-content-md-center"><h5>Fotos</h5></div>
-      <div class="card-body">
-        <div *ngFor="let foto of imagenes">
-          <img [src]="foto" class="img-fluid" alt="Responsive image" style="border: 1px solid #ddd;
-          border-radius: 4px;padding: 5px;width: 200px;">
+    <div class="container">
+      <div class="row" >
+        <div class="col-8">
+          <div class="mt-3 mb-2">
+            <h6 class="font-weight-bold text-muted mb-3 font-italic">Coordenadas </h6>
+          </div>
+          <div class="offset-2 justify-content-center">
+            <div class="col-6">
+              <table class="table table-sm table-borderless">
+                <thead>
+                <tr>
+                  <th scope="col">Longitud</th>
+                  <th scope="col">Latitud</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let coord of detallesPro['coordenadas']">
+                  <td>{{coord.latitud}}</td>
+                  <td>{{coord.longitud}}</td>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div *ngIf="detallesPro.especies">
+            <div *ngIf="detallesPro.especies.length > 0">
+              <div class="mt-5 mb-2">
+                <h6 class="font-weight-bold text-muted mb-3 font-italic">Especies </h6>
+              </div>
+              <table class="table table-borderless offset-1">
+                <thead>
+                <tr>
+                  <th scope="col">Nombre Vulgar</th>
+                  <th scope="col">TSO</th>
+                  <th scope="col">SPOB</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let especie of detallesPro.especies">
+                  <td>{{especie['nombre_vulgar']}}</td>
+                  <td>{{especie['tso']}}</td>
+                  <td>{{especie['spob']}}</td>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="imagenes.length > 0" class="col-4">
+          <div class="container">
+            <app-carousel [slides]="imagenes"></app-carousel>
+          </div>
+        </div>
+        <div class="row  d-flex align-content-end flex-wrap" *ngIf="detallesPro.personal.length">
+          <div class="col">
+            <button class="btn btn-info" (click)="isCollapsed = !isCollapsed"
+                    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+              {{isCollapsed === true ? 'Mostrar' : 'Ocultar'}} integrantes
+              <i class="fa fa-user"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
+    <br>
+    <!--  <hr style="width:50%;text-align:left;margin-left:0">-->
+  </div>
 
-    <div class="mt-2 mb-2"><b>Coordenadas: </b></div>
-    <div class="row justify-content-center">
-      <div class="col-6">
-        <table class="table table-sm">
-          <thead>
-          <tr>
-            <th scope="col">Longitud</th>
-            <th scope="col">Latitud</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let coord of detallesPro['coordenadas']">
-            <td>{{coord.latitud}}</td>
-            <td>{{coord.longitud}}</td>
-          </tbody>
-        </table>
+  <div id="integrantes" [collapse]="isCollapsed" [isAnimated]="true">
+    <div *ngIf="detallesPro.personal.length">
+      <div *ngFor="let persona of detallesPro.personal">
+        <app-integrantes [person]="persona"></app-integrantes>
       </div>
     </div>
-
-
-    <hr>
   </div>
-  <br>
-  <!--  <hr style="width:50%;text-align:left;margin-left:0">-->
 
-    <table *ngIf="detallesPro.especies" class="table">
-      <thead>
-      <tr>
-        <th scope="col">NOMBRE VULGAR</th>
-        <th scope="col">TSO</th>
-        <th scope="col">SPOB</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let especie of detallesPro.especies">
-        <td>{{especie['nombre_vulgar']}}</td>
-        <td>{{especie['tso']}}</td>
-        <td>{{especie['spob']}}</td>
-      </tbody>
-    </table>
+
   <hr>
-<br>
+  <br>
 
 
-
-  <div *ngIf="videos.length > 0" class="mb-2 row">
-      <div *ngFor="let video of videos" class="embed-responsive embed-responsive-16by9  col-4">
-        <youtube-player
-          [videoId]="video"
-          suggestedQuality="highres"
-          [height]="250"
-          [width]="500"
-          [startSeconds]="4"
-          [endSeconds]="8">
-        </youtube-player>
-      </div>
+  <div *ngIf="videos.length > 0" class="row">
+    <div *ngFor="let video of videos" class="embed-responsive embed-responsive-16by9  col">
+      <youtube-player
+        [videoId]="video"
+        suggestedQuality="highres"
+        [height]="400"
+        [width]="500"
+        [startSeconds]="4"
+        [endSeconds]="8">
+      </youtube-player>
+    </div>
   </div>
 </div>
 
 
-
-
 <ng-template #spinner class="row justify-content-md-center">
-<!--  <div class="col">-->
-    <div class="spinner-border text-success " role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-<!--  </div>-->
+  <!--  <div class="col">-->
+  <div class="spinner-border text-success " role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <!--  </div>-->
 </ng-template>

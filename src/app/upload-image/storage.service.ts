@@ -47,7 +47,6 @@ export class StorageService {
         })
       });
     })
-    console.log('dsd serv', imgList);
     return imgList;
   }
 

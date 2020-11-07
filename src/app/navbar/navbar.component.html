@@ -9,26 +9,33 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="#">Mapa <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Acerca de</a>
+        <a class="nav-link" href="#">Acerca de
+          <i class="fa fa-info"></i></a>
       </li><li class="nav-item">
-        <a class="nav-link" href="#">Contacto</a>
+        <a class="nav-link" href="#">Contacto
+          <i class="fa fa-envelope-o"></i>
+        </a>
       </li>
     </ul>
     <ul class="navbar-nav mx-auto" *ngIf="user$ | async as user; else login">
       <li class="nav-item " *ngIf="user">
-        <a class="nav-link" (click)="onLogout()" style="cursor: pointer">Logout</a>
+        <a class="nav-link" (click)="onLogout()" style="cursor: pointer">Logout
+        <i class="fa fa-sign-out"></i>
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="proyectos">Mis Proyectos</a>
+        <a class="nav-link" routerLink="proyectos">Mis Proyectos
+          <i class="fa fa-list-ul"></i></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="submitproject">Agregar</a>
+        <a class="nav-link" routerLink="submitproject">Agregar
+          <i class="fa fa-plus"></i></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" disabled>{{ user?.email }}</a>
+        <a class="nav-link text-muted" disabled>{{ user?.email }}</a>
       </li>
     </ul>
     <ng-template #login>

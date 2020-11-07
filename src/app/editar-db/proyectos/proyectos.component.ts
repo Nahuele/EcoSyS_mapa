@@ -17,11 +17,10 @@ import {AlertComponent} from 'ngx-bootstrap/alert';
 export class ProyectosComponent implements OnInit, OnDestroy {
   modalRef: BsModalRef;
   private borrarConfirm: BehaviorSubject<boolean>;
-
+  modalEdit: BsModalRef;
   public projObj;
   public isAdmin: any = null;
   public userUid: string = null;
-  public editForm = false;
 
   // public alerta = false;
   //
@@ -114,7 +113,8 @@ export class ProyectosComponent implements OnInit, OnDestroy {
   //   this.proyectoService.selectedProject = Object.assign({}, project);
   // }
 
-  aceptarEditar() {
+  aceptarEditar(modalEdit: TemplateRef<any>) {
+    this.modalEdit = this.modalService.show(modalEdit, {class: 'modal-xl',ariaDescribedby: 'my-modal-description'});
     this.borrarConfirm.next(true);
     // this.proyectoService.editarProject(project);
   }

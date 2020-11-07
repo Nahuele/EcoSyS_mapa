@@ -210,11 +210,11 @@ export class EditarComponent implements OnInit, OnDestroy {
       provincia_residencia:    '',
       email_personal:          [''], // , Validators.email
       redes_sociales_personal: this.formBuilder.group({
-        facebook_personal:     '',
-        instagram_personal:    '',
-        twitter_personal:      '',
-        youtube_personal:      '',
-        researchgate_personal: '',
+        facebook:     '',
+        instagram:    '',
+        twitter:      '',
+        youtube:      '',
+        researchgate: '',
       })
     });
     this.personal.push(personalFormGroup);

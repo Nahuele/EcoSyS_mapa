@@ -99,7 +99,8 @@ export class MapaComponent implements OnInit {
   <div class="card-body">
     <h5 class="card-title">${proyecto.detalles.nombre}</h5>
     <p class="card-text"><div><strong>Titulo:</strong></div> ${proyecto.detalles.titulo_extendido}</p>
-    <a href="detalles/${proyecto.id}" class="btn btn-primary btn-sm">Más Detalles</a>
+    <a href="detalles/${proyecto.id}" class="btn btn-primary btn-sm">Más Detalles
+    <i class="fa fa-search"></i></a>
   </div>
   <div id="user/${proyecto.userUid}"></div>
 </div>`;

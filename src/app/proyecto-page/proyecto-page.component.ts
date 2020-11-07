@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProyectoService} from '../editar-db/proyecto.service';
 import {StorageService} from '../upload-image/storage.service';
 import nombresFields from '../../assets/detallesFields.json';
 import {DomSanitizer} from '@angular/platform-browser';
+import {CarouselComponent} from 'ngx-bootstrap/carousel';
 
 @Component({
   selector:    'app-proyecto-page',
@@ -16,6 +17,8 @@ export class ProyectoPageComponent implements OnInit {
   public imagenes;
   public fieldsNames: { label: string; field: string }[] = nombresFields;
   public videos = [];
+  @ViewChild(CarouselComponent) carousel: CarouselComponent;
+  isCollapsed = true;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -27,7 +30,6 @@ export class ProyectoPageComponent implements OnInit {
     const acc = this.route.snapshot.paramMap.get('id');
     this.getProyectoFromServ(acc);
 
-
   }
 
   getProyectoFromServ(acc) {
@@ -35,7 +37,7 @@ export class ProyectoPageComponent implements OnInit {
       for (const proyecto of proyectos) {
         if (proyecto.id === acc) {
           this.detallesPro = proyecto.detalles;
-          console.log('detalles,', proyecto.detalles);
+          console.log(proyecto.detalles);
           // este me trae las imagenes desde el servicio
           this.imagenes = this.storageSvc.getImages(proyecto.id, proyecto.userUid);
           if (this.detallesPro.linksvideos) {

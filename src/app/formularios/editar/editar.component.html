@@ -126,12 +126,6 @@
                  [(ngModel)]="this.proyectoService.selectedProject.detalles['redes_sociales']['youtube']">
           <!--          <input type="text" class="form-control" formControlName="youtube"   >-->
         </div>
-        <div class="form-group col">
-          <label>Research Gate</label>
-          <input type="text" class="form-control" formControlName="researchgate"
-                 [(ngModel)]="this.proyectoService.selectedProject.detalles['redes_sociales']['researchgate']">
-          <!--          <input type="text" class="form-control" formControlName="researchgate"  >-->
-        </div>
       </div>
     </div>
 
@@ -354,28 +348,29 @@
             </div>
           </div>
           <br>
-          <!--                <div class="row ">-->
-          <!--                  <div class="form-group col" >-->
-          <!--                    <label [attr.for]="'link' + h">Facebook</label>-->
-          <!--                    <input type="text" [attr.id]="'link' + h" class="form-control"  disabled >-->
-          <!--                  </div>-->
-          <!--                  <div class="form-group col">-->
-          <!--                    <label [attr.for]="'link' + h">Instagram</label>-->
-          <!--                    <input type="text" [attr.id]="'link' + h" class="form-control"  [value]="person.redes_sociales_personal.instagram_personal" disabled>-->
-          <!--                  </div>-->
-          <!--                  <div class="form-group col">-->
-          <!--                    <label [attr.for]="'link' + h">Twitter</label>-->
-          <!--                    <input type="text" [attr.id]="'link' + h" class="form-control"  [value]="person.redes_sociales_personal.twitter_personal" disabled>-->
-          <!--                  </div>-->
-          <!--                  <div class="form-group col">-->
-          <!--                    <label [attr.for]="'link' + h">Youtube</label>-->
-          <!--                    <input type="text" [attr.id]="'link' + h" class="form-control"  [value]="person.redes_sociales_personal.youtube_personal" disabled>-->
-          <!--                  </div>-->
-          <!--                  <div class="form-group col">-->
-          <!--                    <label [attr.for]="'link' + h">Research Gate</label>-->
-          <!--                    <input type="text" [attr.id]="'link' + h" class="form-control"  [value]="person.redes_sociales_personal.researchgate_personal" disabled>-->
-          <!--                  </div>-->
-          <!--                </div>-->
+                          <div class="row ">
+                            <div class="form-group col" >
+                              <label [attr.for]="'link' + h">Facebook</label>
+                              <input type="text" [attr.id]="'link' + h" class="form-control"  disabled >
+                            </div>
+                            <div class="form-group col">
+                              <label [attr.for]="'link' + h">Instagram</label>
+                              <input type="text" [attr.id]="'link' + h" class="form-control"  [value]="person.redes_sociales_personal.instagram" disabled>
+                            </div>
+                            <div class="form-group col">
+                              <label [attr.for]="'link' + h">Twitter</label>
+                              <input type="text" [attr.id]="'link' + h" class="form-control"  [value]="person.redes_sociales_personal.twitter" disabled>
+                            </div>
+                            <div class="form-group col">
+                              <label [attr.for]="'link' + h">Youtube</label>
+                              <input type="text" [attr.id]="'link' + h" class="form-control"  [value]="person.redes_sociales_personal.youtube" disabled>
+                            </div>
+                            <div class="form-group col">
+                              <label [attr.for]="'link' + h">Research Gate</label>
+                              <input type="text" [attr.id]="'link' + h" class="form-control"  [value]="person.redes_sociales_personal.researchgate" disabled>
+                            </div>
+                          </div>
+          <hr>
         </div>
         <!--              <hr>-->
         <!--            </div>-->
@@ -443,26 +438,26 @@
             </div>
           </div>
           <br>
-          <div class="row  " formGroupName="redes_sociales_personal">
+          <div class="row " formGroupName="redes_sociales_personal">
             <div class="form-group col">
               <label [attr.for]="'link' + x">Facebook</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="facebook_personal">
+              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="facebook">
             </div>
             <div class="form-group col">
               <label [attr.for]="'link' + x">Instagram</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="instagram_personal">
+              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="instagram">
             </div>
             <div class="form-group col">
               <label [attr.for]="'link' + x">Twitter</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="twitter_personal">
+              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="twitter">
             </div>
             <div class="form-group col">
               <label [attr.for]="'link' + x">Youtube</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="youtube_personal">
+              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="youtube">
             </div>
             <div class="form-group col">
               <label [attr.for]="'link' + x">Research Gate</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="researchgate_personal">
+              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="researchgate">
             </div>
           </div>
         </div>
@@ -481,7 +476,7 @@
             <div class="form-group row justify-content-md-center">
               <div class="col-auto">
                 <label [attr.for]="'link' + y">SPOB</label>
-                <input type="text" [attr.id]="'link' + y" class="form-control" placeholder="Lontra provocax"
+                <input type="text" [attr.id]="'link' + y" class="form-control"
                        [value]="especie['spob']" disabled>
               </div>
               <div class="col-auto">

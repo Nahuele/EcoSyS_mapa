@@ -45,7 +45,7 @@ export class ProyectosComponent implements OnInit, OnDestroy {
 
   editarProyecto(project) {
     // console.log(project);
-    this.editForm = true;
+    // this.editForm = true;
     this.proyectoService.selectedProject = Object.assign({}, project);
 
     // this.proyectoService.selectedProject = project;
@@ -125,9 +125,9 @@ export class ProyectosComponent implements OnInit, OnDestroy {
 
 
 
-  cerrarEditar(e) {
-    this.editForm = false;
-  }
+  // cerrarEditar(e) {
+  //   this.editForm = false;
+  // }
 
   // onClosed(dismissedAlert: AlertComponent): void {
   //   this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);

@@ -1,0 +1,22 @@
+
+// Navbar
+   .navbar {
+     border: 0;
+     border-radius: 0;
+    /* background: linear-gradient(to right, #A5D100, #B3C228, #C8D100); */
+     background: linear-gradient(to right, #307F4E, #14B21D, #307F4E);
+.nav li > a, .navbar-brand {
+  max-height: 50px;
+  width: auto;
+  background: transparent !important;
+  font-size: 18px;
+  transition: 0.2s ease-in-out;
+&:hover{
+   background-color: rgba(255,255,255,0.2);
+   font-size: 14px;
+.link {
+  width: 100%;
+  padding: 0 5px 0 5px;
+  visibility: visible;
+  font-size: 14px;
+}}}}

@@ -4,7 +4,6 @@ import * as mapboxgl from 'mapbox-gl';
 import {ProyectoService} from '../editar-db/proyecto.service';
 import {StorageService} from '../upload-image/storage.service';
 
-
 @Component({
   selector:    'app-mapa',
   templateUrl: './mapa.component.html',
@@ -71,15 +70,33 @@ export class MapaComponent implements OnInit {
       }
 
       this.mapa.on('load', () => {
-        // add layers from f(x)
-        this.mapa.addSource('featuresConservacionFlora', this.getSourceAndLayer('featuresConservacionFlora', featuresConservacionFlora,).source);
-        this.mapa.addSource('featuresConservacionFauna', this.getSourceAndLayer('featuresConservacionFauna', featuresConservacionFauna,).source);
-        this.mapa.addSource('ambienteYsoc', this.getSourceAndLayer('ambienteYsoc', featuresAmbSoc,).source);
-        this.mapa.addSource('agroeco', this.getSourceAndLayer('agroeco', featuresAgroEco,).source);
-        this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionFlora', featuresConservacionFlora, '#006CFF').layerConfig);
-        this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionFauna', featuresConservacionFauna, '#FF0000').layerConfig);
-        this.mapa.addLayer(this.getSourceAndLayer('ambienteYsoc', featuresAmbSoc, '#00B811').layerConfig);
-        this.mapa.addLayer(this.getSourceAndLayer('agroeco', featuresAgroEco, '#F3B32A').layerConfig);
+        // this.mapa.loadImage('../../assets/logos_mapa/fauna_logo_mini.png', (image) => {
+        // this.mapa.loadImage('https://upload.wikimedia.org/wikipedia/commons/7/7c/201408_cat.png',  (error, image) => {
+        this.mapa.loadImage('../../assets/logos_mapa/fauna_logo_mini.png', (error, image) => {
+          if (error) throw error;
+          this.mapa.addImage('faunaLogo', image);
+          this.mapa.addSource('featuresConservacionFauna', this.getSourceAndLayer('featuresConservacionFauna', featuresConservacionFauna, 'faunaLogo').source);
+          this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionFauna', featuresConservacionFauna, 'faunaLogo' ).layerConfig);
+        });
+        this.mapa.loadImage('../../assets/logos_mapa/flora_logo_mini.png', (error, image) => {
+          if (error) throw error;
+          this.mapa.addImage('floraLogo', image);
+          this.mapa.addSource('featuresConservacionFlora', this.getSourceAndLayer('featuresConservacionFlora', featuresConservacionFlora, 'floraLogo').source);
+          this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionFlora', featuresConservacionFlora, 'floraLogo').layerConfig);
+        });
+        this.mapa.loadImage('../../assets/logos_mapa/agroeco_logo_mini.png', (error, image) => {
+          if (error) throw error;
+          this.mapa.addImage('agroecoLogo', image);
+          this.mapa.addSource('agroeco', this.getSourceAndLayer('agroeco', featuresAgroEco, 'agroecoLogo').source);
+          this.mapa.addLayer(this.getSourceAndLayer('agroeco', featuresAgroEco, 'agroecoLogo').layerConfig);
+
+        });
+        this.mapa.loadImage('../../assets/logos_mapa/sociedad_amb_logo_mini.png', (error, image) => {
+          if (error) throw error;
+          this.mapa.addImage('socambLogo', image);
+          this.mapa.addSource('ambienteYsoc', this.getSourceAndLayer('ambienteYsoc', featuresAmbSoc, 'socambLogo').source);
+          this.mapa.addLayer(this.getSourceAndLayer('ambienteYsoc', featuresAmbSoc, 'socambLogo').layerConfig);
+        });
         this.showOrHideLayers();
       });
 
@@ -116,18 +133,24 @@ export class MapaComponent implements OnInit {
     this.listenPopUps('agroeco');
   }
 
-  getSourceAndLayer(nameLayer, featuresList, colorDot?) {
+  getSourceAndLayer(nameLayer, featuresList, icon?) {
     const source = {'type': 'geojson', 'data': {'type': 'FeatureCollection', 'features': featuresList}};
     const layerConfig = {
-      'id':     `${nameLayer}`, 'type': 'circle', 'source': `${nameLayer}`,
-      'layout': {'visibility': 'visible'},
-      paint:    {
-        'circle-radius':       20,
-        'circle-color':        colorDot, //'#223b53'
-        'circle-stroke-color': 'white',
-        'circle-stroke-width': 1,
-        'circle-opacity':      0.7
-      }
+      'id':     `${nameLayer}`,
+      'source': `${nameLayer}`,
+      'type': 'symbol',
+      'layout': {
+        'visibility': 'visible',
+        'icon-image': icon,
+        'icon-size': 1
+      },
+      // paint:    {
+      //   'circle-radius':       20,
+      //   'circle-color':        '#223b53', // colorDot,
+      //   'circle-stroke-color': 'white',
+      //   'circle-stroke-width': 1,
+      //   'circle-opacity':      0.7
+      // }
     };
     return {source, layerConfig};
   }
@@ -220,26 +243,26 @@ export class MapaComponent implements OnInit {
 
 // settear visibilidad de capas cuando cambio de estilo de mapa
   showOrHideLayers() {
-    if (this.ftConsFau === true) {
-      this.mapa.setLayoutProperty('featuresConservacionFauna', 'visibility', 'visible');
-    } else if (this.ftConsFau === false) {
-      this.mapa.setLayoutProperty('featuresConservacionFauna', 'visibility', 'none');
-    }
-    if (this.ftConsFlor === true) {
-      this.mapa.setLayoutProperty('featuresConservacionFlora', 'visibility', 'visible');
-    } else if (this.ftConsFlor === false) {
-      this.mapa.setLayoutProperty('featuresConservacionFlora', 'visibility', 'none');
-    }
-    if (this.ftAgroEco === true) {
-      this.mapa.setLayoutProperty('agroeco', 'visibility', 'visible');
-    } else if (this.ftAgroEco === false) {
-      this.mapa.setLayoutProperty('agroeco', 'visibility', 'none');
-    }
-    if (this.ftAmbSoc === true) {
-      this.mapa.setLayoutProperty('ambienteYsoc', 'visibility', 'visible');
-    } else if (this.ftAmbSoc === false) {
-      this.mapa.setLayoutProperty('ambienteYsoc', 'visibility', 'none');
-    }
+    // if (this.ftConsFau === true) {
+    //   this.mapa.setLayoutProperty('featuresConservacionFauna', 'visibility', 'visible');
+    // } else if (this.ftConsFau === false) {
+    //   this.mapa.setLayoutProperty('featuresConservacionFauna', 'visibility', 'none');
+    // }
+    // if (this.ftConsFlor === true) {
+    //   this.mapa.setLayoutProperty('featuresConservacionFlora', 'visibility', 'visible');
+    // } else if (this.ftConsFlor === false) {
+    //   this.mapa.setLayoutProperty('featuresConservacionFlora', 'visibility', 'none');
+    // }
+    // if (this.ftAgroEco === true) {
+    //   this.mapa.setLayoutProperty('agroeco', 'visibility', 'visible');
+    // } else if (this.ftAgroEco === false) {
+    //   this.mapa.setLayoutProperty('agroeco', 'visibility', 'none');
+    // }
+    // if (this.ftAmbSoc === true) {
+    //   this.mapa.setLayoutProperty('ambienteYsoc', 'visibility', 'visible');
+    // } else if (this.ftAmbSoc === false) {
+    //   this.mapa.setLayoutProperty('ambienteYsoc', 'visibility', 'none');
+    // }
   }
 
   ngOnDestroy() {

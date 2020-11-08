@@ -28,18 +28,22 @@
     <hr>
 
     <div class="btn-group-toggle " data-toggle="buttons">
-      <a  id="conservacionfauna" (click)="mostrarCapa(featuresConservacionFauna);ftConsFau =!ftConsFau"><label class="btn btn-outline-primary btn-sm">
+      <a  id="conservacionfauna" (click)="mostrarCapa(featuresConservacionFauna);ftConsFau =!ftConsFau"><label
+        class="btn btn-outline-primary btn-sm mr-3">
         <input name="featuresConservacionFauna" #featuresConservacionFauna type="checkbox"  value="0" checked  [(ngModel)]="ftConsFau"/>
         Conservación de Fauna
       </label></a>
-      <a (click)="mostrarCapa(featuresConservacionFlora);ftConsFlor =!ftConsFlor" id="conservacion" ><label class="btn btn-outline-primary btn-sm">
+      <a (click)="mostrarCapa(featuresConservacionFlora);ftConsFlor =!ftConsFlor" id="conservacion" >
+        <label class="btn btn-outline-primary btn-sm mr-3">
         <input name="featuresConservacionFlora" #featuresConservacionFlora type="checkbox" value="0" checked [(ngModel)]="ftConsFlor"/>
         Conservación de Flora
       </label></a>
-      <a (click)="mostrarCapa(agroeco);ftAgroEco =!ftAgroEco" id="agroeco"><label class="btn btn-outline-primary btn-sm" >
+      <a (click)="mostrarCapa(agroeco);ftAgroEco =!ftAgroEco" id="agroeco">
+        <label class="btn btn-outline-primary btn-sm mr-3" >
         <input name="agroeco" #agroeco type="checkbox" value="0" checked [(ngModel)]="ftAgroEco" />
-        Agroeco y soberanía alimentaria
-      </label></a> <a (click)="mostrarCapa(ambienteYsoc);ftAmbSoc =!ftAmbSoc" id="ambienteYsoc"><label class="btn btn-outline-primary btn-sm" >
+        Agroecología y soberanía alimentaria
+      </label></a> <a (click)="mostrarCapa(ambienteYsoc);ftAmbSoc =!ftAmbSoc" id="ambienteYsoc">
+      <label class="btn btn-outline-primary btn-sm mr-3" >
         <input name="ambienteYsoc" #ambienteYsoc type="checkbox" value="0" checked [(ngModel)]="ftAmbSoc" />
       Ambiente y sociedad
       </label></a>

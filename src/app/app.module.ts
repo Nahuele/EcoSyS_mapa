@@ -39,6 +39,7 @@ import {CarouselModule} from 'ngx-bootstrap/carousel';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
 import { IntegrantesComponent } from './proyecto-page/integrantes/integrantes.component';
 import { RedesSocialesComponent } from './proyecto-page/redes-sociales/redes-sociales.component';
+import { ContactComponent } from './contact/contact.component';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { RedesSocialesComponent } from './proyecto-page/redes-sociales/redes-soc
     CarouselComponent,
     IntegrantesComponent,
     RedesSocialesComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,

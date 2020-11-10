@@ -1,21 +1,15 @@
 <div class="container mb-5 mt-3">
   <h3 class="text-center">Editar proyecto</h3>
   <br>
-  <div class="row justify-content-md-center">
-
-  </div>
-  <br>
-  <!--  <h2>{{this.proyectoService.selectedProject['userUid']}}</h2>-->
   <form (submit)="submit()" [formGroup]="registerForm" name="formPro">
     <div class="row">
       <div class="col">
         <div class="form-group">
           <label>Proyecto ID</label>
-          <input type="text" class="form-control form-control-lg"
-
-                 formControlName="projectid"
-                 placeholder="PRO_Martín_García_ID"
-                 [(ngModel)]="this.proyectoService.selectedProject.detalles.projectid" name="projectid">
+          <input [(ngModel)]="this.proyectoService.selectedProject.detalles.projectid"
+                 class="form-control form-control-lg"
+                 formControlName="projectid" name="projectid"
+                 placeholder="PRO_Martín_García_ID" type="text">
           <div class="invalid-feedback">
             El ID del proyecto es requerido (sin espacios, minimo 6 caracteres)
           </div>
@@ -25,16 +19,17 @@
       <div class="col">
         <div class="form-group">
           <label>Nombre del Proyecto</label>
-          <input type="text" class="form-control" formControlName="nombre"
-                 [(ngModel)]="this.proyectoService.selectedProject.detalles.nombre" name="nombre">
+          <input [(ngModel)]="this.proyectoService.selectedProject.detalles.nombre"
+                 class="form-control" formControlName="nombre"
+                 name="nombre" type="text">
         </div>
       </div>
       <div class="col">
         <div class="form-group">
-          <label>email principal</label>
-          <input type="email" class="form-control"
-                 [ngClass]="{'is-invalid': registerForm.get('email').invalid}"
-                 formControlName="email" [(ngModel)]="this.proyectoService.selectedProject.detalles['email']">
+          <label tooltip="e-mail institucional o de la persona a cargo">e-mail principal</label>
+          <input [(ngModel)]="this.proyectoService.selectedProject.detalles['email']" [ngClass]="{'is-invalid': registerForm.get('email').invalid}"
+                 class="form-control"
+                 formControlName="email" type="email">
           <!--          <div class="invalid-feedback">-->
           <!--            email requerido-->
           <!--          </div>-->
@@ -47,10 +42,11 @@
       <div class="col">
         <div class="form-group">
           <label for="tipo_enfoque">Tipo</label>
-          <select class="form-control" id="tipo_enfoque"
+          <select [(ngModel)]="this.proyectoService.selectedProject.detalles['tipo_enfoque']"
                   [ngClass]="{'is-invalid': registerForm.get('tipo_enfoque').invalid}"
+                  class="form-control"
                   formControlName="tipo_enfoque"
-                  [(ngModel)]="this.proyectoService.selectedProject.detalles['tipo_enfoque']">
+                  id="tipo_enfoque">
             <option disabled selected>Seleccione tipo</option>
             <option>Conservación de fauna</option>
             <option>Agroecología y soberanía alimentaria</option>
@@ -63,113 +59,109 @@
     <div class="row">
       <div class="col">
         <label>Enfoque</label>
-        <input type="text" class="form-control" placeholder="Ecologia" formControlName="enfoque"
-               [(ngModel)]="this.proyectoService.selectedProject.detalles['enfoque']">
+        <input [(ngModel)]="this.proyectoService.selectedProject.detalles['enfoque']" class="form-control" formControlName="enfoque" placeholder="Ecologia"
+               type="text">
       </div>
       <div class="col">
         <label>Estado actual</label>
-        <input type="text" class="form-control" placeholder="En curso" formControlName="estado_actual"
-               [(ngModel)]="this.proyectoService.selectedProject.detalles['estado_actual']">
+        <input [(ngModel)]="this.proyectoService.selectedProject.detalles['estado_actual']" class="form-control" formControlName="estado_actual" placeholder="En curso"
+               type="text">
       </div>
 
       <div class="col">
         <label>Institucion</label>
-        <input type="text" class="form-control" placeholder="Universidad del Litoral" formControlName="institucion"
-               [(ngModel)]="this.proyectoService.selectedProject.detalles['institucion']">
+        <input [(ngModel)]="this.proyectoService.selectedProject.detalles['institucion']" class="form-control" formControlName="institucion" placeholder="Universidad del Litoral"
+               type="text">
       </div>
     </div>
     <hr>
     <div class="form-group">
       <label for="titulo_extendido">Titulo extendido</label>
-      <textarea class="form-control" id="titulo_extendido" formControlName="titulo_extendido" rows="1"
-                [(ngModel)]="this.proyectoService.selectedProject.detalles['titulo_extendido']"></textarea>
+      <textarea [(ngModel)]="this.proyectoService.selectedProject.detalles['titulo_extendido']" class="form-control" formControlName="titulo_extendido" id="titulo_extendido"
+                rows="1"></textarea>
     </div>
     <div class="form-group">
       <label for="descripcion_proyecto">Descripción</label>
-      <textarea class="form-control" id="descripcion_proyecto" formControlName="descripcion" rows="2"
-                [(ngModel)]="this.proyectoService.selectedProject.detalles['descripcion']"></textarea>
+      <textarea [(ngModel)]="this.proyectoService.selectedProject.detalles['descripcion']" class="form-control" formControlName="descripcion" id="descripcion_proyecto"
+                rows="2"></textarea>
     </div>
     <div class="form-group">
       <label for="resumen">Resumen</label>
-      <textarea class="form-control" id="resumen" formControlName="resumen" rows="2"
-                [(ngModel)]="this.proyectoService.selectedProject.detalles['resumen']"></textarea>
+      <textarea [(ngModel)]="this.proyectoService.selectedProject.detalles['resumen']" class="form-control" formControlName="resumen" id="resumen"
+                rows="2"></textarea>
     </div>
     <div class="form-group">
       <label for="resultados">Resultados</label>
-      <textarea class="form-control" id="resultados" formControlName="resultados" rows="1"
-                [(ngModel)]="this.proyectoService.selectedProject.detalles['resultados']"></textarea>
+      <textarea [(ngModel)]="this.proyectoService.selectedProject.detalles['resultados']" class="form-control" formControlName="resultados" id="resultados"
+                rows="1"></textarea>
     </div>
 
     <div formGroupName="redes_sociales">
       <div class="row">
         <div class="form-group col">
           <label>Facebook</label>
-          <input type="text" class="form-control" formControlName="facebook" id="facebook"
-                 [(ngModel)]="this.proyectoService.selectedProject.detalles['redes_sociales']['facebook']">
-          <!--          <input type="text" class="form-control" formControlName="facebook" id="facebook" >-->
+          <input [(ngModel)]="this.proyectoService.selectedProject.detalles['redes_sociales']['facebook']" class="form-control" formControlName="facebook" id="facebook"
+                 type="text">
         </div>
         <div class="form-group col">
           <label>Instagram</label>
-          <input type="text" class="form-control" formControlName="instagram"
-                 [(ngModel)]="this.proyectoService.selectedProject.detalles['redes_sociales']['instagram']">
-          <!--          <input type="text" class="form-control" formControlName="instagram"  >-->
+          <input [(ngModel)]="this.proyectoService.selectedProject.detalles['redes_sociales']['instagram']" class="form-control" formControlName="instagram"
+                 type="text">
         </div>
         <div class="form-group col">
           <label>Twitter</label>
-          <input type="text" class="form-control" formControlName="twitter"
-                 [(ngModel)]="this.proyectoService.selectedProject.detalles['redes_sociales']['twitter']">
-          <!--          <input type="text" class="form-control" formControlName="twitter"  >-->
+          <input [(ngModel)]="this.proyectoService.selectedProject.detalles['redes_sociales']['twitter']" class="form-control" formControlName="twitter"
+                 type="text">
         </div>
         <div class="form-group col">
           <label>Youtube</label>
-          <input type="text" class="form-control" formControlName="youtube"
-                 [(ngModel)]="this.proyectoService.selectedProject.detalles['redes_sociales']['youtube']">
-          <!--          <input type="text" class="form-control" formControlName="youtube"   >-->
+          <input [(ngModel)]="this.proyectoService.selectedProject.detalles['redes_sociales']['youtube']" class="form-control" formControlName="youtube"
+                 type="text">
         </div>
       </div>
     </div>
 
     <hr>
     <div>
-      <a class="btn btn-warning" type="button" (click)="agregarCoordenadas()">Agregar Coordenadas</a>
+      <a (click)="agregarCoordenadas()" class="btn btn-warning" type="button">Agregar Coordenadas</a>
       <div *ngIf="listacoordenadasFromDb as coordenadas">
         <div *ngFor="let coordenada of coordenadas; let u = index">
           <!--      <div class="row justify-content-md-center" formGroupName="coordenadas" *ngFor="let link of coordenadas.controls; let u = index">-->
-<!--          <div [formGroupName]="u">-->
-            <div class="row justify-content-md-center form-group">
-              <label class="col-auto" [attr.for]="'link' + u"><strong>Latitud</strong></label>
-              <div class="col-auto">
-                <input type="text" [attr.id]="'link' + u" class="form-control" [value]="coordenada['latitud']" disabled>
-              </div>
-              <label class="col-auto" [attr.for]="'link' + u"><strong>Longitud</strong></label>
-              <div class="col-auto">
-                <input type="text" [attr.id]="'link' + u" class="form-control" [value]="coordenada['longitud']" disabled>
-              </div>
-              <div class="col-auto">
-                <button class="btn btn-danger btn-sm" type="button" (click)="removerItem(u,'coordenadas', 'anterior')">
-                  Ⓧ
-                </button>
-              </div>
+          <!--          <div [formGroupName]="u">-->
+          <div class="row justify-content-md-center form-group">
+            <label [attr.for]="'link' + u" class="col-auto"><strong>Latitud</strong></label>
+            <div class="col-auto">
+              <input [attr.id]="'link' + u" [value]="coordenada['latitud']" class="form-control" disabled type="text">
             </div>
-<!--          </div>-->
+            <label [attr.for]="'link' + u" class="col-auto"><strong>Longitud</strong></label>
+            <div class="col-auto">
+              <input [attr.id]="'link' + u" [value]="coordenada['longitud']" class="form-control" disabled type="text">
+            </div>
+            <div class="col-auto">
+              <button (click)="removerItem(u,'coordenadas', 'anterior')" class="btn btn-danger btn-sm" type="button">
+                Ⓧ
+              </button>
+            </div>
+          </div>
+          <!--          </div>-->
         </div>
       </div>
       <hr>
 
-      <div class="row justify-content-md-center" formGroupName="coordenadas"
-           *ngFor="let link of coordenadas.controls; let r = index">
+      <div *ngFor="let link of coordenadas.controls; let r = index" class="row justify-content-md-center"
+           formGroupName="coordenadas">
         <div [formGroupName]="r">
           <div class="row justify-content-md-center form-group">
-            <label class="col-auto" [attr.for]="'link' + r"><strong>Latitud</strong></label>
+            <label [attr.for]="'link' + r" class="col-auto"><strong>Latitud</strong></label>
             <div class="col-auto">
-              <input type="text" [attr.id]="'link' + r" class="form-control" formControlName="latitud" name="latitud" >
+              <input [attr.id]="'link' + r" class="form-control" formControlName="latitud" name="latitud" type="text">
             </div>
-            <label class="col-auto" [attr.for]="'link' + r"><strong>Longitud</strong></label>
+            <label [attr.for]="'link' + r" class="col-auto"><strong>Longitud</strong></label>
             <div class="col-auto">
-              <input type="text" [attr.id]="'link' + r" class="form-control" formControlName="longitud" name="longitud">
+              <input [attr.id]="'link' + r" class="form-control" formControlName="longitud" name="longitud" type="text">
             </div>
             <div class="col-auto">
-              <button class="btn btn-danger btn-sm" type="button" (click)="removerItem(r,'coordenadas', 'current')">Ⓧ
+              <button (click)="removerItem(r,'coordenadas', 'current')" class="btn btn-danger btn-sm" type="button">Ⓧ
               </button>
             </div>
           </div>
@@ -180,22 +172,22 @@
       <div class="row justify-content-md-center"><h5>Datos del lugar</h5></div>
       <div class="row">
         <div class="col">
-          <input type="text" class="form-control" placeholder="Pais" formControlName="pais"
-                 [(ngModel)]="this.proyectoService.selectedProject.detalles['pais']">
+          <input [(ngModel)]="this.proyectoService.selectedProject.detalles['pais']" class="form-control" formControlName="pais" placeholder="Pais"
+                 type="text">
         </div>
         <div class="col">
-          <input type="text" class="form-control" placeholder="Provincia" formControlName="provincia"
-                 [(ngModel)]="this.proyectoService.selectedProject.detalles['provincia']">
+          <input [(ngModel)]="this.proyectoService.selectedProject.detalles['provincia']" class="form-control" formControlName="provincia" placeholder="Provincia"
+                 type="text">
         </div>
         <div class="col">
-          <input type="text" class="form-control" placeholder="Ciudad" formControlName="ciudad"
-                 [(ngModel)]="this.proyectoService.selectedProject.detalles['ciudad']">
+          <input [(ngModel)]="this.proyectoService.selectedProject.detalles['ciudad']" class="form-control" formControlName="ciudad" placeholder="Ciudad"
+                 type="text">
         </div>
         <div class="col">
           <div class="form-group">
-            <select class="form-control" formControlName="tipo_sitio"
-                    [(ngModel)]="this.proyectoService.selectedProject.detalles['tipo_sitio']">
-              <option value="" selected disabled>Seleccione tipo de sitio</option>
+            <select [(ngModel)]="this.proyectoService.selectedProject.detalles['tipo_sitio']" class="form-control"
+                    formControlName="tipo_sitio">
+              <option disabled selected value="">Seleccione tipo de sitio</option>
               <option>Parque Nacional</option>
               <option>Reserva Nacional</option>
               <option>Otro</option>
@@ -218,42 +210,42 @@
         <!--        </div>-->
         <div class="form-group col">
           <label>Año de inicio</label>
-          <input type="text" class="form-control" formControlName="ano_inicio" placeholder="2020"
-                 [(ngModel)]="this.proyectoService.selectedProject.detalles['ano_inicio']">
+          <input [(ngModel)]="this.proyectoService.selectedProject.detalles['ano_inicio']" class="form-control" formControlName="ano_inicio" placeholder="2020"
+                 type="text">
         </div>
         <div class="form-group col">
           <label>Tipo de estudio</label>
-          <input type="text" class="form-control" formControlName="tipo_estudio" placeholder="Especie exótica invasora"
-                 [(ngModel)]="this.proyectoService.selectedProject.detalles['tipo_estudio']">
+          <input [(ngModel)]="this.proyectoService.selectedProject.detalles['tipo_estudio']" class="form-control" formControlName="tipo_estudio" placeholder="Especie exótica invasora"
+                 type="text">
         </div>
         <div class="form-group col">
           <label>Web</label>
-          <input type="text" class="form-control" formControlName="web"
-                 [(ngModel)]="this.proyectoService.selectedProject.detalles['web']">
+          <input [(ngModel)]="this.proyectoService.selectedProject.detalles['web']" class="form-control" formControlName="web"
+                 type="text">
         </div>
       </div>
     </div>
     <hr>
 
     <div class="form-group">
-      <a class="btn btn-warning" type="button" (click)="agregarlinkvideo()">Agregar Videos</a>
+      <a (click)="agregarlinkvideo()" class="btn btn-warning" type="button">Agregar Videos</a>
     </div>
     <div *ngIf="listafotosFromDB as videos">
       <div *ngFor="let video of videos; let i = index">
         <!--      <h1>{{link.value['link']}}</h1>-->
         <!--          <div [formGroupName]="i">-->
         <div class="form-group row justify-content-md-center">
-          <label class="col-auto" [attr.for]="'link' + i">Link</label>
+          <label [attr.for]="'link' + i" class="col-auto">Link</label>
           <div class="col-auto">
-            <input type="text" [attr.id]="'link' + i" class="form-control" [value]="video['link']" disabled>
+            <input [attr.id]="'link' + i" [value]="video['link']" class="form-control" disabled type="text">
           </div>
-          <label class="col-auto" [attr.for]="'link' + i">Descripcion</label>
+          <label [attr.for]="'link' + i" class="col-auto">Descripcion</label>
           <div class="col-auto">
-            <input type="text" [attr.id]="'link' + i" class="form-control" [value]="video['descripcion']" disabled>
+            <input [attr.id]="'link' + i" [value]="video['descripcion']" class="form-control" disabled type="text">
             <!--            <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="descripcionfoto" [(ngModel)]="this.proyectoService.selectedProject.detalles['linksfotos']['descripcion']">-->
           </div>
           <div class="col-auto">
-            <button class="btn btn-danger btn-sm" (click)="removerItem(i, 'videos', 'anterior')">Remover anterior
+            <button (click)="removerItem(i, 'videos', 'anterior')" class="btn btn-outline-danger btn-sm"><i class="fa fa-times"></i>
             </button>
           </div>
         </div>
@@ -262,21 +254,22 @@
     </div>
 
 
-    <div formGroupName="linksvideos" *ngFor="let link of linksvideos.controls; let i = index">
+    <div *ngFor="let link of linksvideos.controls; let i = index" formGroupName="linksvideos">
       <!--      <h1>{{link.value['link']}}</h1>-->
       <div [formGroupName]="i">
         <div class="form-group row justify-content-md-center">
-          <label class="col-auto" [attr.for]="'link' + i">Link</label>
+          <label [attr.for]="'link' + i" class="col-auto">Link</label>
           <div class="col-auto">
-            <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="link" name="link">
+            <input [attr.id]="'link' + i" class="form-control" formControlName="link" name="link" type="text">
           </div>
-          <label class="col-auto" [attr.for]="'link' + i">Descripcion</label>
+          <label [attr.for]="'link' + i" class="col-auto">Descripcion</label>
           <div class="col-auto">
-            <input type="text" [attr.id]="'link' + i" class="form-control" name="descripcion" formControlName="descripcion">
+            <input [attr.id]="'link' + i" class="form-control" formControlName="descripcion" name="descripcion"
+                   type="text">
             <!--            <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="descripcionfoto" [(ngModel)]="this.proyectoService.selectedProject.detalles['linksfotos']['descripcion']">-->
           </div>
           <div class="col-auto">
-            <button class="btn btn-danger btn-sm" type="button" (click)="removerItem(i,'videos', 'current')">Remover
+            <button (click)="removerItem(i,'videos', 'current')" class="btn btn-outline-danger btn-sm"><i class="fa fa-times"></i>
             </button>
           </div>
         </div>
@@ -285,24 +278,24 @@
 
     <hr>
     <div class="form-group">
-      <a class="btn btn-warning " type="button" (click)="agregarPersonal()">Agregar Personal</a>
+      <a (click)="agregarPersonal()" class="btn btn-warning " type="button">Agregar Personal</a>
       <div *ngIf="listapersonalFromDb as personal">
         <div *ngFor="let person of personal; let h = index">
           <div class="row justify-content-md-center">
             <div class="col-auto">
               <label [attr.for]="'link' + h">Nombre/s</label>
-              <input type="text" [attr.id]="'link' + h" class="form-control" [value]="person.nombre_personal" disabled>
+              <input [attr.id]="'link' + h" [value]="person.nombre_personal" class="form-control" disabled type="text">
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + h">Apellido/s</label>
-              <input type="text" [attr.id]="'link' + h" class="form-control" [value]="person.apellido_personal"
-                     disabled>
+              <input [attr.id]="'link' + h" [value]="person.apellido_personal" class="form-control" disabled
+                     type="text">
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + h">Rol</label>
               <!--                    <input type="text" [attr.id]="'link' + h" class="form-control" formControlName="rol">-->
               <div class="form-group">
-                <select class="form-control" [attr.id]="'link' + h" [value]="person.rol" disabled>
+                <select [attr.id]="'link' + h" [value]="person.rol" class="form-control" disabled>
                   <option>Guardaparque</option>
                   <option>Director</option>
                   <option>Audiovisual</option>
@@ -315,8 +308,8 @@
             </div>
             <div class="form-group">
               <label [attr.for]="'link' + h">Género</label>
-              <select class="form-control" [attr.id]="'link' + h" [value]="person.genero" disabled>
-                <option value="" selected disabled></option>
+              <select [attr.id]="'link' + h" [value]="person.genero" class="form-control" disabled>
+                <option disabled selected value=""></option>
                 <option>Femenino</option>
                 <option>Masculino</option>
                 <option>Otro</option>
@@ -324,52 +317,55 @@
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + h">Fecha de nacimiento</label>
-              <input type="text" class="form-control" bsDatepicker
-                     [attr.id]="'link' + h" [value]="person.fecha_nacimiento" disabled>
+              <input [attr.id]="'link' + h" [value]="person.fecha_nacimiento" bsDatepicker
+                     class="form-control" disabled type="text">
             </div>
           </div>
           <div class="row justify-content-md-center">
             <div class="col-auto">
               <label [attr.for]="'link' + h">Pais de residencia</label>
-              <input type="text" [attr.id]="'link' + h" class="form-control" [value]="person.pais_residencia" disabled>
+              <input [attr.id]="'link' + h" [value]="person.pais_residencia" class="form-control" disabled type="text">
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + h">Provincia de residencia</label>
-              <input type="text" [attr.id]="'link' + h" class="form-control" [value]="person.provincia_residencia"
-                     disabled>
+              <input [attr.id]="'link' + h" [value]="person.provincia_residencia" class="form-control" disabled
+                     type="text">
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + h">email</label>
-              <input type="text" [attr.id]="'link' + h" class="form-control" [value]="person.email_personal" disabled>
+              <input [attr.id]="'link' + h" [value]="person.email_personal" class="form-control" disabled type="text">
             </div>
             <div class="col-auto align-self-end">
-              <button class="btn btn-danger btn-sm" (click)="removerItem(h, 'personal', 'anterior')">Remover anterior
-              </button>
+              <button (click)="removerItem(h, 'personal', 'anterior')" class="btn btn-outline-danger btn-sm"><i class="fa fa-times"></i></button>
             </div>
           </div>
           <br>
-                          <div class="row ">
-                            <div class="form-group col" >
-                              <label [attr.for]="'link' + h">Facebook</label>
-                              <input type="text" [attr.id]="'link' + h" class="form-control"  disabled >
-                            </div>
-                            <div class="form-group col">
-                              <label [attr.for]="'link' + h">Instagram</label>
-                              <input type="text" [attr.id]="'link' + h" class="form-control"  [value]="person.redes_sociales_personal.instagram" disabled>
-                            </div>
-                            <div class="form-group col">
-                              <label [attr.for]="'link' + h">Twitter</label>
-                              <input type="text" [attr.id]="'link' + h" class="form-control"  [value]="person.redes_sociales_personal.twitter" disabled>
-                            </div>
-                            <div class="form-group col">
-                              <label [attr.for]="'link' + h">Youtube</label>
-                              <input type="text" [attr.id]="'link' + h" class="form-control"  [value]="person.redes_sociales_personal.youtube" disabled>
-                            </div>
-                            <div class="form-group col">
-                              <label [attr.for]="'link' + h">Research Gate</label>
-                              <input type="text" [attr.id]="'link' + h" class="form-control"  [value]="person.redes_sociales_personal.researchgate" disabled>
-                            </div>
-                          </div>
+          <div class="row ">
+            <div class="form-group col">
+              <label [attr.for]="'link' + h">Facebook</label>
+              <input [attr.id]="'link' + h" class="form-control" disabled type="text">
+            </div>
+            <div class="form-group col">
+              <label [attr.for]="'link' + h">Instagram</label>
+              <input [attr.id]="'link' + h" [value]="person.redes_sociales_personal.instagram" class="form-control"
+                     disabled type="text">
+            </div>
+            <div class="form-group col">
+              <label [attr.for]="'link' + h">Twitter</label>
+              <input [attr.id]="'link' + h" [value]="person.redes_sociales_personal.twitter" class="form-control"
+                     disabled type="text">
+            </div>
+            <div class="form-group col">
+              <label [attr.for]="'link' + h">Youtube</label>
+              <input [attr.id]="'link' + h" [value]="person.redes_sociales_personal.youtube" class="form-control"
+                     disabled type="text">
+            </div>
+            <div class="form-group col">
+              <label [attr.for]="'link' + h">Research Gate</label>
+              <input [attr.id]="'link' + h" [value]="person.redes_sociales_personal.researchgate" class="form-control"
+                     disabled type="text">
+            </div>
+          </div>
           <hr>
         </div>
         <!--              <hr>-->
@@ -378,23 +374,23 @@
       </div>
 
 
-      <div formGroupName="personal" *ngFor="let person of personal.controls; let x = index">
+      <div *ngFor="let person of personal.controls; let x = index" formGroupName="personal">
         <div [formGroupName]="x">
           <div class="row justify-content-md-center">
             <div class="col-auto">
               <label [attr.for]="'link' + x">Nombre/s</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="nombre_personal">
+              <input [attr.id]="'link' + x" class="form-control" formControlName="nombre_personal" type="text">
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + x">Apellido/s</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="apellido_personal">
+              <input [attr.id]="'link' + x" class="form-control" formControlName="apellido_personal" type="text">
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + x">Rol</label>
               <!--            <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="rol">-->
               <div class="form-group">
-                <select class="form-control" [attr.id]="'link' + x" formControlName="rol">
-                  <option value="" selected disabled>Seleccione el rol</option>
+                <select [attr.id]="'link' + x" class="form-control" formControlName="rol">
+                  <option disabled selected value="">Seleccione el rol</option>
                   <option>Guardaparque</option>
                   <option>Director</option>
                   <option>Audiovisual</option>
@@ -407,8 +403,8 @@
             </div>
             <div class="form-group">
               <label [attr.for]="'link' + x">Género</label>
-              <select class="form-control" [attr.id]="'link' + x" formControlName="genero">
-                <option value="" selected disabled></option>
+              <select [attr.id]="'link' + x" class="form-control" formControlName="genero">
+                <option disabled selected value=""></option>
                 <option>Femenino</option>
                 <option>Masculino</option>
                 <option>Otro</option>
@@ -416,48 +412,48 @@
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + x">Fecha de nacimiento</label>
-              <input type="text" class="form-control" bsDatepicker
-                     formControlName="fecha_nacimiento" [attr.id]="'link' + x">
+              <input [attr.id]="'link' + x" bsDatepicker class="form-control"
+                     formControlName="fecha_nacimiento" type="text">
             </div>
           </div>
           <div class="row justify-content-md-center">
             <div class="col-auto">
               <label [attr.for]="'link' + x">Pais de residencia</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="pais_residencia">
+              <input [attr.id]="'link' + x" class="form-control" formControlName="pais_residencia" type="text">
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + x">Provincia de residencia</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="provincia_residencia">
+              <input [attr.id]="'link' + x" class="form-control" formControlName="provincia_residencia" type="text">
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + x">email</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="email_personal">
+              <input [attr.id]="'link' + x" class="form-control" formControlName="email_personal" type="text">
             </div>
             <div class="col-auto align-self-end">
-              <button class="btn btn-danger" (click)="removerItem(x,'personal','current')">Remover</button>
+              <button (click)="removerItem(x,'personal','current')" class="btn btn-outline-danger btn-sm"><i class="fa fa-times"></i></button>
             </div>
           </div>
           <br>
           <div class="row " formGroupName="redes_sociales_personal">
             <div class="form-group col">
               <label [attr.for]="'link' + x">Facebook</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="facebook">
+              <input [attr.id]="'link' + x" class="form-control" formControlName="facebook" type="text">
             </div>
             <div class="form-group col">
               <label [attr.for]="'link' + x">Instagram</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="instagram">
+              <input [attr.id]="'link' + x" class="form-control" formControlName="instagram" type="text">
             </div>
             <div class="form-group col">
               <label [attr.for]="'link' + x">Twitter</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="twitter">
+              <input [attr.id]="'link' + x" class="form-control" formControlName="twitter" type="text">
             </div>
             <div class="form-group col">
               <label [attr.for]="'link' + x">Youtube</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="youtube">
+              <input [attr.id]="'link' + x" class="form-control" formControlName="youtube" type="text">
             </div>
             <div class="form-group col">
               <label [attr.for]="'link' + x">Research Gate</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="researchgate">
+              <input [attr.id]="'link' + x" class="form-control" formControlName="researchgate" type="text">
             </div>
           </div>
         </div>
@@ -468,25 +464,25 @@
     <hr>
     <div
       *ngIf="this.registerForm.value.tipo_enfoque != 'Agroecología y soberanía alimentaria' && this.registerForm.value.tipo_enfoque != 'Ambiente y sociedad'">
-      <h2>Registrar especies</h2>
+      <h4 class="text-center">Registrar especies</h4>
       <div class="form-group">
-        <a class="btn btn-warning" type="button" (click)="agregarEspecie()">Agregar Especies</a>
+        <a (click)="agregarEspecie()" class="btn btn-warning" type="button">Agregar Especies</a>
         <div *ngIf="listasppFromDB as especies">
           <div *ngFor="let especie of especies; let y = index">
             <div class="form-group row justify-content-md-center">
               <div class="col-auto">
                 <label [attr.for]="'link' + y">SPOB</label>
-                <input type="text" [attr.id]="'link' + y" class="form-control"
-                       [value]="especie['spob']" disabled>
+                <input [attr.id]="'link' + y" [value]="especie['spob']" class="form-control"
+                       disabled type="text">
               </div>
               <div class="col-auto">
                 <label [attr.for]="'link' + y">Nombre vulgar</label>
-                <input type="text" [attr.id]="'link' + y" class="form-control" [value]="especie['nombre_vulgar']"
-                       disabled>
+                <input [attr.id]="'link' + y" [value]="especie['nombre_vulgar']" class="form-control" disabled
+                       type="text">
               </div>
               <div class="form-group col-auto">
                 <label [attr.for]="'link' + y">tso</label>
-                <select class="form-control" [attr.id]="'link' + y" [value]="especie['tso']" disabled>
+                <select [attr.id]="'link' + y" [value]="especie['tso']" class="form-control" disabled>
                   <option [ngValue]="null" selected></option>
                   <option>Nativa</option>
                   <option>Invasora</option>
@@ -495,8 +491,7 @@
               </div>
               <!--            <button class="btn btn-secondary btn-sm align-bottom " (click)="removerItem(y, 'especies', 'anterior')">Remover anterior</button>-->
               <div class="col-auto align-text-bottom">
-                <button class="btn btn-danger btn-sm" (click)="removerItem(y, 'especies', 'anterior')">Remover
-                  anterior
+                <button (click)="removerItem(y, 'especies', 'anterior')" class="btn btn-outline-danger btn-sm"><i class="fa fa-times"></i>
                 </button>
               </div>
             </div>
@@ -505,21 +500,21 @@
         </div>
 
 
-        <div formGroupName="especies" *ngFor="let spp of especies.controls; let p = index">
+        <div *ngFor="let spp of especies.controls; let p = index" formGroupName="especies">
           <div [formGroupName]="p">
             <div class="row justify-content-md-center">
               <div class="col-auto">
                 <label [attr.for]="'link' + p">SPOB</label>
-                <input type="text" [attr.id]="'link' + p" class="form-control" placeholder="Lontra provocax"
-                       formControlName="spob" (click)="iucnGet(p, spp.value.spob)">
+                <input (click)="iucnGet(p, spp.value.spob)" [attr.id]="'link' + p" class="form-control" formControlName="spob"
+                       placeholder="Lontra provocax" type="text">
               </div>
               <div class="col-auto">
                 <label [attr.for]="'link' + p">Nombre vulgar</label>
-                <input type="text" [attr.id]="'link' + p" class="form-control" formControlName="nombre_vulgar">
+                <input [attr.id]="'link' + p" class="form-control" formControlName="nombre_vulgar" type="text">
               </div>
               <div class="form-group">
                 <label [attr.for]="'link' + p">tso</label>
-                <select class="form-control" [attr.id]="'link' + p" formControlName="tso">
+                <select [attr.id]="'link' + p" class="form-control" formControlName="tso">
                   <option [ngValue]="null" selected></option>
                   <option>Nativa</option>
                   <option>Invasora</option>
@@ -527,16 +522,16 @@
                 </select>
               </div>
               <div class="col-auto">
-                <button class="btn btn-danger btn-sm" (click)="removerItem(p, 'especies', 'current')">Remover</button>
+                <button (click)="removerItem(p, 'especies', 'current')" class="btn btn-outline-danger btn-sm"><i class="fa fa-times"></i></button>
               </div>
             </div>
-            <div class="row justify-content-md-center" >
-                <div *ngIf="iucndetalleslist[spp.value.spob] as value">
+            <div class="row justify-content-md-center">
+              <div *ngIf="iucndetalleslist[spp.value.spob] as value">
                   <span><p style="font-size:12px; color:red">Especie reconocida por la iucnredlist !</p>
                 <p style="font-size:10px">Clase: {{value.class}}, Familia: {{value.family}},
                   taxonid: {{value.taxonid}}, category: {{value.category}},
                 assessor: {{value.assessor}}</p></span>
-                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -545,17 +540,17 @@
     <hr>
     <div class="row justify-content-md-center ">
       <div class="col-auto">
-        <button class="btn btn-success btn-lg"
-                type="submit"
-                [disabled]="!registerForm.valid"
-                style="margin-top: 3rem">Actualizar
+        <button [disabled]="!registerForm.valid"
+                class="btn btn-success btn-lg"
+                style="margin-top: 3rem"
+                type="submit">Actualizar
         </button>
       </div>
       <div class="col-auto">
-        <button class="btn btn-light btn-lg"
-                type="button"
-                (click)="borrarForm()"
-                style="margin-top: 3rem">Vaciar Campos
+        <button (click)="borrarForm()"
+                class="btn btn-light btn-lg"
+                style="margin-top: 3rem"
+                type="button">Vaciar Campos
         </button>
       </div>
     </div>

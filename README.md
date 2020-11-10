@@ -2,7 +2,7 @@
 
 Proyecto de Mapa ecológico de Arg.
 
-![image](http://i.imgur.com/X4sTozA.png)
+![image](https://i.imgur.com/FZmsCW3.png)
 
 
 ## Instrucciones
@@ -41,13 +41,6 @@ Así arranca el server local en el puerto 4200. Cuando termina de compilar si en
 
 Luego editar el código con tu editor favorito, por ejemplo Visual Studio Code.
 
-### Como actualizar el repositorio:
-
-- Comprobamos el remoto y su url: `git remote -v`
-- Checkeamos el estado: `git status`
-- Si esta en rojo los agregamos en memoria: `git add .`
-- Si escribimos otra vez `git status` y salen en verde ya podemos commitear: `git commit -m 'mis cambios'`
-- Y ahora podemos incorporar cambios nuevos de otras personas: `git pull origin master` (reemplazar origin con el nombre que corresponda cuando escribimos `git remote`)
 ### Como actualizar el repositorio:
 
 - Comprobamos el remoto y su url: `git remote -v`

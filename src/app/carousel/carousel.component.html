@@ -13,18 +13,16 @@
 
 
 <ng-template #carrusel>
-  <div class="modal-header ">
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <carousel  [isAnimated]="true" >
-        <div *ngFor="let slide of slides">
-          <slide>
-            <img [src]="slide" class="d-block w-100 " style="object-fit: contain;max-height:1000px;" alt="..."/>
-          </slide>
-        </div>
-    </carousel>
-  </div>
+  <!--  <div class="modal-header ">-->
+  <!--    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">-->
+  <!--      <span aria-hidden="true">&times;</span>-->
+  <!--    </button>-->
+  <!--  </div>-->
+  <carousel [isAnimated]="true">
+    <div *ngFor="let slide of slides">
+      <slide>
+        <img [src]="slide" class="d-block w-100" style="object-fit: contain;max-height:1000px;" alt="..."/>
+      </slide>
+    </div>
+  </carousel>
 </ng-template>

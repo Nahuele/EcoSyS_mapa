@@ -7,6 +7,7 @@ import {take} from 'rxjs/operators';
 import {AlertComponent} from 'ngx-bootstrap/alert';
 import {BehaviorSubject, concat, interval} from 'rxjs';
 import {IucnApiService} from '../iucn-api.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector:    'app-nuevo-proyecto',
@@ -22,7 +23,8 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
               public proyectoService: ProyectoService,
               private modalService: BsModalService,
               public iucnService: IucnApiService,
-              private authService: AuthService) {}
+              private authService: AuthService,
+              private router: Router) {}
 
   get email() {
     return this.registerForm.get('email');
@@ -58,13 +60,12 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
   alerts: any[] = [{
     type:    'success',
-    msg:     `Gracias! se ha agregado el proyecto a la base de datos`,
+    msg:     `Gracias! se ha agregado el proyecto a la base de datos. Redirigiendo a Tus Proyectos ...`,
     timeout: 3000
   }];
 
 
   registerForm = this.formBuilder.group({
-    projectid:        [''], // , [Validators.required, Validators.minLength(6)]],
     email:            [''], // , [Validators.required, Validators.email]],
     tipo_enfoque:     [''], // , Validators.required],
     nombre:           [''],
@@ -108,8 +109,10 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
     this.proyectoService.addProject(formProyectoFinal);
     this.alerta = true;
-    window.scrollTo(0, 0);
-    this.ngOnDestroy();
+    // window.scrollTo(0, 0);
+    setTimeout(() => {
+      this.router.navigate(['proyectos']);
+    }, 3000);
   }
 
   removeEmptyFields(obj) {

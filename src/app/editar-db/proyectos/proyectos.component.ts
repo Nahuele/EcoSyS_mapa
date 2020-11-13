@@ -22,15 +22,6 @@ export class ProyectosComponent implements OnInit, OnDestroy {
   public isAdmin: any = null;
   public userUid: string = null;
 
-  // public alerta = false;
-  //
-  // alerts: any[] = [{
-  //   type: 'success',
-  //   msg: `Gracias! se ha agregado el proyecto a la base de datos`,
-  //   timeout: 3000
-  // }];
-
-
   constructor(private proyectoService: ProyectoService,
               private router: Router,
               private modalService: BsModalService,

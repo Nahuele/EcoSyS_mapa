@@ -1,28 +1,8 @@
 <div class="container mb-5 mt-3" >
   <h3 class="text-center">Registrar proyecto</h3>
   <br>
-  <div class="row justify-content-md-center">
-    <div *ngIf="alerta === true">
-      <div *ngFor="let alert of alerts">
-        <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
-      </div>
-    </div>
-  </div>
-  <br>
   <form (submit)="submit()" [formGroup]="registerForm" name="formPro" >
     <div class="row">
-      <div class="col">
-        <div class="form-group" >
-          <label >Proyecto ID</label>
-          <input type="text" class="form-control form-control-lg"
-                 formControlName="projectid"
-                 placeholder="PRO_Martín_García_ID"  name="projectid">
-          <div class="invalid-feedback">
-            El ID del proyecto es requerido (sin espacios, minimo 6 caracteres)
-          </div>
-        </div>
-      </div>
-
       <div class="col">
         <div class="form-group">
           <label>Nombre del Proyecto</label>
@@ -219,7 +199,6 @@
     <hr>
     <div class="form-group" >
       <a class="btn btn-warning " type="button" (click)="agregarPersonal()">Agregar Personal</a>
-
       <div formGroupName="personal" *ngFor="let person of personal.controls; let x = index">
         <div [formGroupName]="x">
           <div class="row justify-content-md-center">
@@ -306,9 +285,7 @@
         </div>
         <hr>
       </div>
-
     </div>
-    <hr>
 
     <div *ngIf="this.registerForm.value.tipo_enfoque != 'Agroecología y soberanía alimentaria' && this.registerForm.value.tipo_enfoque != 'Ambiente y sociedad'">
       <h4 class="text-center">Registrar especies</h4>
@@ -371,6 +348,14 @@
                 (click)="borrarForm()"
                 style="margin-top: 3rem">Resetear
         </button>
+      </div>
+    </div>
+    <br>
+    <div class="row justify-content-md-center">
+      <div *ngIf="alerta === true">
+        <div *ngFor="let alert of alerts">
+          <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+        </div>
       </div>
     </div>
   </form>

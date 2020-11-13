@@ -1,21 +1,8 @@
 <div class="container mb-5 mt-3">
   <h3 class="text-center">Editar proyecto</h3>
   <br>
-  <form (submit)="submit()" [formGroup]="registerForm" name="formPro">
+  <form (submit)="submit(actualizado)" [formGroup]="registerForm" name="formPro">
     <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label>Proyecto ID</label>
-          <input [(ngModel)]="this.proyectoService.selectedProject.detalles.projectid"
-                 class="form-control form-control-lg"
-                 formControlName="projectid" name="projectid"
-                 placeholder="PRO_Martín_García_ID" type="text">
-          <div class="invalid-feedback">
-            El ID del proyecto es requerido (sin espacios, minimo 6 caracteres)
-          </div>
-        </div>
-      </div>
-
       <div class="col">
         <div class="form-group">
           <label>Nombre del Proyecto</label>
@@ -119,11 +106,11 @@
                  type="text">
         </div>
       </div>
+      <hr>
     </div>
 
-    <hr>
     <div>
-      <a (click)="agregarCoordenadas()" class="btn btn-warning" type="button">Agregar Coordenadas</a>
+      <a (click)="agregarCoordenadas()" class="btn btn-warning mb-2" type="button">Agregar Coordenadas <i class="fa fa-map-marker ml-2"></i></a>
       <div *ngIf="listacoordenadasFromDb as coordenadas">
         <div *ngFor="let coordenada of coordenadas; let u = index">
           <!--      <div class="row justify-content-md-center" formGroupName="coordenadas" *ngFor="let link of coordenadas.controls; let u = index">-->
@@ -138,15 +125,14 @@
               <input [attr.id]="'link' + u" [value]="coordenada['longitud']" class="form-control" disabled type="text">
             </div>
             <div class="col-auto">
-              <button (click)="removerItem(u,'coordenadas', 'anterior')" class="btn btn-danger btn-sm" type="button">
-                Ⓧ
+              <button (click)="removerItem(u,'coordenadas', 'anterior')" class="btn btn-outline-danger btn-sm" type="button">
+                <i class="fa fa-times"></i>
               </button>
             </div>
           </div>
           <!--          </div>-->
         </div>
       </div>
-      <hr>
 
       <div *ngFor="let link of coordenadas.controls; let r = index" class="row justify-content-md-center"
            formGroupName="coordenadas">
@@ -161,7 +147,8 @@
               <input [attr.id]="'link' + r" class="form-control" formControlName="longitud" name="longitud" type="text">
             </div>
             <div class="col-auto">
-              <button (click)="removerItem(r,'coordenadas', 'current')" class="btn btn-danger btn-sm" type="button">Ⓧ
+              <button (click)="removerItem(r,'coordenadas', 'current')" class="btn btn-sm btn-outline-danger" type="button">
+                <i class="fa fa-times"></i>
               </button>
             </div>
           </div>
@@ -197,17 +184,6 @@
       </div>
       <hr>
       <div class="row justify-content-md-center ">
-        <!--        <div class="form-group col" tooltip="Lat,Long (sin espacios, separados por coma) Es a la inversa de Google">-->
-        <!--          <label ><span>Coordenadas</span></label>-->
-        <!--          <input type="text" class="form-control"-->
-        <!--                 formControlName="coordenadas"-->
-        <!--                 placeholder="-58.2595914,-34.1824176"-->
-        <!--                 [(ngModel)]="this.proyectoService.selectedProject.detalles['coordenadas']"-->
-        <!--                 [ngClass]="{'is-invalid': registerForm.get('projectid').invalid}" >-->
-        <!--          <div class="invalid-feedback">-->
-        <!--            Coordenadas con formato especifico requeridas-->
-        <!--          </div>-->
-        <!--        </div>-->
         <div class="form-group col">
           <label>Año de inicio</label>
           <input [(ngModel)]="this.proyectoService.selectedProject.detalles['ano_inicio']" class="form-control" formControlName="ano_inicio" placeholder="2020"
@@ -340,27 +316,27 @@
             </div>
           </div>
           <br>
-          <div class="row ">
-            <div class="form-group col">
+          <div class="row " *ngIf="person.redes_sociales_personal">
+            <div class="form-group col" *ngIf="person.redes_sociales_personal.facebook">
               <label [attr.for]="'link' + h">Facebook</label>
-              <input [attr.id]="'link' + h" class="form-control" disabled type="text">
+              <input [attr.id]="'link' + h" class="form-control" [value]="person.redes_sociales_personal.facebook" disabled type="text">
             </div>
-            <div class="form-group col">
+            <div class="form-group col" *ngIf="person.redes_sociales_personal.instagram">
               <label [attr.for]="'link' + h">Instagram</label>
               <input [attr.id]="'link' + h" [value]="person.redes_sociales_personal.instagram" class="form-control"
                      disabled type="text">
             </div>
-            <div class="form-group col">
+            <div class="form-group col" *ngIf="person.redes_sociales_personal.twitter">
               <label [attr.for]="'link' + h">Twitter</label>
               <input [attr.id]="'link' + h" [value]="person.redes_sociales_personal.twitter" class="form-control"
                      disabled type="text">
             </div>
-            <div class="form-group col">
+            <div class="form-group col" *ngIf="person.redes_sociales_personal.youtube">
               <label [attr.for]="'link' + h">Youtube</label>
               <input [attr.id]="'link' + h" [value]="person.redes_sociales_personal.youtube" class="form-control"
                      disabled type="text">
             </div>
-            <div class="form-group col">
+            <div class="form-group col" *ngIf="person.redes_sociales_personal.researchgate">
               <label [attr.for]="'link' + h">Research Gate</label>
               <input [attr.id]="'link' + h" [value]="person.redes_sociales_personal.researchgate" class="form-control"
                      disabled type="text">
@@ -459,9 +435,8 @@
         </div>
         <hr>
       </div>
-
     </div>
-    <hr>
+
     <div
       *ngIf="this.registerForm.value.tipo_enfoque != 'Agroecología y soberanía alimentaria' && this.registerForm.value.tipo_enfoque != 'Ambiente y sociedad'">
       <h4 class="text-center">Registrar especies</h4>
@@ -557,4 +532,11 @@
   </form>
 </div>
 
-
+<ng-template #actualizado>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left text-success">Proyecto actualizado! <i class="fa fa-check"></i></h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</ng-template>

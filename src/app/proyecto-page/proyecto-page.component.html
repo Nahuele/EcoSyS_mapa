@@ -29,7 +29,7 @@
     <hr>
 
     <div class="container">
-      <div class="row" >
+      <div class="row">
         <div class="col-8">
           <div class="mt-3 mb-2">
             <h6 class="font-weight-bold text-muted mb-3 font-italic">Coordenadas
@@ -80,55 +80,56 @@
             <app-carousel [slides]="imagenes"></app-carousel>
           </div>
         </div>
-        <div class="row  d-flex align-content-end flex-wrap" *ngIf="detallesPro.personal && detallesPro.personal.length">
+        <div class="row  d-flex align-content-end flex-wrap mb-2"
+             *ngIf="detallesPro.personal && detallesPro.personal.length">
           <div class="col">
-        <div class="row  d-flex align-content-end flex-wrap" *ngIf="detallesPro.personal">
-          <div class="col" *ngIf="detallesPro.personal.length">
-            <button class="btn btn-info" (click)="isCollapsed = !isCollapsed"
-                    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
-              {{isCollapsed === true ? 'Mostrar' : 'Ocultar'}} integrantes
-              <i class="fa fa-user"></i>
-            </button>
+            <div class="row  d-flex align-content-end flex-wrap" *ngIf="detallesPro.personal">
+              <div class="col" *ngIf="detallesPro.personal.length">
+                <button class="btn btn-info" (click)="isCollapsed = !isCollapsed"
+                        [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+                  {{isCollapsed === true ? 'Mostrar' : 'Ocultar'}} integrantes
+                  <i class="fa fa-user"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <!--  <hr style="width:50%;text-align:left;margin-left:0">-->
+      </div>
+
+      <div id="integrantes" [collapse]="isCollapsed" [isAnimated]="true">
+        <div *ngIf="detallesPro.personal && detallesPro.personal.length">
+          <div *ngFor="let persona of detallesPro.personal">
+            <app-integrantes [person]="persona"></app-integrantes>
           </div>
         </div>
       </div>
-    </div>
-    <br>
-    <!--  <hr style="width:50%;text-align:left;margin-left:0">-->
-  </div>
 
-  <div id="integrantes" [collapse]="isCollapsed" [isAnimated]="true">
-    <div *ngIf="detallesPro.personal && detallesPro.personal.length">
-        <div *ngFor="let persona of detallesPro.personal">
-          <app-integrantes [person]="persona"></app-integrantes>
+
+      <hr>
+      <br>
+
+
+      <div *ngIf="videos.length > 0" class="row">
+        <div *ngFor="let video of videos" class="embed-responsive embed-responsive-16by9 col">
+          <youtube-player
+            [videoId]="video"
+            suggestedQuality="highres"
+            [height]="400"
+            [width]="500"
+            [startSeconds]="4"
+            [endSeconds]="8">
+          </youtube-player>
         </div>
+      </div>
     </div>
-  </div>
 
 
-  <hr>
-  <br>
-
-
-  <div *ngIf="videos.length > 0" class="row">
-    <div *ngFor="let video of videos" class="embed-responsive embed-responsive-16by9 col">
-      <youtube-player
-        [videoId]="video"
-        suggestedQuality="highres"
-        [height]="400"
-        [width]="500"
-        [startSeconds]="4"
-        [endSeconds]="8">
-      </youtube-player>
-    </div>
-  </div>
-</div>
-
-
-<ng-template #spinner class="row justify-content-md-center">
-  <!--  <div class="col">-->
-  <div class="spinner-border text-success " role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-  <!--  </div>-->
-</ng-template>
+    <ng-template #spinner class="row justify-content-md-center">
+      <!--  <div class="col">-->
+      <div class="spinner-border text-success " role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <!--  </div>-->
+    </ng-template>

@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
 import {CamposFormulario} from '../campos-formulario';
 import {FormArray, FormBuilder} from '@angular/forms';
 import {ProyectoService} from '../../editar-db/proyecto.service';
-import {BsModalService} from 'ngx-bootstrap/modal';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {AuthService} from '../../editar-db/auth/auth.service';
 import {AlertComponent} from 'ngx-bootstrap/alert';
 import {IucnApiService} from '../iucn-api.service';
@@ -46,21 +46,22 @@ export class EditarComponent implements OnInit, OnDestroy {
   public iucndetalleslist = {};
   strtemp = '';
   iucndetails$ = new BehaviorSubject('');
+  modalRef: BsModalRef;
 
-  public alerta = false;
-
-  alerts: any[] = [{
-    type:    'success',
-    msg:     `Gracias! se ha agregado el proyecto a la base de datos`,
-    timeout: 3000
-  }];
+  // public alerta = false;
+  //
+  // alerts: any[] = [{
+  //   type:    'success',
+  //   msg:     `Gracias! se ha agregado el proyecto a la base de datos`,
+  //   timeout: 3000
+  // }];
 
 
   constructor(private formBuilder: FormBuilder,
               public proyectoService: ProyectoService,
               private modalService: BsModalService,
               private authService: AuthService,
-              public iucnService: IucnApiService) {}
+              public iucnService: IucnApiService,) {}
 
   ngOnInit(): void {
     this.userUid = this.authService.userid;
@@ -73,7 +74,6 @@ export class EditarComponent implements OnInit, OnDestroy {
 
 
   registerForm = this.formBuilder.group({
-    projectid:        [''], //, [Validators.required, Validators.minLength(6)]],
     email:            [''], // , [Validators.required, Validators.email]],
     tipo_enfoque:     [''], //, Validators.required],
     nombre:           [''],
@@ -104,7 +104,7 @@ export class EditarComponent implements OnInit, OnDestroy {
 
   });
 
-  submit() {
+  submit(template: TemplateRef<any>) {
     let formProyectoFinal = {};
     console.log('form DB original', this.proyectoService.selectedProject.detalles);
     let videosFinal = [...this.listafotosFromDB, ...this.registerForm.value.linksvideos];
@@ -124,9 +124,10 @@ export class EditarComponent implements OnInit, OnDestroy {
     console.log('detalles', formProyectoFinal);
     this.proyectoService.editarProject(formProyectoFinal);
     console.log('enviado correcto');
-    window.scrollTo(0, 0);
-    this.cerrarForm.emit();
-    this.alerta = true;
+    // window.scrollTo(0, 0);
+    // this.cerrarForm.emit();
+    // this.alerta = true;
+    this.modalRef = this.modalService.show(template);
 
   }
 
@@ -239,8 +240,8 @@ export class EditarComponent implements OnInit, OnDestroy {
   }
 
   onClosed(dismissedAlert: AlertComponent): void {
-    this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);
-    this.alerta = false;
+    // this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);
+    // this.alerta = false;
   }
 
   iucnGet(index, especie?: string) {

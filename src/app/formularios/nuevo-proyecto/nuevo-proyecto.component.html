@@ -9,14 +9,12 @@
     </div>
   </div>
   <br>
-  <!--  <h2>{{this.proyectoService.selectedProject['userUid']}}</h2>-->
   <form (submit)="submit()" [formGroup]="registerForm" name="formPro" >
     <div class="row">
       <div class="col">
         <div class="form-group" >
           <label >Proyecto ID</label>
           <input type="text" class="form-control form-control-lg"
-
                  formControlName="projectid"
                  placeholder="PRO_Martín_García_ID"  name="projectid">
           <div class="invalid-feedback">
@@ -33,7 +31,7 @@
       </div>
       <div class="col">
         <div class="form-group">
-          <label>email principal</label>
+          <label tooltip="e-mail institucional o de la persona a cargo">e-mail principal</label>
           <input type="email" class="form-control"
                  [ngClass]="{'is-invalid': registerForm.get('email').invalid}"
                  formControlName="email" >
@@ -97,33 +95,26 @@
       <div class="row">
         <div class="form-group col">
           <label>Facebook</label>
-          <!--          <input type="text" class="form-control" formControlName="facebook" id="facebook" 'facebook']">-->
           <input type="text" class="form-control" formControlName="facebook" id="facebook" >
         </div>
         <div class="form-group col">
           <label>Instagram</label>
-          <!--          <input type="text" class="form-control" formControlName="instagram"   'instagram']" >-->
           <input type="text" class="form-control" formControlName="instagram"  >
         </div>
         <div class="form-group col">
           <label>Twitter</label>
-          <!--          <input type="text" class="form-control" formControlName="twitter"   'twitter']" >-->
           <input type="text" class="form-control" formControlName="twitter"  >
         </div>
         <div class="form-group col">
           <label>Youtube</label>
-          <!--          <input type="text" class="form-control" formControlName="youtube"   'youtube']" >-->
           <input type="text" class="form-control" formControlName="youtube"   >
-        </div>
-        <div class="form-group col">
-          <label>Research Gate</label>
-          <!--          <input type="text" class="form-control" formControlName="researchgate"   'researchgate']">-->
-          <input type="text" class="form-control" formControlName="researchgate"  >
         </div>
       </div>
     </div>
 
-      <a class="btn button-dos pulse mb-2" type="button" (click)="agregarCoordenadas()">Agregar Coordenadas</a>
+      <a class="btn button-dos pulse mb-2" type="button" (click)="agregarCoordenadas()">Agregar Coordenadas
+        <i class="fa fa-map-marker ml-2"></i>
+      </a>
       <div class="row justify-content-md-center" formGroupName="coordenadas" *ngFor="let link of coordenadas.controls; let u = index">
               <div [formGroupName]="u">
         <div class="row justify-content-md-center form-group" >
@@ -136,7 +127,9 @@
             <input type="text" [attr.id]="'link' + u" class="form-control" formControlName="longitud" name="longitud">
           </div>
           <div class="col-auto">
-            <button class="btn btn-danger btn-sm" type="button" (click)="removerItem(u,'coordenadas', 'current')">Ⓧ</button>
+            <button class="btn btn-sm btn-outline-danger" type="button" (click)="removerItem(u,'coordenadas', 'current')">
+              <i class="fa fa-times"></i>
+            </button>
           </div>
         </div>
     </div>
@@ -217,7 +210,7 @@
             <!--            <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="descripcionfoto" 'descripcion']">-->
           </div>
           <div class="col-auto">
-            <button class="btn btn-danger btn-sm" type="button" (click)="removerItem(i,'videos', 'current')">Ⓧ</button>
+            <button class="btn btn-outline-danger btn-sm" type="button" (click)="removerItem(i,'videos', 'current')"><i class="fa fa-times"></i></button>
           </div>
         </div>
       </div>
@@ -282,7 +275,9 @@
               <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="email_personal">
             </div>
             <div class="col-auto align-self-end">
-              <button class="btn btn-danger" (click)="removerItem(x,'personal','current')">Ⓧ</button>
+              <button class="btn btn-outline-danger" (click)="removerItem(x,'personal','current')" tooltip="Borrar Integrante">
+                <i class="fa fa-times"></i>
+              </button>
             </div>
           </div>
           <br>
@@ -316,7 +311,7 @@
     <hr>
 
     <div *ngIf="this.registerForm.value.tipo_enfoque != 'Agroecología y soberanía alimentaria' && this.registerForm.value.tipo_enfoque != 'Ambiente y sociedad'">
-      <h2>Registrar especies</h2>
+      <h4 class="text-center">Registrar especies</h4>
       <div class="form-group">
         <a class="btn btn-warning" type="button" (click)="agregarEspecie()">Agregar Especies</a>
 
@@ -342,7 +337,9 @@
                 </select>
               </div>
               <div class="col-auto">
-                <button class="btn btn-danger btn-sm" (click)="removerItem(p, 'especies', 'current')">Ⓧ</button>
+                  <button class="btn btn-outline-danger btn-sm" (click)="removerItem(p, 'especies', 'current')">
+                    <i class="fa fa-times"></i>
+                  </button>
               </div>
             </div>
             <div class="row justify-content-md-center" >

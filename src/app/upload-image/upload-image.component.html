@@ -9,8 +9,8 @@
             (mouseOver)="isOverDrop = $event"
             [ngClass]="{ 'file-over': isOverDrop }"
             class="drop-zone">
-            <h4>Arrastre aquí sus imágenes</h4>
-            <img src="../../../assets/cloud.png" alt="drop-images"/>
+            <h4 class="text-center">Arrastre aquí sus imágenes</h4>
+            <img src="../../../assets/cloud.png" alt="drop-images" style="width: 50px; height: 35px"/>
           </div>
         </div>
       </div>
@@ -18,7 +18,8 @@
     <div class="col-md-8 mt-5">
       <div class="card">
         <div class="card-header">
-          <h4>Lista de imágenes</h4>
+          <h4 class="card-title">Lista de imágenes
+            <i class="fa fa-image" style="color: #14B21D"></i></h4>
         </div>
         <div class="card-body">
           <table class="table">
@@ -52,7 +53,7 @@
             </tbody>
           </table>
           <div class="container-buttons">
-            <button (click)="files = []" class="btn btn-danger" type="button">Limpiar</button>
+            <button (click)="files = []" class="btn btn-outline-danger" type="button">Limpiar</button>
 <!--            <button-->
 <!--              (click)="onUpload()"-->
 <!--              [disabled]="files.length === 0"-->

@@ -47,26 +47,31 @@ export class MapaComponent implements OnInit {
 
         this.projectsList.push(projects[proj]);
 
-        itemProj.coordenadas.forEach((element) => {
+        if (itemProj.coordenadas) {
+          itemProj.coordenadas.forEach((element) => {
 
-          const coordenadas = [+element.longitud, +element.latitud];
-          const detallesPro = itemProj;
-          let objForLayer = {
-            'type':        'Feature',
-            'properties':  {
-              'title':       detallesPro.nombre,
-              // 'marker-color': '#3c4e5a',
-              // 'marker-symbol': 'monument',
-              // 'marker-size': 'large',
-              // 'icon': 'theatre',
-              'description': this.setearHtmlPopUp(projects[proj]),
-            }, 'geometry': {'coordinates': coordenadas, 'type': 'Point'}
-          };
-          detallesPro.tipo_enfoque === 'Agroecología y soberanía alimentaria' ? featuresAgroEco.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
-            featuresConservacionFauna.push(objForLayer) : detallesPro.tipo_enfoque === 'Ambiente y sociedad' ? featuresAmbSoc.push(objForLayer) :
-              detallesPro.tipo_enfoque === 'Conservación de flora' ? featuresConservacionFlora.push(objForLayer)
-                : console.log('emtpy enfoque!!');
-        });
+            const coordenadas = [+element.longitud, +element.latitud];
+            const detallesPro = itemProj;
+            let objForLayer = {
+              'type':        'Feature',
+              'properties':  {
+                'title':       detallesPro.nombre,
+                // 'marker-color': '#3c4e5a',
+                // 'marker-symbol': 'monument',
+                // 'marker-size': 'large',
+                // 'icon': 'theatre',
+                'description': this.setearHtmlPopUp(projects[proj]),
+              }, 'geometry': {'coordinates': coordenadas, 'type': 'Point'}
+            };
+            detallesPro.tipo_enfoque === 'Agroecología y soberanía alimentaria' ? featuresAgroEco.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
+              featuresConservacionFauna.push(objForLayer) : detallesPro.tipo_enfoque === 'Ambiente y sociedad' ? featuresAmbSoc.push(objForLayer) :
+                detallesPro.tipo_enfoque === 'Conservación de flora' ? featuresConservacionFlora.push(objForLayer)
+                  : console.log('emtpy enfoque!!');
+          });
+        } else {
+          console.log('not coord found')
+        }
+
       }
 
       this.mapa.on('load', () => {
@@ -166,7 +171,6 @@ export class MapaComponent implements OnInit {
     }
   }
 
-
   private iniciarMapa(layer?: string) {
     if (layer) {
       this.mapa = new mapboxgl.Map({
@@ -265,7 +269,4 @@ export class MapaComponent implements OnInit {
     // }
   }
 
-  ngOnDestroy() {
-    // this.images$.unsubscribe();
-  }
 }

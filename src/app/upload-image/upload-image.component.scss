@@ -17,7 +17,7 @@
         .drop-zone {
           border: dotted 3px lightgray;
           color: #666;
-          height: 253px;
+          height: 100%;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -40,16 +40,16 @@
     .card {
       height: 350px;
 
-      .card-header {
-        /* text-transform: uppercase; */
-        background: #269a76 linear-gradient(180deg, #77ef61, #c6f8db) repeat-x;
-       /* border-color: #2196f3; */
-        height: 3.5rem;
-        color: black;
-        opacity: 0.5;
-        font-size: 1rem;
-        font-weight: bold;
-      }
+      //.card-header {
+      //  /* text-transform: uppercase; */
+      //  background: #269a76 linear-gradient(180deg, #77ef61, #c6f8db) repeat-x;
+      // /* border-color: #2196f3; */
+      //  height: 3.5rem;
+      //  color: black;
+      //  opacity: 0.5;
+      //  font-size: 1rem;
+      //  font-weight: bold;
+      //}
 
       .card-body {
         padding-top: 0;

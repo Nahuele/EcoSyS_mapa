@@ -66,6 +66,7 @@ export class ProyectosComponent implements OnInit, OnDestroy {
 
   getProject() {
     this.proyectoService.getProjects().subscribe(proyectos => {
+      proyectos.forEach(x => console.log(x.detalles));
       this.projObj = proyectos;
     });
   }

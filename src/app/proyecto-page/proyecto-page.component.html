@@ -79,7 +79,7 @@
             <app-carousel [slides]="imagenes"></app-carousel>
           </div>
         </div>
-        <div class="row  d-flex align-content-end flex-wrap" *ngIf="detallesPro.personal.length">
+        <div class="row  d-flex align-content-end flex-wrap" *ngIf="detallesPro.personal && detallesPro.personal.length">
           <div class="col">
             <button class="btn btn-info" (click)="isCollapsed = !isCollapsed"
                     [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
@@ -95,7 +95,7 @@
   </div>
 
   <div id="integrantes" [collapse]="isCollapsed" [isAnimated]="true">
-    <div *ngIf="detallesPro.personal.length">
+    <div *ngIf="detallesPro.personal && detallesPro.personal.length">
       <div *ngFor="let persona of detallesPro.personal">
         <app-integrantes [person]="persona"></app-integrantes>
       </div>

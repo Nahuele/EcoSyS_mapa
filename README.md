@@ -2,6 +2,16 @@
 
 Proyecto de Mapa ecológico de Arg.
 
+Permite explorar proyectos locales relacionados con el medioambiente (incluyendo info, fotos, videos, detalles de los integrantes, etc.).
+
+Para agregar un proyecto debe crearse un usuario, luego podrá ingresar proyectos dentro de las siguientes categorías:
+- Conservación de Fauna
+- Conservación de Flora
+- Agroecología y Soberanía Alimentaria
+- Ambiente y Sociedad
+
+Cada proyecto se mostrará con un ícono en el mapa en las coordenadas proporcionadas por el autor.
+
 ![image](https://i.imgur.com/FZmsCW3.png)
 
 

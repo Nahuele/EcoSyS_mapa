@@ -8,45 +8,52 @@
 <div class="map-overlay-container">
   <div class="map-overlay">
     <div class="custom-control custom-radio custom-control-inline">
-      <input type="radio" id="customRadioInline2" name="customRadioInline" class="custom-control-input">
-      <label class="custom-control-label" for="customRadioInline2" (click)="switchStyle('dark-v10')">Dark</label>
+      <input class="custom-control-input" id="customRadioInline2" name="customRadioInline" type="radio">
+      <label (click)="switchStyle('dark-v10')" class="custom-control-label" for="customRadioInline2">Dark</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
-      <input type="radio" id="customRadioInline3" name="customRadioInline" class="custom-control-input">
-      <label class="custom-control-label" for="customRadioInline3" (click)="switchStyle('light-v10')">Light</label>
+      <input class="custom-control-input" id="customRadioInline3" name="customRadioInline" type="radio">
+      <label (click)="switchStyle('light-v10')" class="custom-control-label" for="customRadioInline3">Light</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
-      <input type="radio" id="customRadioInline4" name="customRadioInline" class="custom-control-input">
-      <label class="custom-control-label" for="customRadioInline4"
-             (click)="switchStyle('outdoors-v11')">Outdoors</label>
+      <input class="custom-control-input" id="customRadioInline4" name="customRadioInline" type="radio">
+      <label (click)="switchStyle('outdoors-v11')" class="custom-control-label"
+             for="customRadioInline4">Outdoors</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline ">
-      <input type="radio" id="customRadioInline5" name="customRadioInline" class="custom-control-input" checked>
-      <label class="custom-control-label" for="customRadioInline5"
-             (click)="switchStyle('satellite-v9')">Satélite</label>
+      <input checked class="custom-control-input" id="customRadioInline5" name="customRadioInline" type="radio">
+      <label (click)="switchStyle('satellite-v9')" class="custom-control-label"
+             for="customRadioInline5">Satélite</label>
     </div>
     <hr>
 
-    <div class="btn-group-toggle " data-toggle="buttons">
-      <a  id="conservacionfauna" (click)="mostrarCapa(featuresConservacionFauna);ftConsFau =!ftConsFau"><label
-        class="btn btn-outline-primary btn-sm mr-3">
-        <input name="featuresConservacionFauna" #featuresConservacionFauna type="checkbox"  value="0" checked  [(ngModel)]="ftConsFau"/>
-        Conservación de Fauna
-      </label></a>
-      <a (click)="mostrarCapa(featuresConservacionFlora);ftConsFlor =!ftConsFlor" id="conservacion" >
-        <label class="btn btn-outline-primary btn-sm mr-3">
-        <input name="featuresConservacionFlora" #featuresConservacionFlora type="checkbox" value="0" checked [(ngModel)]="ftConsFlor"/>
-        Conservación de Flora
-      </label></a>
-      <a (click)="mostrarCapa(agroeco);ftAgroEco =!ftAgroEco" id="agroeco">
-        <label class="btn btn-outline-primary btn-sm mr-3" >
-        <input name="agroeco" #agroeco type="checkbox" value="0" checked [(ngModel)]="ftAgroEco" />
-        Agroecología y soberanía alimentaria
-      </label></a> <a (click)="mostrarCapa(ambienteYsoc);ftAmbSoc =!ftAmbSoc" id="ambienteYsoc">
-      <label class="btn btn-outline-primary btn-sm mr-3" >
-        <input name="ambienteYsoc" #ambienteYsoc type="checkbox" value="0" checked [(ngModel)]="ftAmbSoc" />
-      Ambiente y sociedad
-      </label></a>
+    <div class="btn-group-toggle" data-toggle="buttons">
+      <div class="row-cols-1">
+        <div class="col">
+          <a (click)="mostrarCapa(featuresConservacionFauna);ftConsFau =!ftConsFau" id="conservacionfauna"><label
+            class="btn btn-outline-primary btn-sm mr-3">
+            <input #featuresConservacionFauna [(ngModel)]="ftConsFau" checked name="featuresConservacionFauna" type="checkbox"
+                   value="0"/>
+            Conservación de Fauna
+          </label></a></div>
+        <div class="col"><a (click)="mostrarCapa(featuresConservacionFlora);ftConsFlor =!ftConsFlor"
+                            id="conservacion">
+          <label class="btn btn-outline-primary btn-sm mr-3">
+            <input #featuresConservacionFlora [(ngModel)]="ftConsFlor" checked name="featuresConservacionFlora" type="checkbox"
+                   value="0"/>
+            Conservación de Flora
+          </label></a></div>
+        <div class="col"><a (click)="mostrarCapa(agroeco);ftAgroEco =!ftAgroEco" id="agroeco">
+          <label class="btn btn-outline-primary btn-sm mr-3">
+            <input #agroeco [(ngModel)]="ftAgroEco" checked name="agroeco" type="checkbox" value="0"/>
+            Agroecología y soberanía alimentaria
+          </label></a></div>
+        <div class="col"><a (click)="mostrarCapa(ambienteYsoc);ftAmbSoc =!ftAmbSoc" id="ambienteYsoc">
+          <label class="btn btn-outline-primary btn-sm mr-3">
+            <input #ambienteYsoc [(ngModel)]="ftAmbSoc" checked name="ambienteYsoc" type="checkbox" value="0"/>
+            Ambiente y sociedad
+          </label></a></div>
+      </div>
     </div>
     <hr>
   </div>

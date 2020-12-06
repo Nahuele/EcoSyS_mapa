@@ -40,6 +40,8 @@ import {CollapseModule} from 'ngx-bootstrap/collapse';
 import { IntegrantesComponent } from './proyecto-page/integrantes/integrantes.component';
 import { RedesSocialesComponent } from './proyecto-page/redes-sociales/redes-sociales.component';
 import { ContactComponent } from './contact/contact.component';
+import { AboutComponent } from './acerca-de/about.component';
+import { TutorialComponent } from './tutorial/tutorial.component';
 
 
 @NgModule({
@@ -61,6 +63,8 @@ import { ContactComponent } from './contact/contact.component';
     IntegrantesComponent,
     RedesSocialesComponent,
     ContactComponent,
+    AboutComponent,
+    TutorialComponent,
   ],
   imports: [
     BrowserModule,

@@ -14,8 +14,10 @@ Cada proyecto se mostrará con un ícono en el mapa en las coordenadas proporcio
 
 ![image](https://i.imgur.com/FZmsCW3.png)
 
+![image](https://i.imgur.com/HJlO6Fo.png)
 
-## Instrucciones
+
+## Instrucciones para instalar
 
 Para correr y editar local (al menos en Linux):
 

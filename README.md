@@ -40,7 +40,7 @@ Para correr y editar local (al menos en Linux):
 
     Clonar el Repositorio del Proyecto en alguna carpeta con el comando:
 
-`git clone https://gitlab.com/Nahuele/ianchuproject`
+`git clone https://gitlab.com/Nahuele/EcoMapa`
 
 - Situarse en la carpeta donde está el proyecto y ejecutar:
 

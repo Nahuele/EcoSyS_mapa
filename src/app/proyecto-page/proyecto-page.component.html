@@ -70,7 +70,7 @@
                 <tr *ngFor="let especie of detallesPro.especies">
                   <td><small *ngIf="iucndetalleslist[especie.spob]" (click)="openIucnModal(template)" style="cursor: pointer;">
                     <i class="fa fa-exclamation-triangle btn-danger"></i></small>
-                  <ng-template #template >
+                  <ng-template #template>
                     <div class="modal-header">
                       <h4 class="modal-title pull-left">{{especie.spob}} | Información de la IUCN Red List</h4>
                       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">

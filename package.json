@@ -1,6 +1,9 @@
 {
-  "name": "ianchu-project",
-  "version": "0.0.0",
+  "name": "ecomapa",
+  "version": "1.0.0",
+  "engines": {
+    "node": "12.16.1"
+  },
   "scripts": {
     "ng": "ng",
     "start-test": "ng serve",

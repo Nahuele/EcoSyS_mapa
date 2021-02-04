@@ -17,6 +17,7 @@
   "private": true,
   "dependencies": {
     "@angular-devkit/build-angular": "~0.901.0",
+    "typescript": "~3.8.3",
     "@angular/animations": "~9.1.0",
     "@angular/common": "~9.1.0",
     "@angular/compiler": "~9.1.0",
@@ -58,7 +59,6 @@
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~3.8.3",
     "@angular-devkit/architect": ">= 0.900 < 0.1100",
     "firebase-tools": "^8.0.0",
     "fuzzy": "^0.1.3",

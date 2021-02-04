@@ -3,7 +3,7 @@
     <div class="col-md-6 mx-auto mt-5">
       <div class="card" style="margin-top: 3rem">
         <div class="card-header text-center">
-          Login
+          Ingresar
         </div>
         <div class="card-body">
          <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
@@ -15,10 +15,10 @@
               <label for="password">Password</label>
               <input type="password" id="password" class="form-control" formControlName="password">
             </div>
-            <button type="submit" class="btn btn-primary btn-block" >Login</button>
+            <button type="submit" class="btn btn-primary btn-block" >Ingresar</button>
           </form>
           <div class="form-group mt-3">
-            <p>Crear cuenta <a [routerLink]="['/register']">Register</a></p>
+            <p>Crear cuenta <a [routerLink]="['/register']">Registrarse</a></p>
           </div>
           <div class="form-group mt-3">
             <a [routerLink]="['/resetpass']">Restaurar contraseña </a>

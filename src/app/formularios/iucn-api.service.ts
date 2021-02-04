@@ -18,7 +18,7 @@ export class IucnApiService {
       const dominio = 'https://apiv3.iucnredlist.org/api/v3/species/';
       specie = specie.split(' ');
       const token = '?token=9bb4facb6d23f48efbf424bb05c0c1ef1cf6f468393bc745d42179ac4aca5fee';
-      console.log(`service searching for ${specie}`)
+      console.log(`service searching for ${specie}`);
       return this.http.get<any>(dominio + specie.join('%20') + token);
     } else {
       console.log('not found');

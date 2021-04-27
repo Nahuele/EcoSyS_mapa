@@ -26,7 +26,17 @@
         </a>
       </li>
     </ul>
-    <ul *ngIf="user$ | async as user; else login" class="navbar-nav mx-auto">
+    <ul class="navbar-nav abs-center-x">
+      <li class="nav-item"><a class="nav-link font-weight-bold" href="https://1ecosocialysoberana.wixsite.com/website-0" target="_blank">
+        <i class="fa fa-hand-pointer-o fa-rotate-90 blog-hand-color"></i>
+        Ecología Social y Soberana - Blog
+        <span class="fa-rotate-270" style="display: inline-block;">
+    <i class="fa fa-hand-pointer-o fa-flip-horizontal blog-hand-color"></i>  </span>
+      </a>
+      </li>
+    </ul>
+
+    <ul *ngIf="user$ | async as user; else login" class="navbar-nav my-2 my-lg-0">
       <li class="nav-item">
         <a class="nav-link" routerLink="submitproject">Agregar
           <i class="fa fa-plus"></i></a>
@@ -45,7 +55,7 @@
       </li>
     </ul>
     <ng-template #login>
-      <ul class="navbar-nav mx-auto">
+      <ul class="navbar-nav my-2 my-lg-0">
         <li class="nav-item">
           <a class="nav-link" routerLink="login">Entrar</a>
         </li>

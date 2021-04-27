@@ -20,3 +20,13 @@
   visibility: visible;
   font-size: 14px;
 }}}}
+
+.abs-center-x {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.blog-hand-color {
+  color: firebrick;
+}

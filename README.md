@@ -21,8 +21,13 @@ Cada proyecto se mostrará con un ícono en el mapa en las coordenadas proporcio
 
 Para correr y editar local (al menos en Linux):
 
-- Instalar `npm` [npm info](https://nodejs.org/en/) 
+- Instalar `npm` descargando el binario de [npm info](https://nodejs.org/en/) o escribiendo en consola 
+  
+`sudo apt install nodejs`
+  
+- Para no tener que poner <em>sudo</em> todo el tiempo seguir [estas]("https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally") instrucciones.
 
+- Instalar admin de versiones `nvm` (Opcion 1 de [este link]("https://phoenixnap.com/kb/update-node-js-version"))
 
 - Luego instalar **angular** en la computadora (con la opción -g (global) ).
  Mas info en [Install angular](https://angular.io/guide/setup-local)
@@ -44,19 +49,20 @@ Para correr y editar local (al menos en Linux):
 
 - Situarse en la carpeta donde está el proyecto y ejecutar:
 
-`npm install` (esto instala los paquetes en la carpeta node_modules que no está en el git)
+`npm install` (esto instala los paquetes en la carpeta node_modules que no está en el git, tarda minutos)
 
 
-`npm run start` (esto lee el archivo package.json en la parte de script) es equivalente a: `ng serve`
+`ng serve` (ejecuta el server)
 
 Así arranca el server local en el puerto 4200. Cuando termina de compilar si entramos a la dirección http://localhost:4200/ veremos a nuestra página web.
 
 Luego editar el código con tu editor favorito, por ejemplo Visual Studio Code.
 
-### Como actualizar el repositorio:
+### Como actualizar el repositorio con Git:
 
 - Comprobamos el remoto y su url: `git remote -v`
 - Checkeamos el estado: `git status`
 - Si esta en rojo los agregamos en memoria: `git add .`
 - Si escribimos otra vez `git status` y salen en verde ya podemos commitear: `git commit -m 'mis cambios'`
 - Y ahora podemos incorporar cambios nuevos de otras personas: `git pull origin master` (reemplazar origin con el nombre que corresponda cuando escribimos `git remote`)
+- Y subir nuestros cambios al repor `git push origin master`

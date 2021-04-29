@@ -27,7 +27,7 @@ export class MapaComponent implements OnInit {
     mapboxgl.accessToken = environment.mapboxKey;
     this.iniciarMapa();
     this.listenPopUps('featuresConservacionFauna');
-    this.listenPopUps('featuresConservacionFlora');
+    this.listenPopUps('featuresConservacionVeg');
     this.listenPopUps('ambienteYsoc');
     this.listenPopUps('agroeco');
 
@@ -36,7 +36,7 @@ export class MapaComponent implements OnInit {
   buscarCoordenadas() {
     this.proyectoService.getProjects().subscribe(proyectos => {
       let projects = proyectos;
-      const featuresConservacionFlora = [];
+      const featuresConservacionVeg = [];
       const featuresConservacionFauna = [];
       const featuresAgroEco = [];
       const featuresAmbSoc = [];
@@ -63,9 +63,9 @@ export class MapaComponent implements OnInit {
                 'description': this.setearHtmlPopUp(projects[proj]),
               }, 'geometry': {'coordinates': coordenadas, 'type': 'Point'}
             };
-            detallesPro.tipo_enfoque === 'Agroecología y soberanía alimentaria' ? featuresAgroEco.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
+            detallesPro.tipo_enfoque === 'Experiencias agroecológicas' ? featuresAgroEco.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
               featuresConservacionFauna.push(objForLayer) : detallesPro.tipo_enfoque === 'Ambiente y sociedad' ? featuresAmbSoc.push(objForLayer) :
-                detallesPro.tipo_enfoque === 'Conservación de flora' ? featuresConservacionFlora.push(objForLayer)
+                detallesPro.tipo_enfoque === 'Conservación de vegetación' ? featuresConservacionVeg.push(objForLayer)
                   : console.log('emtpy enfoque!!');
           });
         } else {
@@ -86,8 +86,8 @@ export class MapaComponent implements OnInit {
         this.mapa.loadImage('../../assets/logos_mapa/flora_logo_mini.png', (error, image) => {
           if (error) throw error;
           this.mapa.addImage('floraLogo', image);
-          this.mapa.addSource('featuresConservacionFlora', this.getSourceAndLayer('featuresConservacionFlora', featuresConservacionFlora, 'floraLogo').source);
-          this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionFlora', featuresConservacionFlora, 'floraLogo').layerConfig);
+          this.mapa.addSource('featuresConservacionVeg', this.getSourceAndLayer('featuresConservacionVeg', featuresConservacionVeg, 'floraLogo').source);
+          this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionVeg', featuresConservacionVeg, 'floraLogo').layerConfig);
         });
         this.mapa.loadImage('../../assets/logos_mapa/agroeco_logo_mini.png', (error, image) => {
           if (error) throw error;
@@ -133,7 +133,7 @@ export class MapaComponent implements OnInit {
     this.mapa.remove();
     this.iniciarMapa(layerId);
     this.listenPopUps('featuresConservacionFauna');
-    this.listenPopUps('featuresConservacionFlora');
+    this.listenPopUps('featuresConservacionVeg');
     this.listenPopUps('ambienteYsoc');
     this.listenPopUps('agroeco');
   }

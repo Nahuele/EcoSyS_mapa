@@ -32,8 +32,8 @@
                   formControlName="tipo_enfoque" >
             <option disabled selected>Seleccione tipo</option>
             <option>Conservación de fauna</option>
-            <option>Agroecología y soberanía alimentaria</option>
-            <option>Conservación de flora</option>
+            <option>Experiencias agroecológicas</option>
+            <option>Conservación de vegetación</option>
             <option>Ambiente y sociedad</option>
           </select>
         </div>
@@ -287,7 +287,7 @@
       </div>
     </div>
 
-    <div *ngIf="this.registerForm.value.tipo_enfoque != 'Agroecología y soberanía alimentaria' && this.registerForm.value.tipo_enfoque != 'Ambiente y sociedad'">
+    <div *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas' && this.registerForm.value.tipo_enfoque != 'Ambiente y sociedad'">
       <h4 class="text-center">Registrar especies</h4>
       <div class="form-group">
         <a class="btn btn-warning" type="button" (click)="agregarEspecie()">Agregar Especies</a>

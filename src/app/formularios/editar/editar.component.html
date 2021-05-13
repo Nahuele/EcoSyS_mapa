@@ -35,9 +35,10 @@
                   formControlName="tipo_enfoque"
                   id="tipo_enfoque">
             <option disabled selected>Seleccione tipo</option>
-            <option>Conservación de fauna</option>
+<!--            <option>Conservación de fauna</option>-->
+<!--            <option>Conservación de vegetación</option>-->
+            <option>Conservación de la biodiversidad</option>
             <option>Experiencias agroecológicas</option>
-            <option>Conservación de vegetación</option>
             <option>Ambiente y sociedad</option>
           </select>
         </div>
@@ -54,7 +55,6 @@
         <input [(ngModel)]="this.proyectoService.selectedProject.detalles['estado_actual']" class="form-control" formControlName="estado_actual" placeholder="En curso"
                type="text">
       </div>
-
       <div class="col">
         <label>Institucion</label>
         <input [(ngModel)]="this.proyectoService.selectedProject.detalles['institucion']" class="form-control" formControlName="institucion" placeholder="Universidad del Litoral"

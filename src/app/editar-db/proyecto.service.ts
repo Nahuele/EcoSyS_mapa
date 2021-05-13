@@ -25,7 +25,6 @@ export class ProyectoService {
               private storage: AngularFireStorage,
               private storageSvc: StorageService
   ) {
-
     this.projectsCollection = this.db.collection('proyectos_detalles');
     this.proyectos = this.projectsCollection.snapshotChanges()
       .pipe( // esto es para traer el ID , las de arriba no traian
@@ -42,7 +41,7 @@ export class ProyectoService {
 
   getProjects() {
     return this.proyectos;
-  };
+  }
   // con el then capturo el id del project una vez que esta finalizada la subida de las fotos
   addProject(project) {
     this.projectsCollection.add(project).then((ref) => {
@@ -52,7 +51,7 @@ export class ProyectoService {
   }
 
   editarProject(project) {
-    let idProj = project.id;
+    const idProj = project.id;
     this.proyectoDoc = this.db.doc(`proyectos_detalles/${idProj}`);
     this.proyectoDoc.update(project);
   }
@@ -62,7 +61,7 @@ export class ProyectoService {
     this.proyectoDoc = this.db.doc(`proyectos_detalles/${project.id}`);
     this.proyectoDoc.delete();
     // borrar fotos
-    let storageRef = this.storage.storage.ref();
+    const storageRef = this.storage.storage.ref();
     // Create a reference, busca el usuario, y el id del proyecto, luego borra all incluso la carpeta
     const folderRef = storageRef.child(`uploads/${project.userUid}/${project.id}`);
     // Now we get the references of these files

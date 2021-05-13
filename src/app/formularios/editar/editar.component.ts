@@ -77,7 +77,7 @@ export class EditarComponent implements OnInit, OnDestroy {
     email:            [''], // , [Validators.required, Validators.email]],
     tipo_enfoque:     [''], //, Validators.required],
     nombre:           [''],
-    enfoque:          [''],
+    areas_tematicas:  [''],
     institucion:      [''],
     titulo_extendido: [''],
     descripcion:      [''],

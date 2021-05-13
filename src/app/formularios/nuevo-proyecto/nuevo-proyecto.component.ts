@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {FormArray, FormBuilder} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {ProyectoService} from '../../editar-db/proyecto.service';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {AuthService} from '../../editar-db/auth/auth.service';
@@ -7,7 +7,9 @@ import {take} from 'rxjs/operators';
 import {AlertComponent} from 'ngx-bootstrap/alert';
 import {BehaviorSubject, concat, interval} from 'rxjs';
 import {IucnApiService} from '../iucn-api.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { biodiversidad, agroecologico, ambienteysoc } from '../campos-formulario';
 
 @Component({
   selector:    'app-nuevo-proyecto',
@@ -17,7 +19,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 
 export class NuevoProyectoComponent implements OnInit, OnDestroy {
-
+  // esto es para test del multiselect dropdown
+  disabled = false;
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings = {};
 
   constructor(private formBuilder: FormBuilder,
               public proyectoService: ProyectoService,
@@ -33,6 +39,10 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   get linksvideos() {
     return this.registerForm.get('linksvideos') as FormArray;
   }
+  //
+  // get areastematicas() {
+  //   return this.registerForm.get('areastematicas') as FormArray;
+  // }
 
   get personal() {
     return this.registerForm.get('personal') as FormArray;
@@ -69,7 +79,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     email:            [''], // , [Validators.required, Validators.email]],
     tipo_enfoque:     [''], // , Validators.required],
     nombre:           [''],
-    enfoque:          [''],
+    areas_tematicas: this.formBuilder.array([]),
     institucion:      [''],
     titulo_extendido: [''],
     descripcion:      [''],
@@ -96,8 +106,31 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
   });
 
+
+
   ngOnInit(): void {
     this.userUid$.next(this.authService.userid);
+
+    // multi select dropdown areas tematicas
+
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Seleccionar todo',
+      unSelectAllText: 'Deseleccionar todo',
+      enableCheckAll: false,
+      itemsShowLimit: 3,
+      noDataAvailablePlaceholderText: "Seleccione Tipo",
+      allowSearchFilter: false
+    };
+    // esto revisa cambios en tiempo real del form, areas_tematicas depende de el Tipo de proyecto
+    this.registerForm.valueChanges.subscribe(x => {
+      let tipo = x.tipo_enfoque;
+      this.selectedItems = [];
+      this.dropdownList = tipo === 'Conservación de la biodiversidad' ? biodiversidad : tipo === 'Ambiente y sociedad' ? ambienteysoc :
+        tipo === 'Experiencias agroecológicas' ? agroecologico : [];
+    })
   }
 
   submit() {
@@ -105,14 +138,16 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     // 2) Nested: actualizar el objeto final
     formProyectoFinal['detalles'] = this.removeEmptyFields(this.registerForm.value);
     formProyectoFinal['userUid'] = this.userUid$.value;
+    // TODO arreglar areas tematicas y su interaccion con el form
+    formProyectoFinal['detalles']['areas_tematicas'] = this.selectedItems;
     console.log('detalles', formProyectoFinal);
 
-    this.proyectoService.addProject(formProyectoFinal);
-    this.alerta = true;
-    // window.scrollTo(0, 0);
-    setTimeout(() => {
-      this.router.navigate(['proyectos']);
-    }, 3000);
+    // this.proyectoService.addProject(formProyectoFinal);
+    // this.alerta = true;
+    // // window.scrollTo(0, 0);
+    // setTimeout(() => {
+    //   this.router.navigate(['proyectos']);
+    // }, 3000);
   }
 
   removeEmptyFields(obj) {
@@ -123,6 +158,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
   borrarForm() {
     this.registerForm.reset();
+    this.selectedItems = [];
     this.linksvideos.controls.splice(0, this.linksvideos.length);
     // this.especies.controls.splice(0,this.especies.length);
     this.personal.controls.splice(0, this.personal.length);
@@ -221,11 +257,15 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     concat(tiempo, this.iucndetails$).subscribe((x) => {
       if (typeof x === 'string') {
         const detalleFromSv = this.iucnService.busquedaApi(x).subscribe(y => {
-          const result = y.result[0];
-          this.iucndetalleslist[x] = result;
+          this.iucndetalleslist[x] = y.result[0];
         });
       }
     });
+  }
+
+  onItemSelect(item: any) {
+    console.log('arreglar areas tematicas y forms!')
+    console.log(this.selectedItems);
   }
 
   ngOnDestroy() {

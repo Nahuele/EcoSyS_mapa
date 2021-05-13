@@ -3,6 +3,8 @@ import {environment} from '../../environments/environment';
 import * as mapboxgl from 'mapbox-gl';
 import {ProyectoService} from '../editar-db/proyecto.service';
 import {StorageService} from '../upload-image/storage.service';
+import {BehaviorSubject, interval} from 'rxjs';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector:    'app-mapa',
@@ -12,11 +14,13 @@ import {StorageService} from '../upload-image/storage.service';
 
 export class MapaComponent implements OnInit {
   mapa: mapboxgl.Map;
-  ftConsFau: boolean = true;
-  ftConsFlor: boolean = true;
-  ftAgroEco: boolean = true;
-  ftAmbSoc: boolean = true;
+  // ftConsFau = true;
+  // ftConsFlor = true;
+  ftConsBio = true;
+  ftAgroEco = true;
+  ftAmbSoc = true;
   idproject: string;
+  capasCargadas = false;
   private projectsList = [];
 
   constructor(private proyectoService: ProyectoService,
@@ -26,22 +30,22 @@ export class MapaComponent implements OnInit {
   ngOnInit() {
     mapboxgl.accessToken = environment.mapboxKey;
     this.iniciarMapa();
-    this.listenPopUps('featuresConservacionFauna');
-    this.listenPopUps('featuresConservacionVeg');
+    // this.listenPopUps('featuresConservacionFauna');
+    // this.listenPopUps('featuresConservacionVeg');
+    this.listenPopUps('featuresConservacionBio');
     this.listenPopUps('ambienteYsoc');
     this.listenPopUps('agroeco');
-
   }
 
   buscarCoordenadas() {
     this.proyectoService.getProjects().subscribe(proyectos => {
-      let projects = proyectos;
-      const featuresConservacionVeg = [];
-      const featuresConservacionFauna = [];
+      const projects = proyectos;
+      // const featuresConservacionVeg = [];
+      // const featuresConservacionFauna = [];
+      const featuresConservacionBio = [];
       const featuresAgroEco = [];
       const featuresAmbSoc = [];
-
-      for (let proj of Object.keys(projects)) {
+      for (const proj of Object.keys(projects)) {
         const itemProj = projects[proj].detalles;
         this.idproject = projects[proj].id;
 
@@ -49,69 +53,60 @@ export class MapaComponent implements OnInit {
 
         if (itemProj.coordenadas) {
           itemProj.coordenadas.forEach((element) => {
-
             const coordenadas = [+element.longitud, +element.latitud];
             const detallesPro = itemProj;
-            let objForLayer = {
-              'type':        'Feature',
-              'properties':  {
-                'title':       detallesPro.nombre,
+            const objForLayer = {
+              type:        'Feature',
+              properties:  {
+                title: detallesPro.nombre,
                 // 'marker-color': '#3c4e5a',
                 // 'marker-symbol': 'monument',
                 // 'marker-size': 'large',
                 // 'icon': 'theatre',
-                'description': this.setearHtmlPopUp(projects[proj]),
-              }, 'geometry': {'coordinates': coordenadas, 'type': 'Point'}
+                description: this.setearHtmlPopUp(projects[proj]),
+              }, geometry: {coordinates: coordenadas, type: 'Point'}
             };
-            detallesPro.tipo_enfoque === 'Experiencias agroecológicas' ? featuresAgroEco.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de fauna' ?
-              featuresConservacionFauna.push(objForLayer) : detallesPro.tipo_enfoque === 'Ambiente y sociedad' ? featuresAmbSoc.push(objForLayer) :
-                detallesPro.tipo_enfoque === 'Conservación de vegetación' ? featuresConservacionVeg.push(objForLayer)
-                  : console.log('emtpy enfoque!!');
+            detallesPro.tipo_enfoque === 'Experiencias agroecológicas' ? featuresAgroEco.push(objForLayer) : detallesPro.tipo_enfoque === 'Conservación de la biodiversidad' ?
+              // tslint:disable-next-line:max-line-length
+              featuresConservacionBio.push(objForLayer) : detallesPro.tipo_enfoque === 'Ambiente y sociedad' ? featuresAmbSoc.push(objForLayer) :
+                // detallesPro.tipo_enfoque === 'Conservación de vegetación' ? featuresConservacionVeg.push(objForLayer)
+                console.log('emtpy enfoque!!');
           });
         } else {
-          console.log('not coord found')
+          console.log('not coord found');
         }
-
       }
 
-      this.mapa.on('load', () => {
-        // this.mapa.loadImage('../../assets/logos_mapa/fauna_logo_mini.png', (image) => {
-        // this.mapa.loadImage('https://upload.wikimedia.org/wikipedia/commons/7/7c/201408_cat.png',  (error, image) => {
-        this.mapa.loadImage('../../assets/logos_mapa/fauna_logo_mini.png', (error, image) => {
-          if (error) throw error;
-          this.mapa.addImage('faunaLogo', image);
-          this.mapa.addSource('featuresConservacionFauna', this.getSourceAndLayer('featuresConservacionFauna', featuresConservacionFauna, 'faunaLogo').source);
-          this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionFauna', featuresConservacionFauna, 'faunaLogo' ).layerConfig);
-        });
-        this.mapa.loadImage('../../assets/logos_mapa/flora_logo_mini.png', (error, image) => {
-          if (error) throw error;
-          this.mapa.addImage('floraLogo', image);
-          this.mapa.addSource('featuresConservacionVeg', this.getSourceAndLayer('featuresConservacionVeg', featuresConservacionVeg, 'floraLogo').source);
-          this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionVeg', featuresConservacionVeg, 'floraLogo').layerConfig);
+      if (this.mapa.loaded()) {
+        this.mapa.loadImage('../../assets/logos_mapa/biodiversidad_logo_mini.png', (error, image) => {
+          if (error) { throw error; }
+          this.mapa.addImage('bioLogo', image);
+          this.mapa.addSource('featuresConservacionBio', this.getSourceAndLayer('featuresConservacionBio', featuresConservacionBio, 'bioLogo').source);
+          this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionBio', featuresConservacionBio, 'bioLogo').layerConfig);
         });
         this.mapa.loadImage('../../assets/logos_mapa/agroeco_logo_mini.png', (error, image) => {
-          if (error) throw error;
+          if (error) { throw error; }
           this.mapa.addImage('agroecoLogo', image);
           this.mapa.addSource('agroeco', this.getSourceAndLayer('agroeco', featuresAgroEco, 'agroecoLogo').source);
           this.mapa.addLayer(this.getSourceAndLayer('agroeco', featuresAgroEco, 'agroecoLogo').layerConfig);
-
         });
         this.mapa.loadImage('../../assets/logos_mapa/sociedad_amb_logo_mini.png', (error, image) => {
-          if (error) throw error;
+          if (error) { throw error; }
           this.mapa.addImage('socambLogo', image);
           this.mapa.addSource('ambienteYsoc', this.getSourceAndLayer('ambienteYsoc', featuresAmbSoc, 'socambLogo').source);
           this.mapa.addLayer(this.getSourceAndLayer('ambienteYsoc', featuresAmbSoc, 'socambLogo').layerConfig);
         });
-        this.showOrHideLayers();
-      });
-
+      }
+      else {
+        this.cargarMapaIconos(featuresConservacionBio, featuresAgroEco, featuresAmbSoc);
+      }
     });
   }
 
   // creo una funcion q me hace el popup HTML
   setearHtmlPopUp(proyecto) {
 
-    let link = 'https://icon-library.com/images/no-image-available-icon/no-image-available-icon-7.jpg';
+    const link = 'https://icon-library.com/images/no-image-available-icon/no-image-available-icon-7.jpg';
 
     return `<div class="card">
         <div class="card-header text-center">
@@ -132,22 +127,23 @@ export class MapaComponent implements OnInit {
   switchStyle(layerId) {
     this.mapa.remove();
     this.iniciarMapa(layerId);
-    this.listenPopUps('featuresConservacionFauna');
-    this.listenPopUps('featuresConservacionVeg');
+    // this.listenPopUps('featuresConservacionFauna');
+    // this.listenPopUps('featuresConservacionVeg');
+    this.listenPopUps('featuresConservacionBio');
     this.listenPopUps('ambienteYsoc');
     this.listenPopUps('agroeco');
   }
 
   getSourceAndLayer(nameLayer, featuresList, icon?) {
-    const source = {'type': 'geojson', 'data': {'type': 'FeatureCollection', 'features': featuresList}};
+    const source = {type: 'geojson', data: {type: 'FeatureCollection', features: featuresList}};
     const layerConfig = {
-      'id':     `${nameLayer}`,
-      'source': `${nameLayer}`,
-      'type': 'symbol',
-      'layout': {
-        'visibility': 'visible',
+      id:     `${nameLayer}`,
+      source: `${nameLayer}`,
+      type:   'symbol',
+      layout: {
+        visibility:   'visible',
         'icon-image': icon,
-        'icon-size': 1
+        'icon-size':  1
       },
       // paint:    {
       //   'circle-radius':       20,
@@ -161,8 +157,8 @@ export class MapaComponent implements OnInit {
   }
 
   mostrarCapa(event) {
-    let visibility = event.checked;
-    let clickedLayerId = event.name;
+    const visibility = event.checked;
+    const clickedLayerId = event.name;
     // toggle layer visibility by changing the layout object's visibility property
     if (visibility === true) {
       this.mapa.setLayoutProperty(clickedLayerId, 'visibility', 'none');
@@ -171,37 +167,11 @@ export class MapaComponent implements OnInit {
     }
   }
 
-  private iniciarMapa(layer?: string) {
-    if (layer) {
-      this.mapa = new mapboxgl.Map({
-        container: 'mapa-mapbox', // container id
-        style:     `mapbox://styles/mapbox/${layer}`, // mapbox://styles/mapbox/streets-v11
-        // mapbox://styles/iannbarbe/ckduoxxyy0u7d19teotam0daj
-        center:    [-68.5631238, -43.7027949], // starting position
-        zoom:      3 // starting zoom
-      });
-      this.mapa.addControl(new mapboxgl.NavigationControl());
-      this.buscarCoordenadas();
-    } else {
-      this.mapa = new mapboxgl.Map({
-        container: 'mapa-mapbox', // container id
-        style:     `mapbox://styles/mapbox/satellite-v9`, // mapbox://styles/mapbox/streets-v11
-        // mapbox://styles/iannbarbe/ckduoxxyy0u7d19teotam0daj
-        center:    [-68.5631238, -43.7027949], // starting position
-        zoom:      3 // starting zoom
-      });
-      // agrego el boton  de zoom y norte
-      this.mapa.addControl(new mapboxgl.NavigationControl());
-      this.buscarCoordenadas();
-    }
-  }
-
   listenPopUps(layerId) {
-
     this.mapa.on('click', layerId, (e) => {
 
-      let coordinates = e.features[0].geometry.coordinates.slice();
-      var description = e.features[0].properties.description;
+      const coordinates = e.features[0].geometry.coordinates.slice();
+      let description = e.features[0].properties.description;
 
       const project = description.split('"');
       let projectID;
@@ -214,7 +184,7 @@ export class MapaComponent implements OnInit {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
 
-      for (let itemHtml of project) {
+      for (const itemHtml of project) {
         if (itemHtml.includes('detalles/')) {
           projectID = itemHtml.split('/')[1];
         } else if (itemHtml.includes('user/')) {
@@ -234,7 +204,6 @@ export class MapaComponent implements OnInit {
           .addTo(this.mapa);
       });
     });
-
 // Change the cursor to a pointer when the mouse is over the places layer.
     this.mapa.on('mouseenter', layerId, () => {
       this.mapa.getCanvas().style.cursor = 'pointer';
@@ -245,28 +214,43 @@ export class MapaComponent implements OnInit {
     });
   }
 
-// settear visibilidad de capas cuando cambio de estilo de mapa
-  showOrHideLayers() {
-    // if (this.ftConsFau === true) {
-    //   this.mapa.setLayoutProperty('featuresConservacionFauna', 'visibility', 'visible');
-    // } else if (this.ftConsFau === false) {
-    //   this.mapa.setLayoutProperty('featuresConservacionFauna', 'visibility', 'none');
-    // }
-    // if (this.ftConsFlor === true) {
-    //   this.mapa.setLayoutProperty('featuresConservacionFlora', 'visibility', 'visible');
-    // } else if (this.ftConsFlor === false) {
-    //   this.mapa.setLayoutProperty('featuresConservacionFlora', 'visibility', 'none');
-    // }
-    // if (this.ftAgroEco === true) {
-    //   this.mapa.setLayoutProperty('agroeco', 'visibility', 'visible');
-    // } else if (this.ftAgroEco === false) {
-    //   this.mapa.setLayoutProperty('agroeco', 'visibility', 'none');
-    // }
-    // if (this.ftAmbSoc === true) {
-    //   this.mapa.setLayoutProperty('ambienteYsoc', 'visibility', 'visible');
-    // } else if (this.ftAmbSoc === false) {
-    //   this.mapa.setLayoutProperty('ambienteYsoc', 'visibility', 'none');
-    // }
+  iniciarMapa(layer?: string) {
+    const selectedLayer = layer ? layer : 'satellite-v9';
+    this.mapa = new mapboxgl.Map({
+      container: 'mapa-mapbox', // container id
+      style:     `mapbox://styles/mapbox/${selectedLayer}`, // mapbox://styles/mapbox/streets-v11
+      // mapbox://styles/iannbarbe/ckduoxxyy0u7d19teotam0daj
+      center: [-68.5631238, -43.7027949], // starting position
+      zoom:   3 // starting zoom
+    });
+    this.mapa.addControl(new mapboxgl.NavigationControl());
+    this.buscarCoordenadas();
+  }
+// esto intenta solucionar el bug de map.on('load') o ('idle') que no carga la primera vez
+  cargarMapaIconos(ftsConservacionBio, ftsAgroEco, ftsAmbSoc) {
+    this.mapa.on('idle', () => {
+      this.mapa.loadImage('../../assets/logos_mapa/biodiversidad_logo_mini.png', (error, image) => {
+        if (error) { throw error; }
+        this.mapa.addImage('bioLogo', image);
+        this.mapa.addSource('featuresConservacionBio', this.getSourceAndLayer('featuresConservacionBio', ftsConservacionBio, 'bioLogo').source);
+        this.mapa.addLayer(this.getSourceAndLayer('featuresConservacionBio', ftsConservacionBio, 'bioLogo').layerConfig);
+      });
+      this.mapa.loadImage('../../assets/logos_mapa/agroeco_logo_mini.png', (error, image) => {
+        if (error) { throw error; }
+        this.mapa.addImage('agroecoLogo', image);
+        this.mapa.addSource('agroeco', this.getSourceAndLayer('agroeco', ftsAgroEco, 'agroecoLogo').source);
+        this.mapa.addLayer(this.getSourceAndLayer('agroeco', ftsAgroEco, 'agroecoLogo').layerConfig);
+      });
+      this.mapa.loadImage('../../assets/logos_mapa/sociedad_amb_logo_mini.png', (error, image) => {
+        if (error) { throw error; }
+        this.mapa.addImage('socambLogo', image);
+        this.mapa.addSource('ambienteYsoc', this.getSourceAndLayer('ambienteYsoc', ftsAmbSoc, 'socambLogo').source);
+        this.mapa.addLayer(this.getSourceAndLayer('ambienteYsoc', ftsAmbSoc, 'socambLogo').layerConfig);
+      });
+      // this.showOrHideLayers();
+      console.log('mapa desde funcion correctora con idle, lo carga 3 veces, 2 de las cuales va a dar errores xq ya existen los objetos html')
+      this.capasCargadas = true;
+    });
   }
 
 }

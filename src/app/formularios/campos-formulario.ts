@@ -52,3 +52,37 @@ export interface especies {
   nombre_vulgar?: string,
   tso?:string
 }
+
+export const biodiversidad = [
+  { item_id: 1, item_text: 'Fauna' },
+  { item_id: 2, item_text: 'Vegetación' },
+  { item_id: 3, item_text: 'Hongos' },
+  { item_id: 5, item_text: 'Especies nativas' },
+  { item_id: 6, item_text: 'Especies exóticas invasoras' },
+  { item_id: 7, item_text: 'Especies en silvestría' },
+  { item_id: 8, item_text: 'Especies en cautiverio' },
+  { item_id: 4, item_text: 'Bacterias' },
+  { item_id: 9, item_text: 'Otros' }
+]
+
+export const agroecologico = [
+  { item_id: 1, item_text: 'Ferias' },
+  { item_id: 2, item_text: 'Huertas comunitarias' },
+  { item_id: 3, item_text: 'Nodos' },
+  { item_id: 4, item_text: 'Campos' },
+  { item_id: 5, item_text: 'Compostaje comunitario' },
+  { item_id: 6, item_text: 'Viveros' },
+  { item_id: 7, item_text: 'Otros' },
+]
+export const ambienteysoc = [
+  { item_id: 1, item_text: 'Minería' },
+  { item_id: 2, item_text: 'Manejo de residuos' },
+  { item_id: 3, item_text: 'Contaminación' },
+  { item_id: 4, item_text: 'Eco-epidemiología' },
+  { item_id: 5, item_text: 'Cambio climático' },
+  { item_id: 6, item_text: 'Pesqueras ilegales' },
+  { item_id: 7, item_text: 'Política y ambiente' },
+  { item_id: 8, item_text: 'Experiencias sustentables' },
+  { item_id: 9, item_text: 'Otros' },
+]
+

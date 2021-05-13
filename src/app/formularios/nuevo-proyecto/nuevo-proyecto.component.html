@@ -31,9 +31,10 @@
                   [ngClass]="{'is-invalid': registerForm.get('tipo_enfoque').invalid}"
                   formControlName="tipo_enfoque" >
             <option disabled selected>Seleccione tipo</option>
-            <option>Conservación de fauna</option>
+            <!--            <option>Conservación de fauna</option>-->
+            <!--            <option>Conservación de vegetación</option>-->
+            <option>Conservación de la biodiversidad</option>
             <option>Experiencias agroecológicas</option>
-            <option>Conservación de vegetación</option>
             <option>Ambiente y sociedad</option>
           </select>
         </div>
@@ -41,8 +42,15 @@
     </div>
     <div class="row">
       <div class="col">
-        <label>Enfoque</label>
-        <input type="text" class="form-control" placeholder="Ecologia" formControlName="enfoque" >
+        <label>Áreas temáticas</label>
+          <ng-multiselect-dropdown
+            [placeholder]="'Seleccione'"
+            [settings]="dropdownSettings"
+            [data]="dropdownList"
+            [(ngModel)]="selectedItems"
+            [ngModelOptions]="{standalone: true}"
+            (onSelect)="onItemSelect($event)">
+          </ng-multiselect-dropdown>
       </div>
       <div class="col">
         <label>Estado actual</label>

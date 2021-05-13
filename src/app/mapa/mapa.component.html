@@ -30,19 +30,19 @@
     <div class="btn-group-toggle" data-toggle="buttons">
       <div class="row-cols-1">
         <div class="col">
-          <a (click)="mostrarCapa(featuresConservacionFauna);ftConsFau =!ftConsFau" id="conservacionfauna"><label
+          <a (click)="mostrarCapa(featuresConservacionBio);ftConsBio =!ftConsBio" id="conservacionbio"><label
             class="btn btn-transparent btn-sm mr-3">
-            <input #featuresConservacionFauna [(ngModel)]="ftConsFau" checked name="featuresConservacionFauna" type="checkbox"
+            <input #featuresConservacionBio [(ngModel)]="ftConsBio" checked name="featuresConservacionBio" type="checkbox"
                    value="0"/>
-            Conservación de fauna
+            Conservación de la biodiversidad
           </label></a></div>
-        <div class="col"><a (click)="mostrarCapa(featuresConservacionVeg);ftConsFlor =!ftConsFlor"
-                            id="conservacion">
-          <label class="btn btn-transparent btn-sm mr-3">
-            <input #featuresConservacionVeg [(ngModel)]="ftConsFlor" checked name="featuresConservacionVeg" type="checkbox"
-                   value="0"/>
-            Conservación de vegetación
-          </label></a></div>
+<!--        <div class="col"><a (click)="mostrarCapa(featuresConservacionVeg);ftConsFlor =!ftConsFlor"-->
+<!--                            id="conservacion">-->
+<!--          <label class="btn btn-transparent btn-sm mr-3">-->
+<!--            <input #featuresConservacionVeg [(ngModel)]="ftConsFlor" checked name="featuresConservacionVeg" type="checkbox"-->
+<!--                   value="0"/>-->
+<!--            Conservación de vegetación-->
+<!--          </label></a></div>-->
         <div class="col"><a (click)="mostrarCapa(agroeco);ftAgroEco =!ftAgroEco" id="agroeco">
           <label class="btn btn-transparent btn-sm mr-3">
             <input #agroeco [(ngModel)]="ftAgroEco" checked name="agroeco" type="checkbox" value="0"/>

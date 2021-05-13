@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule} from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import {HttpClientModule} from '@angular/common/http';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,7 +34,7 @@ import { EditarComponent } from './formularios/editar/editar.component';
 import {BUCKET, AngularFireStorageModule} from '@angular/fire/storage';
 import {UploadImageModule} from './upload-image/upload-image.module';
 import {StorageService} from './upload-image/storage.service';
-import { YouTubePlayerModule } from "@angular/youtube-player";
+import { YouTubePlayerModule } from '@angular/youtube-player';
 import { CarouselComponent } from './carousel/carousel.component';
 import {CarouselModule} from 'ngx-bootstrap/carousel';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
@@ -88,6 +89,7 @@ import { TutorialComponent } from './tutorial/tutorial.component';
     ModalModule.forRoot(),
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   exports:[],
   providers: [AuthService, CanEditGuard, { provide: BUCKET, useValue: 'gs://mapaproyectos-59125.appspot.com'}, StorageService],

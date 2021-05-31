@@ -14,14 +14,13 @@ import {take} from 'rxjs/operators';
 
 export class MapaComponent implements OnInit {
   mapa: mapboxgl.Map;
-  // ftConsFau = true;
-  // ftConsFlor = true;
   ftConsBio = true;
   ftAgroEco = true;
   ftAmbSoc = true;
   idproject: string;
   capasCargadas = false;
   private projectsList = [];
+  loadingCursor = new BehaviorSubject<boolean>(false);
 
   constructor(private proyectoService: ProyectoService,
               private view: ViewContainerRef,
@@ -30,11 +29,14 @@ export class MapaComponent implements OnInit {
   ngOnInit() {
     mapboxgl.accessToken = environment.mapboxKey;
     this.iniciarMapa();
-    // this.listenPopUps('featuresConservacionFauna');
-    // this.listenPopUps('featuresConservacionVeg');
     this.listenPopUps('featuresConservacionBio');
     this.listenPopUps('ambienteYsoc');
     this.listenPopUps('agroeco');
+    this.mapa.getCanvas().style.cursor = 'wait';
+    // esto es para el cursor waiting
+    this.loadingCursor.asObservable().subscribe(value => {
+      value == true ? this.mapa.getCanvas().style.cursor = 'wait' : this.mapa.getCanvas().style.cursor = 'default';
+    })
   }
 
   buscarCoordenadas() {
@@ -168,22 +170,20 @@ export class MapaComponent implements OnInit {
   }
 
   listenPopUps(layerId) {
-    this.mapa.on('click', layerId, (e) => {
 
+    this.mapa.on('click', layerId, (e) => {
       const coordinates = e.features[0].geometry.coordinates.slice();
       let description = e.features[0].properties.description;
-
       const project = description.split('"');
       let projectID;
       let userId;
-
+      this.loadingCursor.next(true)
       // Ensure that if the this.mapa is zoomed out such that multiple
 // copies of the feature are visible, the popup appears
 // over the copy being pointed to.
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
-
       for (const itemHtml of project) {
         if (itemHtml.includes('detalles/')) {
           projectID = itemHtml.split('/')[1];
@@ -191,26 +191,29 @@ export class MapaComponent implements OnInit {
           userId = itemHtml.split('/')[1];
         }
       }
-
       this.storageSvc.getSingleImage(projectID, userId).then(url => {
         // aca reemplazo la imagen por defecto cuando se le da el click al icono
         if (url.includes('http')) {
           description = description.replace('https://icon-library.com/images/no-image-available-icon/no-image-available-icon-7.jpg', url);
         }
-
         new mapboxgl.Popup({offset: 25, closeButton: false, className: 'mapboxgl-popup', maxWidth: '400px'})
           .setLngLat(coordinates)
           .setHTML(description)
           .addTo(this.mapa);
+        this.loadingCursor.next(false);
       });
     });
-// Change the cursor to a pointer when the mouse is over the places layer.
+// // Change the cursor to a pointer when the mouse is over the places layer.
     this.mapa.on('mouseenter', layerId, () => {
-      this.mapa.getCanvas().style.cursor = 'pointer';
+      if (!this.loadingCursor.getValue()) {
+        this.mapa.getCanvas().style.cursor = 'pointer';
+      }
     });
 // Change it back to a pointer when it leaves.
     this.mapa.on('mouseleave', layerId, () => {
-      this.mapa.getCanvas().style.cursor = '';
+      if (!this.loadingCursor.getValue()) {
+        this.mapa.getCanvas().style.cursor = '';
+      }
     });
   }
 

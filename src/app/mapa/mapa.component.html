@@ -1,9 +1,11 @@
 <!--<blockquote class="blockquote text-center" style="margin: 20px">-->
 <!--  <p class="mb-0">Mapa</p>-->
 <!--</blockquote>-->
-<!--<div class="container">-->
+<!--<div [ngStyle]="{cursor: 'wait'}">-->
+<!--<div id="mapa-mapbox" [ngStyle]="{cursor: loadingCursor ? 'wait' : 'normal'}"></div>-->
+
 <div id="mapa-mapbox"></div>
-<!--</div>-->
+
 
 <div class="map-overlay-container">
   <div class="map-overlay">
@@ -36,13 +38,6 @@
                    value="0"/>
             Conservación de la biodiversidad
           </label></a></div>
-<!--        <div class="col"><a (click)="mostrarCapa(featuresConservacionVeg);ftConsFlor =!ftConsFlor"-->
-<!--                            id="conservacion">-->
-<!--          <label class="btn btn-transparent btn-sm mr-3">-->
-<!--            <input #featuresConservacionVeg [(ngModel)]="ftConsFlor" checked name="featuresConservacionVeg" type="checkbox"-->
-<!--                   value="0"/>-->
-<!--            Conservación de vegetación-->
-<!--          </label></a></div>-->
         <div class="col"><a (click)="mostrarCapa(agroeco);ftAgroEco =!ftAgroEco" id="agroeco">
           <label class="btn btn-transparent btn-sm mr-3">
             <input #agroeco [(ngModel)]="ftAgroEco" checked name="agroeco" type="checkbox" value="0"/>
@@ -58,5 +53,5 @@
     <hr>
   </div>
 </div>
-
+<!--</div>-->
 

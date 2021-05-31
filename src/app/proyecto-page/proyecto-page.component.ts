@@ -48,9 +48,6 @@ export class ProyectoPageComponent implements OnInit {
           this.imagenes = this.storageSvc.getImages(proyecto.id, proyecto.userUid);
 
           if (this.detallesPro.especies.length > 0) {
-            console.log(this.detallesPro.especies)
-
-
             for (let especie of this.detallesPro.especies) {
               this.checkRedList(especie.spob.toLowerCase())
             }

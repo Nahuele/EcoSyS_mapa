@@ -43,6 +43,7 @@ import { RedesSocialesComponent } from './proyecto-page/redes-sociales/redes-soc
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './acerca-de/about.component';
 import { TutorialComponent } from './tutorial/tutorial.component';
+import { MapCoordComponent } from './formularios/map-coord/map-coord.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { TutorialComponent } from './tutorial/tutorial.component';
     ContactComponent,
     AboutComponent,
     TutorialComponent,
+    MapCoordComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +81,6 @@ import { TutorialComponent } from './tutorial/tutorial.component';
     BsDatepickerModule.forRoot(),
     BrowserAnimationsModule,
     AngularFireAuthModule,
-    ModalModule.forRoot(),
     AlertModule.forRoot(),
     HttpClientModule,
     AngularFireStorageModule,

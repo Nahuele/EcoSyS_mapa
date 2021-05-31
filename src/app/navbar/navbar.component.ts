@@ -10,6 +10,8 @@ import {Observable} from 'rxjs';
 })
 export class NavbarComponent implements OnInit {
 
+  isCollapsed = true;
+
   public uid: string;
 
   public user$: Observable<any> = this.authService.afAuth.user;

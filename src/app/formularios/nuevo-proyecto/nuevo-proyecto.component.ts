@@ -1,7 +1,7 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {ProyectoService} from '../../editar-db/proyecto.service';
-import {BsModalService} from 'ngx-bootstrap/modal';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {AuthService} from '../../editar-db/auth/auth.service';
 import {take} from 'rxjs/operators';
 import {AlertComponent} from 'ngx-bootstrap/alert';
@@ -10,6 +10,7 @@ import {IucnApiService} from '../iucn-api.service';
 import {Router} from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { biodiversidad, agroecologico, ambienteysoc } from '../campos-formulario';
+import {MapCoordComponent} from '../map-coord/map-coord.component';
 
 @Component({
   selector:    'app-nuevo-proyecto',
@@ -24,6 +25,8 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   dropdownList = [];
   selectedItems = [];
   dropdownSettings = {};
+  openMapCoord: BsModalRef;
+  coordsFromMapa;
 
   constructor(private formBuilder: FormBuilder,
               public proyectoService: ProyectoService,
@@ -131,6 +134,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
       this.dropdownList = tipo === 'Conservación de la biodiversidad' ? biodiversidad : tipo === 'Ambiente y sociedad' ? ambienteysoc :
         tipo === 'Experiencias agroecológicas' ? agroecologico : [];
     })
+
   }
 
   submit() {
@@ -219,14 +223,22 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     this.especies.push(especiesFormGroup);
   }
 
-  agregarCoordenadas() {
-    const coordenadasFormGroup = this.formBuilder.group({
-      latitud:  [''],
-      longitud: ['']
-    });
-    this.coordenadas.push(coordenadasFormGroup);
+  agregarCoordenadas(mapacor: TemplateRef<any>) {
+    this.openMapCoord = this.modalService.show(mapacor, Object.assign({}, { class: 'modal-xl' }));
+    this.coordsFromMapa = null;
   }
 
+  getCoordsFromMapa(event) {
+    // este evento viene del child component, me trae las coordenadas luego de dar click en el mapa
+    this.coordsFromMapa = event
+    if (this.coordsFromMapa) {
+      const coordenadasFormGroup = this.formBuilder.group({
+        latitud: this.coordsFromMapa.lat.toString(),
+        longitud: this.coordsFromMapa.lng.toString()
+      });
+      this.coordenadas.push(coordenadasFormGroup);
+    }
+  }
 
   onClosed(dismissedAlert: AlertComponent): void {
     this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);

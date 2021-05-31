@@ -100,7 +100,7 @@
       </div>
     </div>
 
-      <a class="btn button-dos pulse mb-2" type="button" (click)="agregarCoordenadas()">Agregar Coordenadas
+      <a class="btn button-dos pulse mb-2" type="button" (click)="agregarCoordenadas(mapacor)">Agregar Coordenadas
         <i class="fa fa-map-marker ml-2"></i>
       </a>
       <div class="row justify-content-md-center" formGroupName="coordenadas" *ngFor="let link of coordenadas.controls; let u = index">
@@ -108,11 +108,11 @@
         <div class="row justify-content-md-center form-group" >
           <label class="col-auto" [attr.for]="'link' + u"><strong>Latitud</strong></label>
           <div class="col-auto">
-            <input type="text" [attr.id]="'link' + u" class="form-control" formControlName="latitud" name="latitud">
+            <input type="text" [attr.id]="'link' + u" class="form-control" formControlName="latitud" name="latitud" >
           </div>
           <label class="col-auto" [attr.for]="'link' + u"><strong>Longitud</strong></label>
           <div class="col-auto">
-            <input type="text" [attr.id]="'link' + u" class="form-control" formControlName="longitud" name="longitud">
+            <input type="text" [attr.id]="'link' + u" class="form-control" formControlName="longitud" name="longitud" >
           </div>
           <div class="col-auto">
             <button class="btn btn-sm btn-outline-danger" type="button" (click)="removerItem(u,'coordenadas', 'current')">
@@ -378,3 +378,6 @@
   </form>
 </div>
 
+<ng-template #mapacor>
+    <app-map-coord (puntoElegido)="getCoordsFromMapa($event)"></app-map-coord>
+</ng-template>

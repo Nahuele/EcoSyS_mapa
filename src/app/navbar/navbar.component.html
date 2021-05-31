@@ -1,14 +1,14 @@
-<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #7BBF68">
+<nav class="navbar navbar-expand-lg navbar-light ">
   <a class="navbar-brand float-left" routerLink="">
     <img src="assets/logo.png" style="max-height: 3rem;">
   </a>
   <button aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
-          data-target="#navbarTogglerDemo02" data-toggle="collapse" type="button">
+          data-target="#navbarTogglerDemo02" data-toggle="collapse" type="button" (click)="isCollapsed = !isCollapsed">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02" [collapse]="isCollapsed">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 d-flex justify-content-start">
       <li class="nav-item">
         <a class="nav-link" href="#" routerLink="/">Mapa <span class="sr-only">(current)</span></a>
       </li>
@@ -26,7 +26,8 @@
         </a>
       </li>
     </ul>
-    <ul class="navbar-nav abs-center-x">
+
+    <ul class="navbar-nav d-flex justify-content-center">
       <li class="nav-item"><a class="nav-link font-weight-bold btn btn-transparent" href="https://1ecosocialysoberana.wixsite.com/website-0" target="_blank">
         <i class="fa fa-hand-pointer-o fa-rotate-90 blog-hand-color"></i>
         Ecología Social y Soberana - Sitio
@@ -36,7 +37,7 @@
       </li>
     </ul>
 
-    <ul *ngIf="user$ | async as user; else login" class="navbar-nav my-2 my-lg-0">
+    <ul *ngIf="user$ | async as user; else login" class="navbar-nav my-2 my-lg-0 d-flex justify-content-end ml-auto">
       <li class="nav-item">
         <a class="nav-link" routerLink="submitproject">Agregar
           <i class="fa fa-plus"></i></a>
@@ -66,3 +67,6 @@
     </ng-template>
   </div>
 </nav>
+
+
+

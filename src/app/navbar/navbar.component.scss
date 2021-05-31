@@ -1,10 +1,13 @@
 
 // Navbar
    .navbar {
+     position: relative;
      border: 0;
      border-radius: 0;
     /* background: linear-gradient(to right, #A5D100, #B3C228, #C8D100); */
      background: linear-gradient(to right, #307F4E, #14B21D, #307f4e);
+     z-index: 3;
+     background-color: #7BBF68;
 .nav li > a, .navbar-brand {
   max-height: 50px;
   width: auto;
@@ -20,12 +23,6 @@
   visibility: visible;
   font-size: 14px;
 }}}}
-
-.abs-center-x {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
 
 .blog-hand-color {
   color: firebrick;

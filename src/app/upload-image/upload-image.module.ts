@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { UploadImageRoutingModule } from './upload-image-routing.module';
 import { UploadImageComponent } from './upload-image.component';
 import { DirectivaimagenDirective } from './directives/directivaimagen.directive';
+import {TooltipModule} from 'ngx-bootstrap/tooltip';
 
 
 @NgModule({
@@ -11,9 +12,10 @@ import { DirectivaimagenDirective } from './directives/directivaimagen.directive
   exports:      [
     UploadImageComponent
   ],
-  imports:      [
-    CommonModule,
-    UploadImageRoutingModule
-  ]
+    imports: [
+        CommonModule,
+        UploadImageRoutingModule,
+        TooltipModule
+    ]
 })
 export class UploadImageModule { }

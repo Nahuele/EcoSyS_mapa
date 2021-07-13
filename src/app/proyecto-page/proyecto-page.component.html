@@ -1,29 +1,56 @@
 <div class="container mt-3 mb-5">
-  <div *ngIf="detallesPro">
+  <div *ngIf="detallesPro; else spinner">
     <div class="mb-5">
       <h4>{{detallesPro['nombre']}}</h4>
     </div>
-
+    <div class="container">
+      <div *ngIf="detallesPro['areas_tematicas']" class="row">
+        <div *ngFor="let areatem of detallesPro['areas_tematicas']" tooltip="Área temática">
+          <span class="badge badge-pill badge-success mr-1">{{areatem}}</span>
+        </div>
+      </div>
+      <div *ngIf="detallesPro['campo_aplicacion']" class="row mt-2">
+        <div *ngFor="let campo of detallesPro['campo_aplicacion']" tooltip="Campo de aplicación">
+          <span class="badge badge-info mr-1">{{campo}}</span>
+        </div>
+      </div>
+    </div>
     <div class="container mt-3">
-      <div class="row">
-        <div *ngFor="let item of fieldsNames">
-          <div *ngIf="(detallesPro[item.field]) && (item.field != 'resumen') && (item.field != 'redes_sociales')">
-            <div *ngIf="item.label" class="col-auto mt-4 mr-5">
-              <p class="text-muted font-italic">{{item.label}}</p>
-              <p>{{detallesPro[item.field]}}</p>
+      <div *ngIf="detallesPro['resumen']" class="mt-5">
+        <div class="row"><h6 class="font-weight-bold text-muted mb-3 font-italic">Resumen</h6></div>
+        <div class="row offset-1"><p>{{detallesPro['resumen']}}</p></div>
+      </div>
+      <div *ngIf="detallesPro['descripcion']" class="mt-5">
+        <div class="row"><h6 class="font-weight-bold text-muted mb-3 font-italic">Descripción</h6></div>
+        <div class="row offset-1"><p>{{detallesPro['descripcion']}}</p></div>
+      </div>
+      <div *ngIf="detallesPro['resultados']" class="mt-5">
+        <div class="row"><h6 class="font-weight-bold text-muted mb-3 font-italic">Avances/Resultados</h6></div>
+        <div class="row offset-1"><p>{{detallesPro['resultados']}}</p></div>
+      </div>
+    </div>
+      <hr>
+      <div class="container mt-3">
+        <div class="row">
+          <div *ngFor="let item of fieldsNames">
+            <div *ngIf="(detallesPro[item.field])">
+              <div *ngIf="item.label" class="col mt-4 mr-5">
+                <p class="text-muted font-italic">{{item.label}}</p>
+                <p>{{detallesPro[item.field]}}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+
+
+    <hr>
+    <div class="container mt-3">
       <div *ngIf="detallesPro['redes_sociales']" class="row">
         <div class="col mt-4 mr-5 justify-content-center">
           <app-redes-sociales [redes]="detallesPro['redes_sociales']"></app-redes-sociales>
         </div>
-      </div>
-
-      <div *ngIf="detallesPro['resumen']" class="row mt-5">
-        <h6 class="font-weight-bold text-muted mb-3 font-italic">Resumen</h6>
-        <p>{{detallesPro['resumen']}}</p>
       </div>
     </div>
     <hr>
@@ -31,27 +58,43 @@
     <div class="container">
       <div class="row">
         <div class="col-8">
-          <div class="mt-3 mb-2">
-            <h6 class="font-weight-bold text-muted mb-3 font-italic">Coordenadas
-              <i class="fa fa-map-marker ml-1"></i></h6>
-          </div>
-          <div class="offset-2 justify-content-center">
-            <div class="col-6">
-              <table class="table table-sm table-borderless">
-                <thead>
-                <tr>
-                  <th scope="col">Longitud</th>
-                  <th scope="col">Latitud</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let coord of detallesPro['coordenadas']">
-                  <td>{{coord.latitud}}</td>
-                  <td>{{coord.longitud}}</td>
-                </tbody>
-              </table>
+          <div *ngIf="detallesPro.coordenadas && detallesPro.coordenadas.length"
+               class="row  d-flex align-content-start flex-wrap mt-4 mb-3">
+            <div class="col">
+              <div *ngIf="detallesPro.coordenadas" class="row  d-flex align-content-end flex-wrap">
+                <div *ngIf="detallesPro.coordenadas.length" class="col">
+                  <button (click)="showCoordenadas = !showCoordenadas" [attr.aria-expanded]="!showCoordenadas"
+                          aria-controls="collapseBasic" class="btn btn-info">
+                    {{showCoordenadas === true ? 'Mostrar' : 'Ocultar'}} coordenadas
+                    <i class="fa fa-map-marker ml-1"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+          <div [collapse]="showCoordenadas" [isAnimated]="true">
+            <div *ngIf="detallesPro.coordenadas && detallesPro.coordenadas.length">
+                <div class="offset-2 justify-content-center">
+                  <div class="col-6">
+                    <table class="table table-sm table-borderless">
+                      <thead>
+                      <tr>
+                        <th scope="col">Longitud</th>
+                        <th scope="col">Latitud</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let coord of detallesPro['coordenadas']">
+                        <td>{{coord.latitud}}</td>
+                        <td>{{coord.longitud}}</td>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+
           <div *ngIf="detallesPro.especies">
             <div *ngIf="detallesPro.especies.length > 0">
               <div class="mt-5 mb-2">
@@ -61,24 +104,25 @@
               <table class="table table-borderless offset-1">
                 <thead>
                 <tr>
-                  <th scope="col">Nombre Vulgar</th>
-                  <th scope="col">TSO</th>
-                  <th scope="col">SPOB</th>
+                  <th scope="col">Nombre vulgar</th>
+                  <th scope="col">Tipo según origen</th>
+                  <th scope="col">Especie objetivo</th>
+                  <th scope="col">Nombre en inglés</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let especie of detallesPro.especies">
-                  <td><small *ngIf="iucndetalleslist[especie.spob]" (click)="openIucnModal(template)" style="cursor: pointer;">
+                  <td><small (click)="openIucnModal(template)" *ngIf="iucndetalleslist[especie.spob]" style="cursor: pointer;">
                     <i class="fa fa-exclamation-triangle btn-danger"></i></small>
                   <ng-template #template>
                     <div class="modal-header">
                       <h4 class="modal-title pull-left">{{especie.spob}} | Información de la IUCN Red List</h4>
-                      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                      <button (click)="modalRef.hide()" aria-label="Close" class="close pull-right" type="button">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
                     <div class="modal-body">
-                      <div class="" *ngFor="let key of iucndetalleslist[especie.spob] | keyvalue">
+                      <div *ngFor="let key of iucndetalleslist[especie.spob] | keyvalue" class="">
                         <p *ngIf="key.value"><b>{{key.key}}:</b> {{key.value}}</p>
                       </div>
                     </div>
@@ -86,7 +130,8 @@
                     {{especie['nombre_vulgar']}}
                   </td>
                   <td>{{especie['tso']}}</td>
-                  <td>{{especie['spob']}}</td>
+                  <td class="font-italic">{{especie['spob']}}</td>
+                  <td>{{especie['nombre_ingles']}}</td>
                 </tr>
                 </tbody>
               </table>
@@ -98,58 +143,53 @@
             <app-carousel [slides]="imagenes"></app-carousel>
           </div>
         </div>
-        <div class="row  d-flex align-content-end flex-wrap mb-2"
-             *ngIf="detallesPro.personal && detallesPro.personal.length">
-          <div class="col">
-            <div class="row  d-flex align-content-end flex-wrap" *ngIf="detallesPro.personal">
-              <div class="col" *ngIf="detallesPro.personal.length">
-                <button class="btn btn-info" (click)="isCollapsed = !isCollapsed"
-                        [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
-                  {{isCollapsed === true ? 'Mostrar' : 'Ocultar'}} integrantes
-                  <i class="fa fa-users"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
         <br>
         <!--  <hr style="width:50%;text-align:left;margin-left:0">-->
       </div>
-
-      <div id="integrantes" [collapse]="isCollapsed" [isAnimated]="true">
+      <div *ngIf="detallesPro.personal && detallesPro.personal.length"
+           class="row  d-flex align-content-start flex-wrap mt-4 mb-3">
+        <div class="col">
+          <div *ngIf="detallesPro.personal" class="row  d-flex align-content-end flex-wrap">
+            <div *ngIf="detallesPro.personal.length" class="col">
+              <button (click)="showPersonal = !showPersonal" [attr.aria-expanded]="!showPersonal"
+                      aria-controls="collapseBasic" class="btn btn-info">
+                {{showPersonal === true ? 'Mostrar' : 'Ocultar'}} integrantes
+                <i class="fa fa-users"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div [collapse]="showPersonal" [isAnimated]="true" id="integrantes">
         <div *ngIf="detallesPro.personal && detallesPro.personal.length">
           <div *ngFor="let persona of detallesPro.personal">
             <app-integrantes [person]="persona"></app-integrantes>
           </div>
         </div>
       </div>
-
-
       <hr>
       <br>
-
-
-      <div *ngIf="videos.length > 0" class="row">
-        <div *ngFor="let video of videos" class="embed-responsive embed-responsive-16by9 col">
+      <div *ngIf="videos.length > 0" class="container">
+        <div *ngFor="let video of videos" class="embed-responsive embed-responsive-16by9 row mt-3">
           <youtube-player
-            [videoId]="video"
-            suggestedQuality="highres"
+            [endSeconds]="8"
             [height]="400"
-            [width]="500"
             [startSeconds]="4"
-            [endSeconds]="8">
+            [videoId]="video"
+            [width]="500"
+            suggestedQuality="highres">
           </youtube-player>
         </div>
       </div>
     </div>
-
-
-    <ng-template #spinner class="row justify-content-md-center">
-      <!--  <div class="col">-->
-      <div class="spinner-border text-success " role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-      <!--  </div>-->
-    </ng-template>
+</div>
+  <ng-template #spinner class="row d-flex align-content-center flex-wrap">
+    <!--  <div class="col">-->
+    <div class="spinner-border text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <!--  </div>-->
+  </ng-template>
+</div>
 
 

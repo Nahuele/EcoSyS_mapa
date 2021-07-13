@@ -5,9 +5,10 @@ import {StorageService} from '../upload-image/storage.service';
 import nombresFields from '../../assets/detallesFields.json';
 import {DomSanitizer} from '@angular/platform-browser';
 import {CarouselComponent} from 'ngx-bootstrap/carousel';
-import {AuthService} from '../editar-db/auth/auth.service';
 import {IucnApiService} from '../formularios/iucn-api.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {catchError} from 'rxjs/operators';
+import {throwError} from 'rxjs';
 
 @Component({
   selector:    'app-proyecto-page',
@@ -23,7 +24,8 @@ export class ProyectoPageComponent implements OnInit {
   public iucndetalleslist = {};
   modalRef: BsModalRef;
   @ViewChild(CarouselComponent) carousel: CarouselComponent;
-  isCollapsed = true;
+  showPersonal = true;
+  showCoordenadas = true;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -36,7 +38,6 @@ export class ProyectoPageComponent implements OnInit {
   ngOnInit() {
     const acc = this.route.snapshot.paramMap.get('id');
     this.getProyectoFromServ(acc);
-
   }
 
   getProyectoFromServ(acc) {
@@ -46,8 +47,8 @@ export class ProyectoPageComponent implements OnInit {
           this.detallesPro = proyecto.detalles;
           // este me trae las imagenes desde el servicio
           this.imagenes = this.storageSvc.getImages(proyecto.id, proyecto.userUid);
-
-          if (this.detallesPro.especies.length > 0) {
+          // consulto las especies en peligro con la API
+          if (this.detallesPro.especies && this.detallesPro.especies.length > 0) {
             for (let especie of this.detallesPro.especies) {
               this.checkRedList(especie.spob.toLowerCase())
             }
@@ -78,10 +79,11 @@ export class ProyectoPageComponent implements OnInit {
   }
 
   checkRedList(item) {
-    this.iucnService.busquedaApi(item).subscribe(y => {
-      const result = y.result[0];
-      this.iucndetalleslist[item] = result;
-    });
+    if (this.iucnService.busquedaApi(item)) {
+      this.iucnService.busquedaApi(item).subscribe(y => {
+        this.iucndetalleslist[item] = y.result[0];
+      });
+    }
   }
 
   openIucnModal(template: TemplateRef<any>) {

@@ -1,10 +1,10 @@
 [
   {
-    "label": "e-mail",
+    "label": "Correo electrónico principal",
     "field": "email"
   },
   {
-    "label": "Tipo de enfoque",
+    "label": "Tipo de proyecto",
     "field": "tipo_enfoque"
   },
   {
@@ -18,14 +18,6 @@
   {
     "label": "Título extendido",
     "field": "titulo_extendido"
-  },
-  {
-    "label": "Descripción",
-    "field": "descripcion"
-  },
-  {
-    "label": "Resumen",
-    "field": "resumen"
   },
   {
     "label": "Tipo de estudio",
@@ -60,11 +52,23 @@
     "field": "tipo_sitio"
   },
   {
-    "label": "Resultados",
-    "field": "resultados"
+    "label": "Teléfono de contacto",
+    "field": "telefono_contacto"
   },
   {
-    "label": "Redes sociales",
-    "field": "redes_sociales"
+    "label": "Palabras clave",
+    "field": "palabras_clave"
+  },
+  {
+    "label": "Tipo de producción",
+    "field": "tipo_produccion"
+  },
+  {
+    "label": "Localidad más cercana",
+    "field": "localidad_cercana"
+  },
+  {
+    "label": "Alcance geográfico del proyecto",
+    "field": "alcance_geografico"
   }
 ]

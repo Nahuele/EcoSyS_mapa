@@ -10,8 +10,9 @@ import * as mapboxgl from 'mapbox-gl';
 export class MapCoordComponent implements OnInit {
 
   mapa: mapboxgl.Map;
+  private puntoElegidoPriv;
   // con esto se lo paso al parent Form
-  @Output() puntoElegido = new EventEmitter();
+  @Output() puntoElegidoEmit = new EventEmitter();
 
   constructor() { }
 
@@ -19,10 +20,10 @@ export class MapCoordComponent implements OnInit {
     // this.puntoElegido.emit('algo');
     mapboxgl.accessToken = environment.mapboxKey;
     let marker;
-    this.puntoElegido.emit(null);
+    this.puntoElegidoEmit.emit(null);
     this.mapa = new mapboxgl.Map({
       container: 'mapacoord', // container id
-      style:     `mapbox://styles/mapbox/satellite-v9`, // mapbox://styles/mapbox/streets-v11
+      style:     `mapbox://styles/mapbox/streets-v11`, // mapbox://styles/mapbox/streets-v11
       center: [-66.477375, -35.584892], // starting position
       zoom:   4 // starting zoom
     });
@@ -33,9 +34,7 @@ export class MapCoordComponent implements OnInit {
 
     this.mapa.on('click', (e) => {
       const coordenadas = e.lngLat
-      this.puntoElegido.emit(coordenadas)
-      console.log(coordenadas)
-      // this.puntoElegido.emit([coordenadas.lng, coordenadas.lat])
+      this.puntoElegidoPriv = coordenadas;
       if (marker) {
         // remuevo marker anterior antes de mostrar el nuevo
         marker.remove()
@@ -45,6 +44,11 @@ export class MapCoordComponent implements OnInit {
         marker = new mapboxgl.Marker({draggable: true}).setLngLat([coordenadas.lng, coordenadas.lat]).addTo(this.mapa)
       }
     });
+  }
+
+  enviarCoordenada() {
+    console.log(this.puntoElegidoPriv)
+    this.puntoElegidoEmit.emit(this.puntoElegidoPriv)
   }
 
 }

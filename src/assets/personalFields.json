@@ -1,14 +1,22 @@
 [
   {
-    "label": "Nombre",
+    "label": "Nombre/s",
     "field": "nombre_personal"
   },
   {
-    "label": "Apellido",
+    "label": "Apellido/s",
     "field": "apellido_personal"
   },
   {
-    "label": "Rol",
+    "label": "Profesión",
+    "field": "profesion"
+  },
+  {
+    "label": "Especialidad",
+    "field": "especialidad"
+  },
+  {
+    "label": "Rol en el proyecto",
     "field": "rol"
   },
   {
@@ -16,23 +24,23 @@
     "field": "genero"
   },
   {
-    "label": "Fecha de Nacimiento",
+    "label": "Fecha de nacimiento",
     "field": "fecha_nacimiento"
   },
   {
-    "label": "País de Residencia",
+    "label": "País de residencia",
     "field": "pais_residencia"
   },
   {
-    "label": "Provincia de Residencia",
+    "label": "Provincia de residencia",
     "field": "provincia_residencia"
   },
   {
-    "label": "e-mail",
+    "label": "Correo electrónico",
     "field": "email_personal"
   },
   {
-    "label": "Redes Sociales",
+    "label": "Redes sociales",
     "field": "redes_sociales_personal"
   }
 ]

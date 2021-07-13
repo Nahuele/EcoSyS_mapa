@@ -21,8 +21,8 @@ export class IucnApiService {
       console.log(`service searching for ${specie}`);
       return this.http.get<any>(dominio + specie.join('%20') + token);
     } else {
-      console.log('not found');
-      return;
+      console.log('la especie no tiene 1 espacio entre las palabras');
+      return null;
     }
   }
 

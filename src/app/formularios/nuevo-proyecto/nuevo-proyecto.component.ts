@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {ProyectoService} from '../../editar-db/proyecto.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {AuthService} from '../../editar-db/auth/auth.service';
@@ -9,7 +9,15 @@ import {BehaviorSubject, concat, interval} from 'rxjs';
 import {IucnApiService} from '../iucn-api.service';
 import {Router} from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { biodiversidad, agroecologico, ambienteysoc } from '../campos-formulario';
+import { Location } from '@angular/common'
+
+import {
+  areasTemBiodiversidad,
+  areasTemAgroecologico,
+  areastemAmbienteysoc,
+  campoAplicacBiodiversidad,
+  campoAplicacSocYamb
+} from '../campos-formulario';
 import {MapCoordComponent} from '../map-coord/map-coord.component';
 
 @Component({
@@ -20,12 +28,14 @@ import {MapCoordComponent} from '../map-coord/map-coord.component';
 
 
 export class NuevoProyectoComponent implements OnInit, OnDestroy {
-  // esto es para test del multiselect dropdown
   disabled = false;
-  dropdownList = [];
-  selectedItems = [];
+  // esto es para test del multiselect dropdown
+  lista_areas_tem = [];
+  lista_campo_aplicacion = [];
+  selected_items_areas_tem = [];
+  selected_items_campo_aplica = [];
   dropdownSettings = {};
-  openMapCoord: BsModalRef;
+  openMapCoordModal: BsModalRef;
   coordsFromMapa;
 
   constructor(private formBuilder: FormBuilder,
@@ -33,7 +43,8 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
               private modalService: BsModalService,
               public iucnService: IucnApiService,
               private authService: AuthService,
-              private router: Router) {}
+              private router: Router,
+              private location: Location) {}
 
   get email() {
     return this.registerForm.get('email');
@@ -42,10 +53,6 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   get linksvideos() {
     return this.registerForm.get('linksvideos') as FormArray;
   }
-  //
-  // get areastematicas() {
-  //   return this.registerForm.get('areastematicas') as FormArray;
-  // }
 
   get personal() {
     return this.registerForm.get('personal') as FormArray;
@@ -62,11 +69,14 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   @Input() userUidEdit;
   // public projId: string;
   @Input() projobj;
-  public formProyecto;
   public userUid$ = new BehaviorSubject('');
   public iucndetalles;
   public iucndetalleslist = {};
   strtemp = '';
+  public listavideosFromDB;
+  public listasppFromDB;
+  public listapersonalFromDb;
+  public listacoordenadasFromDb;
   iucndetails$ = new BehaviorSubject('');
 
   public alerta = false;
@@ -82,30 +92,36 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     email:            [''], // , [Validators.required, Validators.email]],
     tipo_enfoque:     [''], // , Validators.required],
     nombre:           [''],
-    areas_tematicas: this.formBuilder.array([]),
+    // areas_tematicas: this.formBuilder.array([]),
     institucion:      [''],
     titulo_extendido: [''],
     descripcion:      [''],
+    telefono_contacto:         [''],
     resumen:          [''],
     tipo_estudio:     [''],
-    redes_sociales:   this.formBuilder.group({
+    tipo_produccion:  [''],
+    nombre_sitio:  [''],
+    alcance_geografico: [''],
+    redes_sociales:     this.formBuilder.group({
       facebook:  [''],
       instagram: [''],
       twitter:   [''],
       youtube:   [''],
+      otra:   [''],
     }),
-    pais:             [''],
-    provincia:        [''],
-    ciudad:           [''],
-    estado_actual:    [''],
-    coordenadas:      this.formBuilder.array([]), // , Validators.required
-    ano_inicio:       [''],
-    web:              [''],
-    tipo_sitio:       [''],
-    resultados:       [''],
-    linksvideos:      this.formBuilder.array([]),
-    personal:         this.formBuilder.array([]),
-    especies:         this.formBuilder.array([])
+    pais:               [''],
+    provincia:          [''],
+    localidad_cercana:  [''],
+    estado_actual:      [''],
+    coordenadas:        this.formBuilder.array([]), // , Validators.required
+    ano_inicio:         [''],
+    web:                [''],
+    tipo_sitio:         [''],
+    resultados:         [''],
+    palabras_clave:     [''],
+    linksvideos:        this.formBuilder.array([]),
+    personal:           this.formBuilder.array([]),
+    especies:           this.formBuilder.array([])
 
   });
 
@@ -114,12 +130,22 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userUid$.next(this.authService.userid);
 
-    // multi select dropdown areas tematicas
+    if (this.proyectoService.selectedProject && this.proyectoService.selectedProject.detalles) {
+      const objetoFromService = this.proyectoService.selectedProject.detalles
+      console.log('se seeleleeciono uno')
+      console.log(this.proyectoService.selectedProject.detalles)
 
+      objetoFromService.linksvideos && objetoFromService.linksvideos.length > 0 ? this.listavideosFromDB = objetoFromService.linksvideos : this.listavideosFromDB = [];
+      objetoFromService.especies && objetoFromService.especies.length > 0 ? this.listasppFromDB = objetoFromService.especies : this.listasppFromDB = [];
+      objetoFromService.personal && objetoFromService.personal.length > 0 ? this.listapersonalFromDb = objetoFromService.personal : this.listapersonalFromDb = [];
+      objetoFromService.coordenadas && objetoFromService.coordenadas.length > 0 ? this.listacoordenadasFromDb = objetoFromService.coordenadas : this.listacoordenadasFromDb = [];
+      objetoFromService.areas_tematicas && objetoFromService.areas_tematicas.length > 0 ? this.selected_items_areas_tem = objetoFromService.areas_tematicas : this.selected_items_areas_tem = [];
+      objetoFromService.campo_aplicacion && objetoFromService.campo_aplicacion.length > 0 ? this.selected_items_campo_aplica = objetoFromService.campo_aplicacion : this.selected_items_campo_aplica = [];
+
+    }
+    // multi select dropdown areas tematicas
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
       selectAllText: 'Seleccionar todo',
       unSelectAllText: 'Deseleccionar todo',
       enableCheckAll: false,
@@ -130,9 +156,9 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     // esto revisa cambios en tiempo real del form, areas_tematicas depende de el Tipo de proyecto
     this.registerForm.valueChanges.subscribe(x => {
       let tipo = x.tipo_enfoque;
-      this.selectedItems = [];
-      this.dropdownList = tipo === 'Conservación de la biodiversidad' ? biodiversidad : tipo === 'Ambiente y sociedad' ? ambienteysoc :
-        tipo === 'Experiencias agroecológicas' ? agroecologico : [];
+      this.lista_areas_tem = tipo === 'Conservación de la biodiversidad' ? areasTemBiodiversidad : tipo === 'Ambiente y sociedad' ? areastemAmbienteysoc :
+        tipo === 'Experiencias agroecológicas' ? areasTemAgroecologico : [];
+      this.lista_campo_aplicacion = tipo === 'Conservación de la biodiversidad' ? campoAplicacBiodiversidad : tipo === 'Ambiente y sociedad' ? campoAplicacSocYamb : [];
     })
 
   }
@@ -142,11 +168,28 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     // 2) Nested: actualizar el objeto final
     formProyectoFinal['detalles'] = this.removeEmptyFields(this.registerForm.value);
     formProyectoFinal['userUid'] = this.userUid$.value;
-    // TODO arreglar areas tematicas y su interaccion con el form
-    formProyectoFinal['detalles']['areas_tematicas'] = this.selectedItems;
-    console.log('detalles', formProyectoFinal);
+    this.proyectoService.selectedProject ? formProyectoFinal['id'] = this.proyectoService.selectedProject.id: null;
 
-    // this.proyectoService.addProject(formProyectoFinal);
+    // cargar el anterior
+    if (this.proyectoService.selectedProject) {
+      const videosFinal = [...this.listavideosFromDB, ...this.registerForm.value.linksvideos];
+      const especiesFinal = [...this.listasppFromDB, ...this.registerForm.value.especies];
+      const personalFinal = [...this.listapersonalFromDb, ...this.registerForm.value.personal];
+      const coordsFinal = [...this.listacoordenadasFromDb, ...this.registerForm.value.coordenadas];
+      formProyectoFinal['detalles']['linksvideos'] = videosFinal;
+      formProyectoFinal['detalles']['especies'] = especiesFinal;
+      formProyectoFinal['detalles']['personal'] = personalFinal;
+      formProyectoFinal['detalles']['coordenadas'] = coordsFinal;
+    }
+
+    // TODO arreglar areas tematicas y su interaccion con el form
+    formProyectoFinal['detalles']['areas_tematicas'] = this.selected_items_areas_tem;
+    formProyectoFinal['detalles']['campo_aplicacion'] = this.selected_items_campo_aplica;
+
+    console.log(formProyectoFinal['detalles']);
+
+    formProyectoFinal['id'] ? this.proyectoService.editarProject(formProyectoFinal) : this.proyectoService.addProject(formProyectoFinal);
+
     // this.alerta = true;
     // // window.scrollTo(0, 0);
     // setTimeout(() => {
@@ -156,16 +199,20 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
   removeEmptyFields(obj) {
     return JSON.parse(JSON.stringify(obj, (key, value) => {
-      return (value === null ? undefined : value === '' ? undefined : value.length === 0 ? undefined : value);
+      return (value === null ? undefined : value === '' ? undefined : value === undefined ? undefined : value.length === 0 ? undefined : value);
     }));
   }
 
   borrarForm() {
     this.registerForm.reset();
-    this.selectedItems = [];
+    this.selected_items_areas_tem = [];
+    this.selected_items_campo_aplica = [];
     this.linksvideos.controls.splice(0, this.linksvideos.length);
-    // this.especies.controls.splice(0,this.especies.length);
+    this.especies.controls.splice(0,this.especies.length);
     this.personal.controls.splice(0, this.personal.length);
+    this.listasppFromDB = [];
+    this.listacoordenadasFromDb = [];
+    this.listavideosFromDB = [];
     window.scrollTo(0, 0);
   }
 
@@ -179,12 +226,21 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
   // 3) Nested: funcion general que sirve para cualquier nested
   removerItem(indice: number, asignarForm: string, target: string,) {
-    if (target === 'current' && indice !== -1) {
+    if (target === 'anterior' && indice !== -1) {
+      if (asignarForm === 'videos') {
+        this.listavideosFromDB.splice(indice, 1);
+      } else if (asignarForm === 'especies') {
+        this.listasppFromDB.splice(indice, 1);
+      } else if (asignarForm === 'personal') {
+        this.listapersonalFromDb.splice(indice, 1);
+      } else if (asignarForm === 'coordenadas') {
+        this.listacoordenadasFromDb.splice(indice, 1);
+      }
+    } else if (target === 'current' && indice !== -1) {
       if (asignarForm === 'videos') {
         this.linksvideos.removeAt(indice);
       } else if (asignarForm === 'especies') {
         this.especies.removeAt(indice);
-        // this.listasppFromDB.splice(indice, 1);
       } else if (asignarForm === 'personal') {
         this.personal.removeAt(indice);
       } else if (asignarForm === 'coordenadas') {
@@ -198,6 +254,8 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
       nombre_personal:         '',
       apellido_personal:       '',
       rol:                     '',
+      profesion:               '',
+      especialidad:                     '',
       genero:                  '',
       fecha_nacimiento:        '',
       pais_residencia:         '',
@@ -209,6 +267,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
         twitter:      [''],
         youtube:      [''],
         researchgate: [''],
+        otra:         [''],
       })
     });
     this.personal.push(personalFormGroup);
@@ -218,13 +277,14 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     const especiesFormGroup = this.formBuilder.group({
       spob:          [''],
       nombre_vulgar: [''],
+      nombre_ingles:  [''],
       tso:           ['']
     });
     this.especies.push(especiesFormGroup);
   }
 
   agregarCoordenadas(mapacor: TemplateRef<any>) {
-    this.openMapCoord = this.modalService.show(mapacor, Object.assign({}, { class: 'modal-xl' }));
+    this.openMapCoordModal = this.modalService.show(mapacor, Object.assign({}, { class: 'modal-xl' }));
     this.coordsFromMapa = null;
   }
 
@@ -236,6 +296,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
         latitud: this.coordsFromMapa.lat.toString(),
         longitud: this.coordsFromMapa.lng.toString()
       });
+      this.openMapCoordModal.hide();
       this.coordenadas.push(coordenadasFormGroup);
     }
   }
@@ -276,14 +337,15 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   }
 
   onItemSelect(item: any) {
-    console.log('arreglar areas tematicas y forms!')
-    console.log(this.selectedItems);
+    // console.log('arreglar areas tematicas y forms!')
+    // console.log(this.selected_items_areas_tem);
+    // console.log(this.selected_items_campo_aplica);
   }
 
   ngOnDestroy() {
     this.projobj = null;
-    this.formProyecto = null;
     this.registerForm.reset();
+    this.proyectoService.selectedProject = null;
   }
 
 }

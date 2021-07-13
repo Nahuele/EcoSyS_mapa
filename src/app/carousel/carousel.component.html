@@ -1,27 +1,55 @@
 <div *ngIf="slides">
   <div class="cards-list" (click)="openModalWithClass(carrusel)">
-    <div class="card 1">
-      <div class="card_image">
-        <img [src]="slides[0]" alt="cardImg"/>
-      </div>
-      <div class="card_title title-white">
-        <p class="threeD">Ver fotos</p>
+
+    <div class="flip-card-container" style="--hue: 170">
+      <div class="flip-card">
+
+        <div class="card-front">
+          <figure>
+            <div class="img-bg"></div>
+            <img [src]="slides[0]" alt="Image 2">
+            <figcaption>Galería</figcaption>
+          </figure>
+        </div>
+        <div class="card-back">
+          <figure>
+            <div class="img-bg"></div>
+            <img [src]="slides[0]" alt="image-2">
+          </figure>
+          <button>Ver Fotos</button>
+
+          <div class="design-container">
+            <span class="design design--1"></span>
+            <span class="design design--2"></span>
+            <span class="design design--3"></span>
+            <span class="design design--4"></span>
+            <span class="design design--5"></span>
+            <span class="design design--6"></span>
+            <span class="design design--7"></span>
+            <span class="design design--8"></span>
+          </div>
+        </div>
+
       </div>
     </div>
+
+<!--    <div class="card 1">-->
+<!--      <div class="card_image">-->
+<!--        <img [src]="slides[0]" alt="cardImg"/>-->
+<!--      </div>-->
+<!--      <div class="card_title title-white">-->
+<!--        <p class="threeD">Ver fotos</p>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </div>
 
 
 <ng-template #carrusel>
-  <!--  <div class="modal-header ">-->
-  <!--    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">-->
-  <!--      <span aria-hidden="true">&times;</span>-->
-  <!--    </button>-->
-  <!--  </div>-->
   <carousel [isAnimated]="true">
     <div *ngFor="let slide of slides">
       <slide>
-        <img [src]="slide" class="d-block w-100" style="object-fit: contain;max-height:1000px;" alt="..."/>
+        <img [src]="slide" class="d-block w-100" style="object-fit: cover;max-height:1000px;" alt="..."/>
       </slide>
     </div>
   </carousel>

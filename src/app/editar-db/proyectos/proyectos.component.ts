@@ -35,7 +35,6 @@ export class ProyectosComponent implements OnInit, OnDestroy {
   }
 
   editarProyecto(project) {
-    // console.log(project);
     // this.editForm = true;
     this.proyectoService.selectedProject = Object.assign({}, project);
 

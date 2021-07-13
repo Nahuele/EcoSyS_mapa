@@ -1,8 +1,8 @@
 {
   "hosting": [
     {
-      "target": "ianchuProject",
-      "public": "dist/ianchuProject",
+      "target": "ecosysmapa",
+      "public": "dist/ecosysmapa",
       "ignore": [
         "**/.*"
       ],

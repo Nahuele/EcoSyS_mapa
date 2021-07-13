@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ianchuProject": {
+    "ecosysmapa": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ianchuProject",
+            "outputPath": "dist/ecosysmapa",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ianchuProject:build"
+            "browserTarget": "ecosysmapa:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ianchuProject:build:production"
+              "browserTarget": "ecosysmapa:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ianchuProject:build"
+            "browserTarget": "ecosysmapa:build"
           }
         },
         "test": {
@@ -114,11 +114,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ianchuProject:serve"
+            "devServerTarget": "ecosysmapa:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ianchuProject:serve:production"
+              "devServerTarget": "ecosysmapa:serve:production"
             }
           }
         },
@@ -129,7 +129,7 @@
       }
     }
   },
-  "defaultProject": "ianchuProject",
+  "defaultProject": "ecosysmapa",
   "cli": {
     "analytics": "34a3200d-b50e-46bc-a384-1d048a8df239"
   }

@@ -47,6 +47,7 @@ export class ProyectoPageComponent implements OnInit {
           this.detallesPro = proyecto.detalles;
           // este me trae las imagenes desde el servicio
           this.imagenes = this.storageSvc.getImages(proyecto.id, proyecto.userUid);
+          console.log(this.imagenes);
           // consulto las especies en peligro con la API
           if (this.detallesPro.especies && this.detallesPro.especies.length > 0) {
             for (let especie of this.detallesPro.especies) {

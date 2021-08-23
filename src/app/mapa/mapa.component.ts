@@ -113,7 +113,7 @@ export class MapaComponent implements OnInit {
     return `<div class="card">
         <div class="card-header text-center">
           <img src="${link}" class="img-fluid" alt="Responsive image" style="border: 1px solid #ddd;
-          border-radius: 4px;padding: 5px;width: 250px;">
+          border-radius: 4px;padding: 5px;width: 350px;">
 </div>
   <div class="card-body">
     <h5 class="card-title">${proyecto.detalles.nombre}</h5>
@@ -227,6 +227,7 @@ export class MapaComponent implements OnInit {
       zoom:   3 // starting zoom
     });
     this.mapa.addControl(new mapboxgl.NavigationControl());
+    this.mapa.addControl(new mapboxgl.ScaleControl());
     this.buscarCoordenadas();
   }
 // esto intenta solucionar el bug de map.on('load') o ('idle') que no carga la primera vez

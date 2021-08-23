@@ -155,10 +155,17 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     };
     // esto revisa cambios en tiempo real del form, areas_tematicas depende de el Tipo de proyecto
     this.registerForm.valueChanges.subscribe(x => {
+      // if (!(this.proyectoService.selectedProject && this.proyectoService.selectedProject.detalles)) {
+      // }
+// TODO esta parte de aca
       let tipo = x.tipo_enfoque;
       this.lista_areas_tem = tipo === 'Conservación de la biodiversidad' ? areasTemBiodiversidad : tipo === 'Ambiente y sociedad' ? areastemAmbienteysoc :
         tipo === 'Experiencias agroecológicas' ? areasTemAgroecologico : [];
       this.lista_campo_aplicacion = tipo === 'Conservación de la biodiversidad' ? campoAplicacBiodiversidad : tipo === 'Ambiente y sociedad' ? campoAplicacSocYamb : [];
+
+      // this.selected_items_areas_tem = [];
+      // this.selected_items_campo_aplica = [];
+      console.log(this.selected_items_areas_tem, this.selected_items_campo_aplica)
     })
 
   }

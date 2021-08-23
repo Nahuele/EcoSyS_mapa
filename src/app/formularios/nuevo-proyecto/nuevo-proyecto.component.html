@@ -93,14 +93,15 @@
       <label for="tipo_produccion">Tipo de producción</label>
       <input class="form-control" formControlName="tipo_produccion" id="tipo_produccion" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['tipo_produccion'] : ''">
     </div>
-    <div class="form-group" *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas'">
-      <label for="descripcion_proyecto">Descripción</label>
-      <textarea class="form-control" id="descripcion_proyecto" formControlName="descripcion" rows="2" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['descripcion'] : ''"></textarea>
-    </div>
     <div class="form-group">
       <label for="resumen">Resumen</label>
-      <textarea class="form-control" id="resumen" formControlName="resumen" rows="2" maxlength= "250" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['resumen'] : ''"></textarea>
-      <p class="text-muted text-right">{{this.registerForm.value.resumen?.length || 0}}/250</p>
+      <textarea class="form-control" id="resumen" formControlName="resumen" rows="2" maxlength= "1000" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['resumen'] : ''"></textarea>
+      <p class="text-muted text-right">{{this.registerForm.value.resumen?.length || 0}}/1000</p>
+    </div>
+    <div class="form-group" *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas'">
+      <label for="descripcion_proyecto">Descripción</label>
+      <textarea class="form-control" id="descripcion_proyecto" formControlName="descripcion" rows="2" maxlength= "3500" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['descripcion'] : ''"></textarea>
+      <p class="text-muted text-right">{{this.registerForm.value.descripcion?.length || 0}}/3500</p>
     </div>
     <div class="form-group" *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas'">
       <label for="resultados">Avances/Resultados</label>
@@ -136,7 +137,7 @@
       <button class="btn button-dos pulse mb-2" type="button" (click)="agregarCoordenadas(mapacor)"
       [disabled]="this.registerForm.value.coordenadas.length > 4" ><span tooltip="De ser necesario puede agregar un máximo de cinco">Agregar Coordenadas <i class="fa fa-map-marker ml-2" ></i></span>
       </button>
-    <div *ngIf="this.proyectoService.selectedProject && this.proyectoService.selectedProject.detalles.coordenadas as coordenadas">
+    <div *ngIf="this.proyectoService.selectedProject && listacoordenadasFromDb as coordenadas">
       <div *ngFor="let coordenada of coordenadas; let u = index">
         <!--      <div class="row justify-content-md-center" formGroupName="coordenadas" *ngFor="let link of coordenadas.controls; let u = index">-->
         <!--          <div [formGroupName]="u">-->

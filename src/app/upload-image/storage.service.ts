@@ -47,6 +47,7 @@ export class StorageService {
         })
       });
     })
+    console.log('lista de imagenes> ', imgList)
     return imgList;
   }
 

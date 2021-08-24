@@ -3,7 +3,6 @@ import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} 
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {AngularFireModule} from '@angular/fire';
-import {CamposFormulario} from '../formularios/campos-formulario';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {StorageService} from '../upload-image/storage.service';
 

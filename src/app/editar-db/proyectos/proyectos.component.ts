@@ -6,7 +6,6 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {AuthService} from '../auth/auth.service';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {User} from '../auth/user';
-import {CamposFormulario} from '../../formularios/campos-formulario';
 import {AlertComponent} from 'ngx-bootstrap/alert';
 
 @Component({

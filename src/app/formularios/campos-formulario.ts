@@ -13,23 +13,26 @@ export interface CamposFormulario {
   resumen?: string,
   tipo_estudio?: string,
   redes_sociales?: redesSociales,
-  pais?: string,
   palabras_clave?: string,
-  provincia?: string,
   tipo_produccion?: string,
-  localidad_cercana?: string,
   estado_actual?: string,
   coordenadas?: string,
   ano_inicio?: string,
   web?: string,
-  nombre_sitio?: string,
-  tipo_sitio?: string,
   resultados?: string,
   linksfotos?: [{ link?: string, descripcion?: string }]
   personal?: personal[],
   especies?: especies[],
-  alcance_geografico?: string,
 }
+}
+
+export interface datosSitio {
+  pais?: string,
+  provincia?: string,
+  localidad_cercana?: string,
+  nombre_sitio?: string,
+  tipo_sitio?: string,
+  alcance_geografico?: string,
 }
 
 export interface redesSociales {

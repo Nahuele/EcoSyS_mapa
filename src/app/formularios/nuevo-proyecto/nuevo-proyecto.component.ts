@@ -3,7 +3,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {ProyectoService} from '../../editar-db/proyecto.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {AuthService} from '../../editar-db/auth/auth.service';
-import {take} from 'rxjs/operators';
+import {first, skip, switchMap, take, takeWhile} from 'rxjs/operators';
 import {AlertComponent} from 'ngx-bootstrap/alert';
 import {BehaviorSubject, concat, interval} from 'rxjs';
 import {IucnApiService} from '../iucn-api.service';
@@ -125,15 +125,13 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
   });
 
-
-
   ngOnInit(): void {
     this.userUid$.next(this.authService.userid);
 
     if (this.proyectoService.selectedProject && this.proyectoService.selectedProject.detalles) {
-      const objetoFromService = this.proyectoService.selectedProject.detalles
       console.log('se seeleleeciono uno')
       console.log(this.proyectoService.selectedProject.detalles)
+      const objetoFromService = this.proyectoService.selectedProject.detalles
 
       objetoFromService.linksvideos && objetoFromService.linksvideos.length > 0 ? this.listavideosFromDB = objetoFromService.linksvideos : this.listavideosFromDB = [];
       objetoFromService.especies && objetoFromService.especies.length > 0 ? this.listasppFromDB = objetoFromService.especies : this.listasppFromDB = [];
@@ -141,7 +139,6 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
       objetoFromService.coordenadas && objetoFromService.coordenadas.length > 0 ? this.listacoordenadasFromDb = objetoFromService.coordenadas : this.listacoordenadasFromDb = [];
       objetoFromService.areas_tematicas && objetoFromService.areas_tematicas.length > 0 ? this.selected_items_areas_tem = objetoFromService.areas_tematicas : this.selected_items_areas_tem = [];
       objetoFromService.campo_aplicacion && objetoFromService.campo_aplicacion.length > 0 ? this.selected_items_campo_aplica = objetoFromService.campo_aplicacion : this.selected_items_campo_aplica = [];
-
     }
     // multi select dropdown areas tematicas
     this.dropdownSettings = {
@@ -153,21 +150,27 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
       noDataAvailablePlaceholderText: "Seleccione Tipo",
       allowSearchFilter: false
     };
-    // esto revisa cambios en tiempo real del form, areas_tematicas depende de el Tipo de proyecto
-    this.registerForm.valueChanges.subscribe(x => {
-      // if (!(this.proyectoService.selectedProject && this.proyectoService.selectedProject.detalles)) {
-      // }
-// TODO esta parte de aca
-      let tipo = x.tipo_enfoque;
-      this.lista_areas_tem = tipo === 'Conservación de la biodiversidad' ? areasTemBiodiversidad : tipo === 'Ambiente y sociedad' ? areastemAmbienteysoc :
-        tipo === 'Experiencias agroecológicas' ? areasTemAgroecologico : [];
-      this.lista_campo_aplicacion = tipo === 'Conservación de la biodiversidad' ? campoAplicacBiodiversidad : tipo === 'Ambiente y sociedad' ? campoAplicacSocYamb : [];
-
-      // this.selected_items_areas_tem = [];
-      // this.selected_items_campo_aplica = [];
-      console.log(this.selected_items_areas_tem, this.selected_items_campo_aplica)
+    // esto revisa cambios en tiempo real del form, los elif son para borrar cuando cambio de tipo_enfoque y no borrar si ya lo tiene cargado
+    this.registerForm.valueChanges.subscribe(x => { // .pipe(skip(1))
+      x = x.tipo_enfoque
+      this.lista_areas_tem = x === 'Conservación de la biodiversidad' ? areasTemBiodiversidad : x === 'Ambiente y sociedad' ? areastemAmbienteysoc :
+        x === 'Experiencias agroecológicas' ? areasTemAgroecologico : [];
+      this.lista_campo_aplicacion = x === 'Conservación de la biodiversidad' ? campoAplicacBiodiversidad : x === 'Ambiente y sociedad' ? campoAplicacSocYamb : [];
+      if (this.proyectoService.selectedProject && this.proyectoService.selectedProject.detalles) {
+        console.log('ejecutada, hay proyecto')
+        if (x !== this.proyectoService.selectedProject.detalles.tipo_enfoque && x !== null && x.length !== 0 ) {
+          console.log('son diferentes', x, '///', this.proyectoService.selectedProject.detalles , '///')
+          this.selected_items_areas_tem = [];
+          this.selected_items_campo_aplica = [];
+        } else {
+          this.selected_items_areas_tem = this.proyectoService.selectedProject.detalles.areas_tematicas;
+          this.selected_items_campo_aplica = this.proyectoService.selectedProject.detalles.campo_aplicacion;
+        }
+      } else {
+        this.selected_items_areas_tem = [];
+        this.selected_items_campo_aplica = [];
+      }
     })
-
   }
 
   submit() {
@@ -189,7 +192,6 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
       formProyectoFinal['detalles']['coordenadas'] = coordsFinal;
     }
 
-    // TODO arreglar areas tematicas y su interaccion con el form
     formProyectoFinal['detalles']['areas_tematicas'] = this.selected_items_areas_tem;
     formProyectoFinal['detalles']['campo_aplicacion'] = this.selected_items_campo_aplica;
 
@@ -197,11 +199,11 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
     formProyectoFinal['id'] ? this.proyectoService.editarProject(formProyectoFinal) : this.proyectoService.addProject(formProyectoFinal);
 
-    // this.alerta = true;
-    // // window.scrollTo(0, 0);
-    // setTimeout(() => {
-    //   this.router.navigate(['proyectos']);
-    // }, 3000);
+    this.alerta = true;
+    // window.scrollTo(0, 0);
+    setTimeout(() => {
+      this.router.navigate(['proyectos']);
+    }, 3000);
   }
 
   removeEmptyFields(obj) {
@@ -301,7 +303,15 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     if (this.coordsFromMapa) {
       const coordenadasFormGroup = this.formBuilder.group({
         latitud: this.coordsFromMapa.lat.toString(),
-        longitud: this.coordsFromMapa.lng.toString()
+        longitud: this.coordsFromMapa.lng.toString(),
+        datos_del_sitio: this.formBuilder.group({
+          pais:     [''],
+          provincia:    [''],
+          localidad_cercana:      [''],
+          nombre_sitio:      [''],
+          tipo_sitio: [''],
+          alcance_geografico:         [''],
+        })
       });
       this.openMapCoordModal.hide();
       this.coordenadas.push(coordenadasFormGroup);

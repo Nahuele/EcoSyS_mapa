@@ -1,21 +1,22 @@
-<div class="container mb-5 mt-3" >
+<div class="container mb-5 mt-3">
   <h3 class="text-center">Registrar proyecto</h3>
   <br>
-  <form (submit)="submit()" [formGroup]="registerForm" name="formPro" >
+  <form (submit)="submit()" [formGroup]="registerForm" name="formPro">
     <div class="row">
       <div class="col">
         <div class="form-group">
           <label>Nombre del Proyecto</label>
-          <input type="text" class="form-control" formControlName="nombre" name="nombre" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['nombre'] : ''">
+          <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['nombre'] : ''" class="form-control" formControlName="nombre" name="nombre"
+                 type="text">
         </div>
       </div>
       <div class="col">
         <div class="form-group">
           <label tooltip="e-mail institucional o de la persona a cargo">Correo electrónico principal</label>
-          <input type="email" class="form-control"
-                 [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['email'] : ''"
-                 [ngClass]="{'is-invalid': registerForm.get('email').invalid}"
-                 formControlName="email" >
+          <input [ngClass]="{'is-invalid': registerForm.get('email').invalid}" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['email'] : ''"
+                 class="form-control"
+                 formControlName="email"
+                 type="email">
           <!--          <div class="invalid-feedback">-->
           <!--            email requerido-->
           <!--          </div>-->
@@ -26,12 +27,12 @@
       </div>
 
       <div class="col">
-        <div class="form-group" >
+        <div class="form-group">
           <label for="tipo_enfoque">Tipo</label>
-          <select class="form-control" id="tipo_enfoque"
-                  [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['tipo_enfoque'] : ''"
-                  [ngClass]="{'is-invalid': registerForm.get('tipo_enfoque').invalid}"
-                  formControlName="tipo_enfoque" >
+          <select [ngClass]="{'is-invalid': registerForm.get('tipo_enfoque').invalid}" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['tipo_enfoque'] : ''"
+                  class="form-control"
+                  formControlName="tipo_enfoque"
+                  id="tipo_enfoque">
             <option disabled selected>Seleccione tipo</option>
             <!--            <option>Conservación de fauna</option>-->
             <!--            <option>Conservación de vegetación</option>-->
@@ -45,98 +46,126 @@
     <div class="row">
       <div class="col">
         <label>Áreas temáticas</label>
-          <ng-multiselect-dropdown
-            [placeholder]="'Seleccione'"
-            [settings]="dropdownSettings"
-            [data]="lista_areas_tem"
-            [(ngModel)]="selected_items_areas_tem"
-            [ngModelOptions]="{standalone: true}"
-            (onSelect)="onItemSelect($event)">
-          </ng-multiselect-dropdown>
+        <ng-multiselect-dropdown
+          (onSelect)="onItemSelect($event)"
+          [(ngModel)]="selected_items_areas_tem"
+          [data]="lista_areas_tem"
+          [ngModelOptions]="{standalone: true}"
+          [placeholder]="'Seleccione'"
+          [settings]="dropdownSettings">
+        </ng-multiselect-dropdown>
       </div>
-      <div class="col" *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas'">
+      <div *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas'" class="col">
         <label>Campo de aplicación</label>
-          <ng-multiselect-dropdown
-            [placeholder]="'Seleccione'"
-            [settings]="dropdownSettings"
-            [data]="lista_campo_aplicacion"
-            [(ngModel)]="selected_items_campo_aplica"
-            [ngModelOptions]="{standalone: true}"
-            (onSelect)="onItemSelect($event)">
-          </ng-multiselect-dropdown>
+        <ng-multiselect-dropdown
+          (onSelect)="onItemSelect($event)"
+          [(ngModel)]="selected_items_campo_aplica"
+          [data]="lista_campo_aplicacion"
+          [ngModelOptions]="{standalone: true}"
+          [placeholder]="'Seleccione'"
+          [settings]="dropdownSettings">
+        </ng-multiselect-dropdown>
       </div>
       <div class="col">
         <label>Estado actual</label>
-        <input type="text" class="form-control" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['estado_actual'] : ''" placeholder="En curso" formControlName="estado_actual" >
+        <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['estado_actual'] : ''" class="form-control"
+               formControlName="estado_actual"
+               placeholder="En curso" type="text">
       </div>
       <div class="col">
         <label>Institucion</label>
-        <input type="text" class="form-control" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['institucion'] : ''" placeholder="Universidad del Litoral"  formControlName="institucion" >
+        <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['institucion'] : ''" class="form-control"
+               formControlName="institucion"
+               placeholder="Universidad del Litoral" type="text">
       </div>
-      <div class="col" *ngIf="this.registerForm.value.tipo_enfoque == 'Experiencias agroecológicas'">
+      <div *ngIf="this.registerForm.value.tipo_enfoque == 'Experiencias agroecológicas'" class="col">
         <label>Teléfono de contacto</label>
-        <input type="text" class="form-control" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['telefono_contacto'] : ''" formControlName="telefono_contacto" >
+        <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['telefono_contacto'] : ''" class="form-control"
+               formControlName="telefono_contacto"
+               type="text">
       </div>
     </div>
-    <div class="row mt-3" *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas'">
+    <div *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas'" class="row mt-3">
       <div class="col">
         <label>Palabras clave (separadas por coma)</label>
-        <input type="text" class="form-control" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['palabras_clave'] : ''" placeholder="reproducción,nativas,centro,contaminación" formControlName="palabras_clave" >
-       </div>
+        <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['palabras_clave'] : ''" class="form-control"
+               formControlName="palabras_clave"
+               placeholder="reproducción,nativas,centro,contaminación" type="text">
+      </div>
     </div>
-    <hr  class="m-5">
+    <hr class="m-5">
     <div class="form-group">
       <label for="titulo_extendido">Titulo extendido</label>
-      <textarea class="form-control" id="titulo_extendido" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['titulo_extendido'] : ''" formControlName="titulo_extendido" rows="1" ></textarea>
+      <textarea [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['titulo_extendido'] : ''" class="form-control"
+                formControlName="titulo_extendido"
+                id="titulo_extendido" rows="1"></textarea>
     </div>
-    <div class="form-group" *ngIf="this.registerForm.value.tipo_enfoque == 'Experiencias agroecológicas'">
+    <div *ngIf="this.registerForm.value.tipo_enfoque == 'Experiencias agroecológicas'" class="form-group">
       <label for="tipo_produccion">Tipo de producción</label>
-      <input class="form-control" formControlName="tipo_produccion" id="tipo_produccion" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['tipo_produccion'] : ''">
+      <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['tipo_produccion'] : ''" class="form-control" formControlName="tipo_produccion"
+             id="tipo_produccion">
     </div>
     <div class="form-group">
       <label for="resumen">Resumen</label>
-      <textarea class="form-control" id="resumen" formControlName="resumen" rows="2" maxlength= "1000" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['resumen'] : ''"></textarea>
+      <textarea [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['resumen'] : ''" class="form-control" formControlName="resumen" id="resumen" maxlength="1000"
+                rows="2"></textarea>
       <p class="text-muted text-right">{{this.registerForm.value.resumen?.length || 0}}/1000</p>
     </div>
-    <div class="form-group" *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas'">
+    <div *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas'" class="form-group">
       <label for="descripcion_proyecto">Descripción</label>
-      <textarea class="form-control" id="descripcion_proyecto" formControlName="descripcion" rows="2" maxlength= "3500" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['descripcion'] : ''"></textarea>
+      <textarea [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['descripcion'] : ''" class="form-control" formControlName="descripcion" id="descripcion_proyecto" maxlength="3500"
+                rows="2"></textarea>
       <p class="text-muted text-right">{{this.registerForm.value.descripcion?.length || 0}}/3500</p>
     </div>
-    <div class="form-group" *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas'">
+    <div *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas'" class="form-group">
       <label for="resultados">Avances/Resultados</label>
-      <textarea class="form-control" id="resultados" formControlName="resultados" rows="1" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['resultados'] : ''" ></textarea>
+      <textarea [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['resultados'] : ''" class="form-control" formControlName="resultados" id="resultados"
+                rows="1"></textarea>
     </div>
-    <hr  class="m-5">
-    <div class="row justify-content-md-center mb-2"> <h5>Red de contacto</h5> </div>
+    <hr class="m-5">
+    <div class="row justify-content-md-center mb-2"><h5>Red de contacto</h5></div>
     <div formGroupName="redes_sociales">
       <div class="row">
         <div class="form-group col">
           <label>Facebook</label>
-          <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['redes_sociales']['facebook'] : ''" type="text" class="form-control" formControlName="facebook" id="facebook" >
+          <input
+            [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['redes_sociales']['facebook'] : ''"
+            class="form-control" formControlName="facebook" id="facebook" type="text">
         </div>
         <div class="form-group col">
           <label>Instagram</label>
-          <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['redes_sociales']['instagram'] : ''" type="text" class="form-control" formControlName="instagram"  >
+          <input
+            [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['redes_sociales']['instagram'] : ''"
+            class="form-control" formControlName="instagram" type="text">
         </div>
         <div class="form-group col">
           <label>Twitter</label>
-          <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['redes_sociales']['twitter'] : ''" type="text" class="form-control" formControlName="twitter"  >
+          <input
+            [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['redes_sociales']['twitter'] : ''"
+            class="form-control" formControlName="twitter" type="text">
         </div>
         <div class="form-group col">
           <label>Youtube</label>
-          <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['redes_sociales']['youtube'] : ''" type="text" class="form-control" formControlName="youtube"   >
+          <input
+            [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['redes_sociales']['youtube'] : ''"
+            class="form-control" formControlName="youtube" type="text">
         </div>
         <div class="form-group col">
           <label>Otra</label>
-          <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['redes_sociales']['otra'] : ''" type="text" class="form-control" formControlName="otra"   >
+          <input
+            [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['redes_sociales']['otra'] : ''"
+            class="form-control" formControlName="otra" type="text">
         </div>
       </div>
     </div>
     <hr class="m-5">
-      <button class="btn button-dos pulse mb-2" type="button" (click)="agregarCoordenadas(mapacor)"
-      [disabled]="this.registerForm.value.coordenadas.length > 4" ><span tooltip="De ser necesario puede agregar un máximo de cinco">Agregar Coordenadas <i class="fa fa-map-marker ml-2" ></i></span>
-      </button>
+
+    <button (click)="agregarCoordenadas(mapacor)" [disabled]="this.registerForm.value.coordenadas.length > 4" class="btn button-dos pulse mb-5"
+            type="button"><span
+      tooltip="De ser necesario puede agregar un máximo de cinco">Agregar Coordenadas <i
+      class="fa fa-map-marker ml-2"></i></span>
+    </button>
+<!--    viejas coordenadas-->
     <div *ngIf="this.proyectoService.selectedProject && listacoordenadasFromDb as coordenadas">
       <div *ngFor="let coordenada of coordenadas; let u = index">
         <!--      <div class="row justify-content-md-center" formGroupName="coordenadas" *ngFor="let link of coordenadas.controls; let u = index">-->
@@ -151,111 +180,168 @@
             <input [attr.id]="'link' + u" [value]="coordenada['longitud']" class="form-control" disabled type="text">
           </div>
           <div class="col-auto">
-            <button (click)="removerItem(u,'coordenadas', 'anterior')" class="btn btn-outline-danger btn-sm" type="button">
+            <button (click)="removerItem(u,'coordenadas', 'anterior')" class="btn btn-outline-danger btn-sm"
+                    type="button">
               <i class="fa fa-times"></i>
             </button>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row justify-content-md-center mt-4 mb-3"><h5>Datos del sitio</h5></div>
+          <div class="row">
+            <div class="col">
+              <input
+                [attr.id]="'link' + u" [value]="coordenada['datos_del_sitio']['pais'] ? coordenada['datos_del_sitio']['pais'] : ''"
+                class="form-control"  type="text" disabled>
+            </div>
+            <div class="col">
+              <input
+                [attr.id]="'link' + u" [value]="coordenada['datos_del_sitio']['provincia'] ? coordenada['datos_del_sitio']['provincia'] : ''"
+                class="form-control" type="text" disabled>
+            </div>
+            <div class="col">
+              <input
+                [attr.id]="'link' + u" [value]="coordenada['datos_del_sitio']['localidad_cercana'] ? coordenada['datos_del_sitio']['localidad_cercana'] : ''"
+                class="form-control" type="text" disabled>
+            </div>
+            <div class="col">
+              <input
+                [attr.id]="'link' + u" [value]="coordenada['datos_del_sitio']['nombre_sitio'] ? coordenada['datos_del_sitio']['nombre_sitio'] : ''"
+                class="form-control" type="text" disabled>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <select
+                  [attr.id]="'link' + u" [value]="coordenada['datos_del_sitio']['tipo_sitio'] ? coordenada['datos_del_sitio']['tipo_sitio'] : ''"
+                  class="form-control" disabled>
+                  <option disabled selected value="">Seleccione tipo de sitio</option>
+                  <option>Ámbito rural</option>
+                  <option>Ámbito urbano</option>
+                  <option>Área protegida</option>
+                  <option>Otro</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col"><input
+              [attr.id]="'link' + u" [value]="coordenada['datos_del_sitio']['alcance_geografico'] ? coordenada['datos_del_sitio']['alcance_geografico'] : ''"
+              class="form-control" type="text" disabled></div>
           </div>
         </div>
         <!--          </div>-->
       </div>
     </div>
-      <div class="row justify-content-md-center" formGroupName="coordenadas" *ngFor="let link of coordenadas.controls; let r = index">
-              <div [formGroupName]="r">
-        <div class="row justify-content-md-center form-group" >
-          <label class="col-auto" [attr.for]="'link' + r"><strong>Latitud</strong></label>
+<!--    nuevas coordenadas-->
+    <div *ngFor="let link of coordenadas.controls; let r = index" class="row justify-content-md-center mb-6"
+         formGroupName="coordenadas">
+      <div [formGroupName]="r">
+        <div class="row justify-content-md-center form-group">
+          <label [attr.for]="'link' + r" class="col-auto"><strong>Latitud</strong></label>
           <div class="col-auto">
-            <input type="text" [attr.id]="'link' + r" class="form-control" formControlName="latitud" name="latitud" >
+            <input [attr.id]="'link' + r" class="form-control" disabled formControlName="latitud" name="latitud"
+                   type="text">
           </div>
-          <label class="col-auto" [attr.for]="'link' + r"><strong>Longitud</strong></label>
+          <label [attr.for]="'link' + r" class="col-auto"><strong>Longitud</strong></label>
           <div class="col-auto">
-            <input type="text" [attr.id]="'link' + r" class="form-control" formControlName="longitud" name="longitud" >
+            <input [attr.id]="'link' + r" class="form-control" disabled formControlName="longitud" name="longitud"
+                   type="text">
           </div>
           <div class="col-auto">
-            <button class="btn btn-sm btn-outline-danger" type="button" (click)="removerItem(r,'coordenadas', 'current')">
+            <button (click)="removerItem(r,'coordenadas', 'current')" class="btn btn-sm btn-outline-danger"
+                    type="button">
               <i class="fa fa-times"></i>
             </button>
           </div>
         </div>
-    </div>
-    </div>
-    <hr  class="m-5">
-    <div >
-      <div class="row justify-content-md-center mb-2"> <h5>Datos del sitio</h5> </div>
-      <div class="row">
-        <div class="col">
-          <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['pais'] : ''" type="text" class="form-control" placeholder="Pais" formControlName="pais" >
-        </div>
-        <div class="col">
-          <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['provincia'] : ''" type="text" class="form-control" placeholder="Provincia" formControlName="provincia" >
-        </div>
-        <div class="col">
-          <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['localidad_cercana'] : ''" type="text" class="form-control" placeholder="Localidad más cercana" formControlName="localidad_cercana" >
-        </div>
-        <div class="col">
-          <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['nombre_sitio'] : ''" type="text" class="form-control" placeholder="Nombre del sitio" formControlName="nombre_sitio" >
-        </div>
-        <div class="col">
-          <div class="form-group">
-            <select class="form-control" formControlName="tipo_sitio"
-                    [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['tipo_sitio'] : ''">
-              <option value="" selected disabled>Seleccione tipo de sitio</option>
-              <option>Ámbito rural</option>
-              <option>Ámbito urbano</option>
-              <option>Área protegida</option>
-              <option>Otro</option>
-            </select>
+        <div class="container" formGroupName="datos_del_sitio">
+          <div class="row justify-content-md-center mt-4 mb-3"><h5>Datos del sitio</h5></div>
+          <div class="row">
+            <div class="col">
+              <input
+                [attr.id]="'link' + r" class="form-control" formControlName="pais" placeholder="Pais" type="text">
+            </div>
+            <div class="col">
+              <input
+                [attr.id]="'link' + r" class="form-control" formControlName="provincia" placeholder="Provincia" type="text">
+            </div>
+            <div class="col">
+              <input
+                [attr.id]="'link' + r" class="form-control" formControlName="localidad_cercana" placeholder="Localidad más cercana" type="text">
+            </div>
+            <div class="col">
+              <input
+                [attr.id]="'link' + r" class="form-control" formControlName="nombre_sitio" placeholder="Nombre del sitio" type="text">
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <select
+                  [attr.id]="'link' + r"
+                [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['tipo_sitio'] : ''"
+                  class="form-control"
+                  formControlName="tipo_sitio">
+                  <option disabled selected value="">Seleccione tipo de sitio</option>
+                  <option>Ámbito rural</option>
+                  <option>Ámbito urbano</option>
+                  <option>Área protegida</option>
+                  <option>Otro</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col"><input
+              [attr.id]="'link' + r" class="form-control" formControlName="alcance_geografico" placeholder="Alcance geográfico del proyecto (Ej.: los sitios no incluidos en las coordenadas)" type="text"></div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-            <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['alcance_geografico'] : ''"
-                   type="text" class="form-control" placeholder="Alcance geográfico del proyecto (Ej.: los sitios no incluidos en las coordenadas)"
-                   formControlName="alcance_geografico">
-        </div>
-      </div>
-      <hr  class="m-5">
-      <div class="row justify-content-md-center ">
-<!--        <div class="form-group col" tooltip="Lat,Long (sin espacios, separados por coma) Es a la inversa de Google">-->
-<!--          <label ><span>Coordenadas</span></label>-->
-<!--          <input type="text" class="form-control"-->
-<!--                 formControlName="coordenadas"-->
-<!--                 placeholder="-58.2595914,-34.1824176"-->
 
-<!--                 [ngClass]="{'is-invalid': registerForm.get('projectid').invalid}" >-->
-<!--          <div class="invalid-feedback">-->
-<!--            Coordenadas con formato especifico requeridas-->
-<!--          </div>-->
-<!--        </div>-->
-        <div class="form-group col">
-          <label>Año de inicio</label>
-          <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['ano_inicio'] : ''"
-                 type="text" class="form-control" formControlName="ano_inicio" placeholder="2020" >
-        </div>
-        <div class="form-group col">
-          <label>Tipo de estudio</label>
-          <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['tipo_estudio'] : ''"
-                 type="text" class="form-control" formControlName="tipo_estudio" placeholder="Especie exótica invasora" >
-        </div>
-        <div class="form-group col">
-          <label>Página web</label>
-          <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['web'] : ''"
-                 type="text" class="form-control" formControlName="web"  >
-        </div>
+    </div>
+    <hr class="m-5">
+    <div class="row justify-content-md-center ">
+      <!--        <div class="form-group col" tooltip="Lat,Long (sin espacios, separados por coma) Es a la inversa de Google">-->
+      <!--          <label ><span>Coordenadas</span></label>-->
+      <!--          <input type="text" class="form-control"-->
+      <!--                 formControlName="coordenadas"-->
+      <!--                 placeholder="-58.2595914,-34.1824176"-->
+
+      <!--                 [ngClass]="{'is-invalid': registerForm.get('projectid').invalid}" >-->
+      <!--          <div class="invalid-feedback">-->
+      <!--            Coordenadas con formato especifico requeridas-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <div class="form-group col">
+        <label>Año de inicio</label>
+        <input
+          [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['ano_inicio'] : ''"
+          class="form-control" formControlName="ano_inicio" placeholder="2020" type="text">
+      </div>
+      <div class="form-group col">
+        <label>Tipo de estudio</label>
+        <input
+          [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['tipo_estudio'] : ''"
+          class="form-control" formControlName="tipo_estudio" placeholder="Especie exótica invasora" type="text">
+      </div>
+      <div class="form-group col">
+        <label>Página web</label>
+        <input
+          [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['web'] : ''"
+          class="form-control" formControlName="web" type="text">
       </div>
     </div>
-    <hr  class="m-5">
+    <hr class="m-5">
 
-    <div class="mb-3" *ngIf="!this.proyectoService.selectedProject; else noaddimagen">
+    <div *ngIf="!this.proyectoService.selectedProject; else noaddimagen" class="mb-3">
       <app-upload-image [idNewProject]="this.proyectoService.idProjectSubmitted$ | async"
-      [idUser]="userUid$.value"></app-upload-image>
+                        [idUser]="userUid$.value"></app-upload-image>
     </div>
-    <ng-template #noaddimagen><p class="font-weight-bold">Para cambiar las imágenes debe crear nuevamente el proyecto.</p></ng-template>
-  <hr  class="m-5">
+    <ng-template #noaddimagen><p class="font-weight-bold">Para cambiar las imágenes debe crear nuevamente el
+      proyecto.</p></ng-template>
+    <hr class="m-5">
     <div class="form-group">
-      <a class="btn btn-warning" type="button" (click)="agregarvideos()" tooltip="Link de YouTube">Agregar Videos</a>
+      <a (click)="agregarvideos()" class="btn btn-warning" tooltip="Link de YouTube" type="button">Agregar Videos</a>
     </div>
-<!--    viejos videos-->
+    <!--    viejos videos-->
     <div *ngIf="listavideosFromDB as videos">
       <div *ngFor="let video of videos; let i = index">
         <!--      <h1>{{link.value['link']}}</h1>-->
@@ -271,63 +357,69 @@
             <!--            <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="descripcionfoto" [(ngModel)]="this.proyectoService.selectedProject.detalles['linksfotos']['descripcion']">-->
           </div>
           <div class="col-auto">
-            <button (click)="removerItem(i, 'videos', 'anterior')" class="btn btn-outline-danger btn-sm"><i class="fa fa-times"></i>
+            <button (click)="removerItem(i, 'videos', 'anterior')" class="btn btn-outline-danger btn-sm"><i
+              class="fa fa-times"></i>
             </button>
           </div>
         </div>
         <!--          </div>-->
       </div>
     </div>
-<!--    nuevos videos-->
-    <div formGroupName="linksvideos" *ngFor="let link of linksvideos.controls; let r = index">
+    <!--    nuevos videos-->
+    <div *ngFor="let link of linksvideos.controls; let r = index" formGroupName="linksvideos">
       <!--      <h1>{{link.value['link']}}</h1>-->
       <div [formGroupName]="r">
         <div class="form-group row justify-content-md-center">
-          <label class="col-auto" [attr.for]="'link' + r">Link</label>
+          <label [attr.for]="'link' + r" class="col-auto">Link</label>
           <div class="col-auto">
-            <input type="text" [attr.id]="'link' + r" class="form-control" formControlName="link" name="link" >
+            <input [attr.id]="'link' + r" class="form-control" formControlName="link" name="link" type="text">
           </div>
-          <label class="col-auto" [attr.for]="'link' + r">Descripcion</label>
+          <label [attr.for]="'link' + r" class="col-auto">Descripcion</label>
           <div class="col-auto">
-            <input type="text" [attr.id]="'link' + r" class="form-control" name="descripcionvideo" formControlName="descripcionvideo">
+            <input [attr.id]="'link' + r" class="form-control" formControlName="descripcionvideo" name="descripcionvideo"
+                   type="text">
             <!--            <input type="text" [attr.id]="'link' + i" class="form-control" formControlName="descripcionfoto" 'descripcion']">-->
           </div>
           <div class="col-auto">
-            <button class="btn btn-outline-danger btn-sm" type="button" (click)="removerItem(r,'videos', 'current')"><i class="fa fa-times"></i></button>
+            <button (click)="removerItem(r,'videos', 'current')" class="btn btn-outline-danger btn-sm" type="button"><i
+              class="fa fa-times"></i></button>
           </div>
         </div>
       </div>
     </div>
-<!--antiguo personal-->
-    <hr  class="m-5">
-    <div class="form-group" >
-      <a class="btn btn-warning " type="button" (click)="agregarPersonal()">Agregar personal</a>
+
+    <!--antiguo personal-->
+    <hr class="m-5">
+    <div class="form-group">
+      <a (click)="agregarPersonal()" class="btn btn-warning " type="button">Agregar personal</a>
       <div *ngIf="listapersonalFromDb as personal">
         <div *ngFor="let person of personal; let x = index">
           <div class="row justify-content-md-center">
             <div class="col-auto">
-              <label  [attr.for]="'link' + x">Nombre/s</label>
-              <input type="text" [value]="person.nombre_personal" [attr.id]="'link' + x" class="form-control" disabled  >
-            </div> <div class="col-auto">
-            <label  [attr.for]="'link' + x">Apellido/s</label>
-            <input type="text" [value]="person.apellido_personal" [attr.id]="'link' + x" class="form-control" disabled  >
-          </div>
+              <label [attr.for]="'link' + x">Nombre/s</label>
+              <input [attr.id]="'link' + x" [value]="person.nombre_personal" class="form-control" disabled type="text">
+            </div>
             <div class="col-auto">
-              <label  [attr.for]="'link' + x">Profesión</label>
-              <input type="text" [value]="person.profesion" [attr.id]="'link' + x" class="form-control" disabled  >
+              <label [attr.for]="'link' + x">Apellido/s</label>
+              <input [attr.id]="'link' + x" [value]="person.apellido_personal" class="form-control" disabled
+                     type="text">
+            </div>
+            <div class="col-auto">
+              <label [attr.for]="'link' + x">Profesión</label>
+              <input [attr.id]="'link' + x" [value]="person.profesion" class="form-control" disabled type="text">
             </div>
           </div>
           <div class="row justify-content-md-center">
             <div class="col-auto">
               <label [attr.for]="'link' + x">Especialidad</label>
-              <input type="text" [value]="person.especialidad" [attr.id]="'link' + x" class="form-control" disabled >
+              <input [attr.id]="'link' + x" [value]="person.especialidad" class="form-control" disabled type="text">
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + x">Rol en el proyecto</label>
               <!--            <input type="text" [attr.id]="'link' + x" class="form-control" ">-->
               <div class="form-group">
-                <select class="form-control" [value]="person.rol" [attr.id]="'link' + x" disabled >
-                  <option value="" selected disabled>Seleccione el rol</option>
+                <select [attr.id]="'link' + x" [value]="person.rol" class="form-control" disabled>
+                  <option disabled selected value="">Seleccione el rol</option>
                   <option>Audiovisual</option>
                   <option>Codirector/a</option>
                   <option>Director/a</option>
@@ -340,8 +432,8 @@
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + x">Género</label>
-              <select class="form-control" [value]="person.genero" [attr.id]="'link' + x" disabled >
-                <option value="" selected disabled></option>
+              <select [attr.id]="'link' + x" [value]="person.genero" class="form-control" disabled>
+                <option disabled selected value=""></option>
                 <option>Femenino</option>
                 <option>Masculino</option>
                 <option>Otro</option>
@@ -349,85 +441,94 @@
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + x">Fecha de nacimiento</label>
-              <input type="text" class="form-control" bsDatepicker [value]="person.fecha_nacimiento" disabled
-                      [attr.id]="'link' + x" autocomplete="off">
+              <input [attr.id]="'link' + x" [value]="person.fecha_nacimiento" autocomplete="off" bsDatepicker class="form-control"
+                     disabled type="text">
             </div>
           </div>
           <div class="row justify-content-md-center">
             <div class="col-auto">
-              <label  [attr.for]="'link' + x">Pais de residencia</label>
-              <input type="text" [attr.id]="'link' + x" [value]="person.pais_residencia" disabled class="form-control" >
+              <label [attr.for]="'link' + x">Pais de residencia</label>
+              <input [attr.id]="'link' + x" [value]="person.pais_residencia" class="form-control" disabled type="text">
             </div>
             <div class="col-auto">
-              <label  [attr.for]="'link' + x">Provincia de residencia</label>
-              <input type="text" [attr.id]="'link' + x" [value]="person.provincia_residencia" disabled class="form-control" >
+              <label [attr.for]="'link' + x">Provincia de residencia</label>
+              <input [attr.id]="'link' + x" [value]="person.provincia_residencia" class="form-control" disabled
+                     type="text">
             </div>
             <div class="col-auto">
-              <label  [attr.for]="'link' + x">email</label>
-              <input type="text" [attr.id]="'link' + x" [value]="person.email_personal" disabled class="form-control" >
+              <label [attr.for]="'link' + x">email</label>
+              <input [attr.id]="'link' + x" [value]="person.email_personal" class="form-control" disabled type="text">
             </div>
             <div class="col-auto align-self-end">
-              <button class="btn btn-outline-danger" (click)="removerItem(x,'personal','anterior')" tooltip="Borrar Integrante">
+              <button (click)="removerItem(x,'personal','anterior')" class="btn btn-outline-danger"
+                      tooltip="Borrar Integrante">
                 <i class="fa fa-times"></i>
               </button>
             </div>
           </div>
           <br>
-          <div class="row " *ngIf="person.redes_sociales_personal">
-            <div class="form-group col" *ngIf="person.redes_sociales_personal.facebook">
-              <label [attr.for]="'link' + x" >Facebook</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" disabled [value]="person.redes_sociales_personal.facebook" >
+          <div *ngIf="person.redes_sociales_personal" class="row ">
+            <div *ngIf="person.redes_sociales_personal.facebook" class="form-group col">
+              <label [attr.for]="'link' + x">Facebook</label>
+              <input [attr.id]="'link' + x" [value]="person.redes_sociales_personal.facebook" class="form-control" disabled
+                     type="text">
             </div>
-            <div class="form-group col" *ngIf="person.redes_sociales_personal.instagram">
+            <div *ngIf="person.redes_sociales_personal.instagram" class="form-group col">
               <label [attr.for]="'link' + x">Instagram</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" disabled [value]="person.redes_sociales_personal.instagram" >
+              <input [attr.id]="'link' + x" [value]="person.redes_sociales_personal.instagram" class="form-control" disabled
+                     type="text">
             </div>
-            <div class="form-group col" *ngIf="person.redes_sociales_personal.twitter">
+            <div *ngIf="person.redes_sociales_personal.twitter" class="form-group col">
               <label [attr.for]="'link' + x">Twitter</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" disabled [value]="person.redes_sociales_personal.twitter" >
+              <input [attr.id]="'link' + x" [value]="person.redes_sociales_personal.twitter" class="form-control" disabled
+                     type="text">
             </div>
-            <div class="form-group col" *ngIf="person.redes_sociales_personal.youtube">
+            <div *ngIf="person.redes_sociales_personal.youtube" class="form-group col">
               <label [attr.for]="'link' + x">Youtube</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" disabled [value]="person.redes_sociales_personal.youtube"  >
+              <input [attr.id]="'link' + x" [value]="person.redes_sociales_personal.youtube" class="form-control" disabled
+                     type="text">
             </div>
-            <div class="form-group col" *ngIf="person.redes_sociales_personal.researchgate">
+            <div *ngIf="person.redes_sociales_personal.researchgate" class="form-group col">
               <label [attr.for]="'link' + x">Research Gate</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" disabled [value]="person.redes_sociales_personal.researchgate"  >
+              <input [attr.id]="'link' + x" [value]="person.redes_sociales_personal.researchgate" class="form-control" disabled
+                     type="text">
             </div>
-            <div class="form-group col" *ngIf="person.redes_sociales_personal.otra">
+            <div *ngIf="person.redes_sociales_personal.otra" class="form-group col">
               <label [attr.for]="'link' + x">Otra</label>
-              <input type="text" [attr.id]="'link' + x" class="form-control" disabled [value]="person.redes_sociales_personal.otra"  >
+              <input [attr.id]="'link' + x" [value]="person.redes_sociales_personal.otra" class="form-control" disabled
+                     type="text">
             </div>
           </div>
         </div>
       </div>
-<!--nuevo personal-->
-      <div formGroupName="personal" *ngFor="let person of personal.controls; let j = index">
+      <!--nuevo personal-->
+      <div *ngFor="let person of personal.controls; let j = index" formGroupName="personal">
         <div [formGroupName]="j">
           <div class="row justify-content-md-center">
             <div class="col-auto">
-              <label  [attr.for]="'link' + j">Nombre/s</label>
-              <input type="text" [attr.id]="'link' + j" class="form-control" formControlName="nombre_personal" >
-            </div> <div class="col-auto">
-            <label  [attr.for]="'link' + j">Apellido/s</label>
-            <input type="text" [attr.id]="'link' + j" class="form-control" formControlName="apellido_personal" >
-          </div>
+              <label [attr.for]="'link' + j">Nombre/s</label>
+              <input [attr.id]="'link' + j" class="form-control" formControlName="nombre_personal" type="text">
+            </div>
             <div class="col-auto">
-              <label  [attr.for]="'link' + j">Profesión</label>
-              <input type="text" [attr.id]="'link' + j" class="form-control" formControlName="profesion" >
+              <label [attr.for]="'link' + j">Apellido/s</label>
+              <input [attr.id]="'link' + j" class="form-control" formControlName="apellido_personal" type="text">
+            </div>
+            <div class="col-auto">
+              <label [attr.for]="'link' + j">Profesión</label>
+              <input [attr.id]="'link' + j" class="form-control" formControlName="profesion" type="text">
             </div>
           </div>
           <div class="row justify-content-md-center">
             <div class="col-auto">
               <label [attr.for]="'link' + j">Especialidad</label>
-              <input type="text" [attr.id]="'link' + j" class="form-control" formControlName="especialidad">
+              <input [attr.id]="'link' + j" class="form-control" formControlName="especialidad" type="text">
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + j">Rol en el proyecto</label>
               <!--            <input type="text" [attr.id]="'link' + x" class="form-control" formControlName="rol">-->
               <div class="form-group">
-                <select class="form-control" [attr.id]="'link' + j" formControlName="rol">
-                  <option value="" selected disabled>Seleccione el rol</option>
+                <select [attr.id]="'link' + j" class="form-control" formControlName="rol">
+                  <option disabled selected value="">Seleccione el rol</option>
                   <option>Audiovisual</option>
                   <option>Codirector/a</option>
                   <option>Director/a</option>
@@ -440,8 +541,8 @@
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + j">Género</label>
-              <select class="form-control" [attr.id]="'link' + j" formControlName="genero">
-                <option value="" selected disabled></option>
+              <select [attr.id]="'link' + j" class="form-control" formControlName="genero">
+                <option disabled selected value=""></option>
                 <option>Femenino</option>
                 <option>Masculino</option>
                 <option>Otro</option>
@@ -449,25 +550,26 @@
             </div>
             <div class="col-auto">
               <label [attr.for]="'link' + j">Fecha de nacimiento</label>
-              <input type="text" class="form-control" bsDatepicker
-                     formControlName="fecha_nacimiento" [attr.id]="'link' + j" autocomplete="off">
+              <input [attr.id]="'link' + j" autocomplete="off" bsDatepicker
+                     class="form-control" formControlName="fecha_nacimiento" type="text">
             </div>
           </div>
           <div class="row justify-content-md-center">
             <div class="col-auto">
-              <label  [attr.for]="'link' + j">Pais de residencia</label>
-              <input type="text" [attr.id]="'link' + j" class="form-control" formControlName="pais_residencia">
+              <label [attr.for]="'link' + j">Pais de residencia</label>
+              <input [attr.id]="'link' + j" class="form-control" formControlName="pais_residencia" type="text">
             </div>
             <div class="col-auto">
-              <label  [attr.for]="'link' + j">Provincia de residencia</label>
-              <input type="text" [attr.id]="'link' + j" class="form-control" formControlName="provincia_residencia">
+              <label [attr.for]="'link' + j">Provincia de residencia</label>
+              <input [attr.id]="'link' + j" class="form-control" formControlName="provincia_residencia" type="text">
             </div>
             <div class="col-auto">
-              <label  [attr.for]="'link' + j">email</label>
-              <input type="text" [attr.id]="'link' + j" class="form-control" formControlName="email_personal">
+              <label [attr.for]="'link' + j">email</label>
+              <input [attr.id]="'link' + j" class="form-control" formControlName="email_personal" type="text">
             </div>
             <div class="col-auto align-self-end">
-              <button class="btn btn-outline-danger" (click)="removerItem(j,'personal','current')" tooltip="Borrar Integrante">
+              <button (click)="removerItem(j,'personal','current')" class="btn btn-outline-danger"
+                      tooltip="Borrar Integrante">
                 <i class="fa fa-times"></i>
               </button>
             </div>
@@ -476,93 +578,61 @@
           <div class="row " formGroupName="redes_sociales_personal">
             <div class="form-group col">
               <label [attr.for]="'link' + j">Facebook</label>
-              <input type="text" [attr.id]="'link' + j" class="form-control" formControlName="facebook">
+              <input [attr.id]="'link' + j" class="form-control" formControlName="facebook" type="text">
             </div>
             <div class="form-group col">
               <label [attr.for]="'link' + j">Instagram</label>
-              <input type="text" [attr.id]="'link' + j" class="form-control" formControlName="instagram">
+              <input [attr.id]="'link' + j" class="form-control" formControlName="instagram" type="text">
             </div>
             <div class="form-group col">
               <label [attr.for]="'link' + j">Twitter</label>
-              <input type="text" [attr.id]="'link' + j" class="form-control" formControlName="twitter">
+              <input [attr.id]="'link' + j" class="form-control" formControlName="twitter" type="text">
             </div>
             <div class="form-group col">
               <label [attr.for]="'link' + j">Youtube</label>
-              <input type="text" [attr.id]="'link' + j" class="form-control" formControlName="youtube" >
+              <input [attr.id]="'link' + j" class="form-control" formControlName="youtube" type="text">
             </div>
             <div class="form-group col">
               <label [attr.for]="'link' + j">Research Gate</label>
-              <input type="text" [attr.id]="'link' + j" class="form-control" formControlName="researchgate" >
+              <input [attr.id]="'link' + j" class="form-control" formControlName="researchgate" type="text">
             </div>
             <div class="form-group col">
               <label [attr.for]="'link' + j">Otra</label>
-              <input type="text" [attr.id]="'link' + j" class="form-control" formControlName="otra" >
+              <input [attr.id]="'link' + j" class="form-control" formControlName="otra" type="text">
             </div>
           </div>
         </div>
-        <hr  class="m-5">
+        <hr class="m-5">
       </div>
     </div>
-<!--especies-->
-    <div *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas' && this.registerForm.value.tipo_enfoque != 'Ambiente y sociedad'">
+
+    <!--especies-->
+    <div
+      *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas' && this.registerForm.value.tipo_enfoque != 'Ambiente y sociedad'">
       <h4 class="text-center">Registrar especies</h4>
       <div class="form-group">
-        <a class="btn btn-warning m-3" type="button" (click)="agregarEspecie()">Agregar Especies</a>
+        <a (click)="agregarEspecie()" class="btn btn-warning m-3" type="button">Agregar Especies</a>
         <!-- viejas especies-->
         <div *ngIf="listasppFromDB as especies">
           <div *ngFor="let spp of especies; let y = index">
-                <div class="row justify-content-md-center">
-                  <div class="col-auto">
-                    <label [attr.for]="'link' + y">Especie objetivo</label>
-                    <input type="text" [attr.id]="'link' + y" class="form-control" [value]="spp['spob']" placeholder="Lontra provocax"
-                           disabled >
-                  </div>
-                  <div class="col-auto">
-                    <label [attr.for]="'link' + y">Nombre vulgar</label>
-                    <input type="text" [value]="spp['nombre_vulgar']" [attr.id]="'link' + y" class="form-control" disabled >
-                  </div>
-                  <div class="col-auto">
-                    <label [attr.for]="'link' + y">Nombre en inglés</label>
-                    <input type="text" [attr.id]="'link' + y" class="form-control"  [value]="spp['nombre_ingles']" disabled>
-                  </div>
-                  <div class="form-group">
-                    <label [attr.for]="'link' + y">Tipo según origen</label>
-                    <select class="form-control" [attr.id]="'link' + y" [value]="spp['tso']" disabled>
-                      <option [ngValue]="null" selected></option>
-                      <option>Nativa</option>
-                      <option>Invasora</option>
-                      <option>Endémica</option>
-                      <option>Otro</option>
-                    </select>
-                  </div>
-                  <div class="col-auto">
-                    <button class="btn btn-outline-danger btn-sm" (click)="removerItem(y, 'especies', 'anterior')">
-                      <i class="fa fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-          </div>
-        </div>
-<!--        nuevas especies-->
-        <div formGroupName="especies" *ngFor="let spp of especies.controls; let p = index">
-          <div [formGroupName]="p">
             <div class="row justify-content-md-center">
               <div class="col-auto">
-                <label [attr.for]="'link' + p">Especie objetivo</label>
-                <input type="text" [attr.id]="'link' + p" class="form-control" placeholder="Lontra provocax"
-                       formControlName="spob" (click)="iucnGet(p, spp.value.spob)">
+                <label [attr.for]="'link' + y">Especie objetivo</label>
+                <input [attr.id]="'link' + y" [value]="spp['spob']" class="form-control" disabled
+                       placeholder="Lontra provocax"
+                       type="text">
               </div>
               <div class="col-auto">
-                <label [attr.for]="'link' + p">Nombre vulgar</label>
-                <input type="text" [attr.id]="'link' + p" class="form-control" formControlName="nombre_vulgar">
+                <label [attr.for]="'link' + y">Nombre vulgar</label>
+                <input [attr.id]="'link' + y" [value]="spp['nombre_vulgar']" class="form-control" disabled type="text">
               </div>
               <div class="col-auto">
-                <label [attr.for]="'link' + p">Nombre en inglés</label>
-                <input type="text" [attr.id]="'link' + p" class="form-control" formControlName="nombre_ingles">
+                <label [attr.for]="'link' + y">Nombre en inglés</label>
+                <input [attr.id]="'link' + y" [value]="spp['nombre_ingles']" class="form-control" disabled type="text">
               </div>
               <div class="form-group">
-                <label [attr.for]="'link' + p">Tipo según origen</label>
-                <select class="form-control" [attr.id]="'link' + p" formControlName="tso">
+                <label [attr.for]="'link' + y">Tipo según origen</label>
+                <select [attr.id]="'link' + y" [value]="spp['tso']" class="form-control" disabled>
                   <option [ngValue]="null" selected></option>
                   <option>Nativa</option>
                   <option>Invasora</option>
@@ -571,12 +641,47 @@
                 </select>
               </div>
               <div class="col-auto">
-                  <button class="btn btn-outline-danger btn-sm" (click)="removerItem(p, 'especies', 'current')">
-                    <i class="fa fa-times"></i>
-                  </button>
+                <button (click)="removerItem(y, 'especies', 'anterior')" class="btn btn-outline-danger btn-sm">
+                  <i class="fa fa-times"></i>
+                </button>
               </div>
             </div>
-            <div class="row justify-content-md-center" >
+          </div>
+        </div>
+        <!--        nuevas especies-->
+        <div *ngFor="let spp of especies.controls; let p = index" formGroupName="especies">
+          <div [formGroupName]="p">
+            <div class="row justify-content-md-center">
+              <div class="col-auto">
+                <label [attr.for]="'link' + p">Especie objetivo</label>
+                <input (click)="iucnGet(p, spp.value.spob)" [attr.id]="'link' + p" class="form-control" formControlName="spob"
+                       placeholder="Lontra provocax" type="text">
+              </div>
+              <div class="col-auto">
+                <label [attr.for]="'link' + p">Nombre vulgar</label>
+                <input [attr.id]="'link' + p" class="form-control" formControlName="nombre_vulgar" type="text">
+              </div>
+              <div class="col-auto">
+                <label [attr.for]="'link' + p">Nombre en inglés</label>
+                <input [attr.id]="'link' + p" class="form-control" formControlName="nombre_ingles" type="text">
+              </div>
+              <div class="form-group">
+                <label [attr.for]="'link' + p">Tipo según origen</label>
+                <select [attr.id]="'link' + p" class="form-control" formControlName="tso">
+                  <option [ngValue]="null" selected></option>
+                  <option>Nativa</option>
+                  <option>Invasora</option>
+                  <option>Endémica</option>
+                  <option>Otro</option>
+                </select>
+              </div>
+              <div class="col-auto">
+                <button (click)="removerItem(p, 'especies', 'current')" class="btn btn-outline-danger btn-sm">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div class="row justify-content-md-center">
               <div *ngIf="iucndetalleslist[spp.value.spob] as value">
                   <span><p style="font-size:12px; color:red">Especie reconocida por la iucnredlist !</p>
                 <p style="font-size:10px">Clase: {{value.class}}, Familia: {{value.family}},
@@ -587,45 +692,46 @@
           </div>
         </div>
       </div>
-      <hr  class="m-5">
+      <hr class="m-5">
     </div>
 
-<!--botones de abajo-->
+    <!--botones de abajo-->
     <div class="row justify-content-md-center ">
       <div class="col-auto">
         <button class="btn btn-primary btn-lg"
-                type="submit"
-                [disabled]="!registerForm.valid"
-                style="margin-top: 3rem">Enviar
+                style="margin-top: 3rem"
+                type="submit">Enviar
+          <!--                [disabled]="!registerForm.valid"-->
         </button>
       </div>
       <div class="col-auto">
-        <button class="btn btn-light btn-lg"
-                type="button"
-                (click)="borrarForm()"
-                style="margin-top: 3rem">Vaciar campos
+        <button (click)="borrarForm()"
+                class="btn btn-light btn-lg"
+                style="margin-top: 3rem"
+                type="button">Vaciar campos
         </button>
       </div>
-<!--      <div class="col-auto">-->
-<!--        <a (click)="goBack()">-->
-<!--        <button class="btn btn-danger btn-lg"-->
-<!--                type="button"-->
-<!--                style="margin-top: 3rem" >Cancelar-->
-<!--        </button>-->
-<!--        </a>-->
-<!--      </div>-->
+      <!--      <div class="col-auto">-->
+      <!--        <a (click)="goBack()">-->
+      <!--        <button class="btn btn-danger btn-lg"-->
+      <!--                type="button"-->
+      <!--                style="margin-top: 3rem" >Cancelar-->
+      <!--        </button>-->
+      <!--        </a>-->
+      <!--      </div>-->
     </div>
     <br>
     <div class="row justify-content-md-center">
       <div *ngIf="alerta === true">
         <div *ngFor="let alert of alerts">
-          <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+          <alert (onClosed)="onClosed(alert)" [dismissOnTimeout]="alert.timeout"
+                 [type]="alert.type">{{ alert.msg }}</alert>
         </div>
       </div>
     </div>
   </form>
 </div>
 
-<ng-template #mapacor >
+<ng-template #mapacor>
   <app-map-coord (puntoElegidoEmit)="getCoordsFromMapa($event)"></app-map-coord>
 </ng-template>

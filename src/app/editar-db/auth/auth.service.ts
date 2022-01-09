@@ -55,6 +55,7 @@ export class AuthService extends RoleValidator {
     try {
       const {user} = await this.afAuth.createUserWithEmailAndPassword(email, password);
       this.sendVerificationEmail();
+      this.logout();
       return user;
     } catch (e) {
       console.log(e);
@@ -69,7 +70,7 @@ export class AuthService extends RoleValidator {
     }
   }
 
-  private updateUserData(user:User) {
+  updateUserData(user:User) {
     const userRef : AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
     const data: User = {
       uid: user.uid,

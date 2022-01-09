@@ -178,6 +178,8 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     // 2) Nested: actualizar el objeto final
     formProyectoFinal['detalles'] = this.removeEmptyFields(this.registerForm.value);
     formProyectoFinal['userUid'] = this.userUid$.value;
+    formProyectoFinal['detalles'].fecha_modificacion = new Date();
+
     this.proyectoService.selectedProject ? formProyectoFinal['id'] = this.proyectoService.selectedProject.id: null;
 
     // cargar el anterior
@@ -190,6 +192,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
       formProyectoFinal['detalles']['especies'] = especiesFinal;
       formProyectoFinal['detalles']['personal'] = personalFinal;
       formProyectoFinal['detalles']['coordenadas'] = coordsFinal;
+      formProyectoFinal['detalles']['fecha_modificacion'] = new Date();
     }
 
     formProyectoFinal['detalles']['areas_tematicas'] = this.selected_items_areas_tem;
@@ -197,13 +200,13 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
     console.log(formProyectoFinal['detalles']);
 
-    formProyectoFinal['id'] ? this.proyectoService.editarProject(formProyectoFinal) : this.proyectoService.addProject(formProyectoFinal);
+    // formProyectoFinal['id'] ? this.proyectoService.editarProject(formProyectoFinal) : this.proyectoService.addProject(formProyectoFinal);
 
-    this.alerta = true;
-    // window.scrollTo(0, 0);
-    setTimeout(() => {
-      this.router.navigate(['proyectos']);
-    }, 3000);
+    // this.alerta = true;
+    // // window.scrollTo(0, 0);
+    // setTimeout(() => {
+    //   this.router.navigate(['proyectos']);
+    // }, 3000);
   }
 
   removeEmptyFields(obj) {

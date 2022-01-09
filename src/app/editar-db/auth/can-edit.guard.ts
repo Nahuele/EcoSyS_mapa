@@ -12,13 +12,12 @@ export class CanEditGuard implements CanActivate {
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean  {
     return this.authService.user$.pipe(
-      take(1),
-      map((user) => user && this.authService.isEditor(user)),
-        tap((canEdit) => {
-          if (!canEdit) {
-            window.alert('Acceso denegado! Si ya confirmó el correo electrónico cierre sesión y vuelva a loguear.')
-          }
-        })
+      map((user) => user && this.authService.isEditor(user))
+        // tap((canEdit) => {
+        //   if (!canEdit) {
+        //     window.alert('Acceso denegado! Si ya confirmó el correo electrónico cierre sesión y vuelva a loguear.')
+        //   }
+        // })
     );
   }
 

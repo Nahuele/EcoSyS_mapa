@@ -11,18 +11,19 @@ import {Observable} from 'rxjs';
 export class NavbarComponent implements OnInit {
 
   isCollapsed = true;
-
+  public isLogged: boolean = false;
   public uid: string;
 
   public user$: Observable<any> = this.authService.afAuth.user;
   constructor(private authService: AuthService,
               private router: Router) { }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.getCurrentUser();
     // this.user$.subscribe(data => this.uid = data.uid)
   }
 
-  async onLogout() {
+  onLogout() {
     try {
       this.authService.logout();
       this.router.navigate(['/'])
@@ -30,6 +31,19 @@ export class NavbarComponent implements OnInit {
     catch (e) {
       console.log(e);
     }
+  }
+
+  getCurrentUser() {
+    this.authService.isAuth().subscribe(auth => {
+      if (auth) {
+        console.log('user logged');
+        this.isLogged = true;
+        this.router.navigate(['/'])
+      } else {
+        console.log('not logged');
+        this.isLogged = false;
+      }
+    })
   }
 
 }

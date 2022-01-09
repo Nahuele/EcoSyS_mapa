@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {AuthService} from '../auth/auth.service';
 import {Router} from '@angular/router';
+import {auth} from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -36,5 +37,9 @@ export class LoginComponent implements OnInit {
       console.log(e);
     }
 }
+  onLoginFacebook() {
+    this.authService.afAuth.signInWithPopup( new auth.FacebookAuthProvider());
+  }
+
 
 }

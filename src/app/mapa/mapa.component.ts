@@ -147,13 +147,6 @@ export class MapaComponent implements OnInit {
         'icon-image': icon,
         'icon-size':  1
       },
-      // paint:    {
-      //   'circle-radius':       20,
-      //   'circle-color':        '#223b53', // colorDot,
-      //   'circle-stroke-color': 'white',
-      //   'circle-stroke-width': 1,
-      //   'circle-opacity':      0.7
-      // }
     };
     return {source, layerConfig};
   }
@@ -223,8 +216,8 @@ export class MapaComponent implements OnInit {
       container: 'mapa-mapbox', // container id
       style:     `mapbox://styles/mapbox/${selectedLayer}`, // mapbox://styles/mapbox/streets-v11
       // mapbox://styles/iannbarbe/ckduoxxyy0u7d19teotam0daj
-      center: [-68.5631238, -43.7027949], // starting position
-      zoom:   3 // starting zoom
+      center: [-50, -27], // starting position
+      zoom:   2.7 // starting zoom
     });
     this.mapa.addControl(new mapboxgl.NavigationControl());
     this.mapa.addControl(new mapboxgl.ScaleControl());
@@ -254,7 +247,23 @@ export class MapaComponent implements OnInit {
       // this.showOrHideLayers();
       console.log('mapa desde funcion correctora con idle, lo carga 3 veces, 2 de las cuales va a dar errores xq ya existen los objetos html')
       this.capasCargadas = true;
+
+// nueva capa del mar argentino, fuente https://marineregions.org/gazetteer.php?p=details&id=8466
+      this.mapa.addSource('mararg', {
+        'type': 'geojson',
+        'data': '../assets/coordenadas_mar_argentino.geojson'
+      });
+
+// muestro poligono del mar arg.
+      this.mapa.addLayer({
+        'id': 'mar-arg_layer',
+        'type': 'fill',
+        'source': 'mararg',
+        'paint': {
+          'fill-color': 'rgba(74, 5, 5, 0.4)',
+          'fill-outline-color': 'rgba(240, 78, 78, 1)'
+        }
+      });
     });
   }
-
 }

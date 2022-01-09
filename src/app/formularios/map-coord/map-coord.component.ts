@@ -44,6 +44,7 @@ export class MapCoordComponent implements OnInit {
         marker = new mapboxgl.Marker({draggable: true}).setLngLat([coordenadas.lng, coordenadas.lat]).addTo(this.mapa)
       }
     });
+    this.mapa.addControl(new mapboxgl.NavigationControl());
   }
 
   enviarCoordenada() {

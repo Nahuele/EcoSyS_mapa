@@ -607,11 +607,12 @@
     </div>
 
     <!--especies-->
+    <hr class="m-5">
     <div
-      *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas' && this.registerForm.value.tipo_enfoque != 'Ambiente y sociedad'">
+      *ngIf="this.registerForm.value.tipo_enfoque != 'Experiencias agroecológicas'">
       <h4 class="text-center">Registrar especies</h4>
       <div class="form-group">
-        <a (click)="agregarEspecie()" class="btn btn-warning m-3" type="button">Agregar Especies</a>
+        <a (click)="agregarEspecie()" class="btn btn-warning" type="button">Agregar Especies</a>
         <!-- viejas especies-->
         <div *ngIf="listasppFromDB as especies">
           <div *ngFor="let spp of especies; let y = index">

@@ -35,7 +35,6 @@ export class ProyectoService {
             return data;
           });
         }));
-
   }
 
   getProjects() {

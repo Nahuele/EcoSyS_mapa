@@ -1,71 +1,218 @@
 <div class="container mt-5 mb-5">
-  <p class="text-start mb-5">El mapa contiene entradas cargadas totalmente por las personas registradas en el sistema
-    que
-    quieren compartir información verídica acerca de distintos tipos de proyectos medioambientales que se llevan a cabo
-    actualmente en Latinoamérica.
+  <p class="text-start mb-5">El mapa contiene entradas cargadas totalmente por las personas registradas
+    en el sistema que quieren compartir información verídica acerca de distintos tipos de proyectos medioambientales
+    que se llevan a cabo actualmente en Latinoamérica.
   </p>
-  <div class="mt-3">
-    <div class="mb-4">
-      <h4 class="text-secondary"><small><i class="fa fa-user mr-2"></i></small>Creación del usuario
-      </h4>
-    </div>
+<accordion [isAnimated]="true">
+  <accordion-group heading="" [isOpen]="isFirstOpen">
+    <span accordion-heading class="text-secondary">
+      <i class='fa fa-user mr-2'></i>Creación del usuario
+    </span>
     <div class="offset-1">
-      <p>Para registrar un proyecto es necesario crearse un usuario en el sistema utilizando el e-mail.</p>
+      <p>Para registrar un proyecto es necesario crearse un usuario en el sistema utilizando el e-mail.
+      </p>
       <ol>
-        <li><p>Ingresar a la página de <a routerLink="/login" target="_blank">Login</a> y registrar el correo
-          electrónico.</p></li>
+        <li><p>Ingresar a la página de <a routerLink="/login" target="_blank">Login</a> y registrar el correo electrónico y contraseña de más de 6 caracteres.</p></li>
         <li><p>Le llegará un correo de confirmación a la dirección proporcionada.</p></li>
-        <li><p>Una vez realizado este procedimiento se habilitarán las secciones para visualizar la lista de proyectos
-          cargados por el usuario y la opción para generar un nuevo proyecto.
+        <li><p>Una vez realizada la confirmación se habilitarán las secciones para visualizar la lista de
+          proyectos cargados por el usuario y la opción para generar un nuevo proyecto.
         </p></li>
       </ol>
-      <p>En la vista de "Mis proyectos" aparecerán sus proyectos registrados en el sistema y también la posibilidad de
-        editarlos y borrarlos. </p>
-      <p class="text-muted"><i>Nota: En edición del proyecto va a notar que no todos los campos son editables. Los
-        campos en gris no se
-        pueden cambiar, tampoco las fotos subidas con anterioridad. En caso de que desee remover las fotos tiene que
-        borrar el proyecto completo y crear una nueva entrada.</i></p>
+      <p>En la vista de "Mis proyectos" aparecerán sus proyectos registrados
+        en el sistema y también la posibilidad de editarlos o borrarlos.</p>
+      <p class="text-muted"><i>Nota: En la edición del proyecto va a notar que no todos los campos son editables. Los campos en gris no se pueden cambiar, tampoco las fotos subidas con anterioridad. En caso de que desee remover las fotos tiene que borrar el proyecto completo y crear uno nuevo.</i></p>
     </div>
-  </div>
-  <div class="mt-5">
-    <h4 class="text-secondary"><small><i class="fa fa-list-alt mr-2"></i></small>Cómo completar el formulario
-    </h4>
-    <div class="row offset-1 mt-4">
-      <p>El formulario contiene campos obligatorios, campos opcionales, y campos recomendados para completar. </p>
+  </accordion-group>
+
+  <accordion-group heading="">
+    <span accordion-heading class="text-secondary">
+      <i class='fa fa-th-list mr-2'></i>Datos básicos
+    </span>
+    <div class="mt-5">
+      <p class="text-secondary text-center">Cómo completar el formulario:</p>
+      <div class="row offset-1 mt-4">
+        <p>El formulario contiene campos obligatorios, campos opcionales, y campos recomendados para completar. </p>
+      </div>
+      <dl class="row offset-1 mt-3">
+        <dt class="col-sm-3 color-item mb-2">Nombre del Proyecto</dt>
+        <dd class="col-sm-9">Titulo corto</dd>
+        <dt class="col-sm-3 color-item mb-2">Correo electrónico principal</dt>
+        <dd class="col-sm-9">
+          <p>Este e-mail se utilizará para ponerse en contacto con la persona o institución encargada, pero deberá ser un e-mail activo para responder las consultas en caso de que se necesite.</p>
+        </dd>
+        <dt class="col-sm-3 color-item mb-2">Tipo</dt>
+        <dd class="col-sm-9">
+          <p>Indicar el tipo de proyecto desde el menú desplegable. Dependiendo del tipo se elija algunos de los campos
+            del formulario podrán modificarse. Los tipos disponibles por el momento son:</p>
+          <ul>
+            <li>Conservación de la biodiversidad fauna (proyectos de investigación sobre la temática, iniciativas de conservación de fauna y flora)</li>
+            <li>Experiencias agroecológicas (huertas, cooperativas, ONGs)</li>
+            <li>Ambiente y sociedad (proyectos de investigación sobre impacto ambiental, ambiente y políticas públicas, etc)</li>
+          </ul>
+        </dd>
+        <dt class="col-sm-3 color-item mb-2">Estado actual</dt>
+        <dd class="col-sm-9"></dd>
+        <dt class="col-sm-3 color-item mb-2">Institución</dt>
+        <dd class="col-sm-9"></dd>
+        <dt class="col-sm-3 color-item mb-2">Palabras clave</dt>
+        <dd class="col-sm-9">Separadas por coma. Se utilizarán para futuros filtros.</dd>
+        <dt class="col-sm-3 color-item mb-2">Descripción</dt>
+        <dd class="col-sm-9"></dd>
+        <dt class="col-sm-3 color-item mb-2">Resumen</dt>
+        <dd class="col-sm-9"></dd>
+        <dt class="col-sm-3 color-item mb-2">Resultados</dt>
+        <dd class="col-sm-9"></dd>
+        <dt class="col-sm-3 color-item mb-2">Redes Sociales</dt>
+        <dd class="col-sm-9">Ingresar link
+          <ul>
+            <li>Facebook</li>
+            <li>Instagram</li>
+            <li>Twitter</li>
+            <li>YouTube</li>
+          </ul>
+        </dd>
+        <dt class="col-sm-3 color-item mb-2">Coordenadas</dt>
+        <dd class="col-sm-9">Debe ingresar al menos una coordenada geográfica del lugar dónde se lleva a cabo el proyecto.
+          Tiene la opción de agregar múltiples coordenadas si es un proyecto que involucra varios lugares.
+        </dd>
+        <dt class="col-sm-3 color-item mb-2">Datos del lugar</dt>
+        <dd class="col-sm-9">Info de la locación en donde se lleva a cabo el proyecto.
+          <ul>
+            <li>País</li>
+            <li>Provincia</li>
+            <li>Ciudad</li>
+            <li>Seleccione tipo de sitio (Parque Nacional, Reserva Nacional, Otro)</li>
+          </ul>
+        </dd>
+        <dt class="col-sm-3 color-item mb-2">Año de inicio</dt>
+        <dd class="col-sm-9"></dd>
+        <dt class="col-sm-3 color-item mb-2">Tipo de Estudio
+        </dt>
+        <dd class="col-sm-9">Por ejemplo: Especie exótica invasora
+        </dd>
+        <dt class="col-sm-3 color-item mb-2">Web</dt>
+        <dd class="col-sm-9">link de la web del grupo o universidad</dd>
+      </dl>
+
     </div>
+  </accordion-group>
+
+  <accordion-group heading="">
+    <span accordion-heading class="text-secondary">
+      <i class='fa fa-list-alt mr-2'></i>Información detallada
+    </span>
+
     <dl class="row offset-1 mt-3">
-      <dt class="col-sm-3 color-item mb-2">Nombre del Proyecto</dt>
+      <dt class="col-sm-3 color-item mb-2">Título Extendido</dt>
       <dd class="col-sm-9"></dd>
-      <dt class="col-sm-3 color-item mb-2">E-mail principal</dt>
-      <dd class="col-sm-9">
-        <p>este e-mail se utilizará para ponerse en contacto con la persona o institución encargada, pero deberá ser un
-          e-mail activo para responder las consultas</p>
-      </dd>
-      <dt class="col-sm-3 color-item mb-2">Tipo</dt>
-      <dd class="col-sm-9">
-        <p>Indicar el tipo de proyecto desde el menú desplegable. Dependiendo del tipo se elija algunos de los campos
-          del formulario podrán modificarse. Los tipos disponibles por el momento son (leer Acerca de para más
-          info):</p>
-        <ul>
-          <li>Agroecología y soberanía alimentaria (huertas, cooperativas, ONGs)</li>
-          <li>Conservación de fauna (proyectos de investigación sobre la temática)</li>
-          <li>Conservación de flora (proyectos de investigación sobre la temática)</li>
-          <li>Ambiente y sociedad (proyectos de investigación sobre impacto ambiental, ambiente y políticas públicas,
-            etc)
-          </li>
-        </ul>
-      </dd>
-      <dt class="col-sm-3 color-item mb-2">Enfoque</dt>
-      <dd class="col-sm-9">Por ejemplo: Ecología, criadero de aves, etc.</dd>
-      <dt class="col-sm-3 color-item mb-2">Estado actual</dt>
-      <dd class="col-sm-9"></dd>
-      <dt class="col-sm-3 color-item mb-2">Institución</dt>
-      <dd class="col-sm-9"></dd>
-      <dt class="col-sm-3 color-item mb-2">Título Extendido/dt>
+      <dt class="col-sm-3 color-item mb-2">Resumen</dt>
       <dd class="col-sm-9"></dd>
       <dt class="col-sm-3 color-item mb-2">Descripción</dt>
       <dd class="col-sm-9"></dd>
-      <dt class="col-sm-3 color-item mb-2">Resumen</dt>
+      <dt class="col-sm-3 color-item mb-2">Avances/Resultados</dt>
+      <dd class="col-sm-9"></dd>
+      <dt class="col-sm-3 color-item mb-2">Redes de Contacto</dt>
+      <dd class="col-sm-9">Ingresar link
+        <ul>
+          <li>Facebook</li>
+          <li>Instagram</li>
+          <li>Twitter</li>
+          <li>YouTube</li>
+          <li>Otra</li>
+        </ul>
+      </dd>
+    </dl>
+  </accordion-group>
+
+  <accordion-group heading="">
+    <span accordion-heading class="text-secondary">
+      <i class='fa fa-map-marker mr-2'></i>Datos del sitio
+    </span>
+    <dl class="row offset-1 mt-3">
+      <dt class="col-sm-3 color-item mb-2">Coordenadas</dt>
+      <dd class="col-sm-9">Debe ingresar al menos una coordenada geográfica del lugar dónde se lleva a cabo el proyecto.
+        Tiene la opción de agregar máximo cinco coordenadas si es un proyecto que involucra varios lugares.
+      </dd>
+      <dt class="col-sm-3 color-item mb-2">Info de la locación en donde se lleva a cabo el proyecto.</dt>
+      <dd class="col-sm-9">Opciones:
+        <ul>
+          <li>País</li>
+          <li>Provincia</li>
+          <li>Localidad más cercana (Ciudad en donde se lleva a cabo el proyecto)</li>
+          <li>Seleccione tipo de sitio (Parque Nacional, Reserva Nacional, Otro)</li>
+          <li>Alcance geográfico</li>
+        </ul>
+      </dd>
+      <hr>
+      <dt class="col-sm-3 color-item mb-2">Año de inicio</dt>
+      <dd class="col-sm-9"></dd>
+      <dt class="col-sm-3 color-item mb-2">Tipo de Estudio
+      </dt>
+      <dd class="col-sm-9">Por ejemplo: Especie exótica invasora
+      </dd>
+      <dt class="col-sm-3 color-item mb-2">Página Web</dt>
+      <dd class="col-sm-9">link de la web del grupo o universidad</dd>
+    </dl>
+
+  </accordion-group>
+  <accordion-group heading="">
+    <span accordion-heading class="text-secondary">
+      <i class='fa fa-image mr-2'></i>Imágenes
+    </span>
+    <div class="offset-1">
+      <p>Puede incluir algunas imágenes de propia autoría arrastrando y soltando en el área correspondiente.</p>
+      <p>Se admiten solo formatos jpg y png.</p>
+      <p>Las imágenes no pueden ser editadas luego de subido el proyecto, si se desea reemplazarlas, se debe borrar el proyecto y volver a generarlo con nuevas imágenes.</p>
+    </div>
+
+  </accordion-group>
+  <accordion-group heading="">
+    <span accordion-heading class="text-secondary">
+      <i class='fa fa-video-camera mr-2'></i>Agregar Videos
+    </span>
+    <div class="offset-1">
+      <p>Los videos admitidos por el momento deben estar bajo la plataforma YouTube (para agregar más de uno clickee otra vez en el botón Agregar Videos).</p>
+    </div>
+  </accordion-group>
+
+  <accordion-group heading="">
+    <span accordion-heading class="text-secondary">
+      <i class='fa fa-users mr-2'></i>Agregar Personal
+    </span>
+    <div class="offset-1">
+      <p>Puede agregar también la información de los integrantes del proyecto (para agregar más de uno clickee otra vez en el botón Agregar Personal).</p>
+    </div>
+    <dl class="row offset-1 mt-3">
+      <dt class="col-sm-3 color-item mb-2">Nombre/s</dt>
+      <dd class="col-sm-9"></dd>
+      <dt class="col-sm-3 color-item mb-2">Apellido/s</dt>
+      <dd class="col-sm-9">
+      <dt class="col-sm-3 color-item mb-2">Profesión</dt>
+      <dd class="col-sm-9">
+      <dt class="col-sm-3 color-item mb-2">Especialidad</dt>
+      <dd class="col-sm-9"></dd>
+      <dt class="col-sm-3 color-item mb-2">Rol</dt>
+      <dd class="col-sm-9">
+        <p>Opciones:</p>
+        <ul>
+          <li>Guardaparque</li>
+          <li>Director</li>
+          <li>Audiovisual</li>
+          <li>Voluntario de campo</li>
+          <li>Codirector/a</li>
+          <li>Investigador principal</li>
+          <li>Otro</li>
+        </ul>
+      </dd>
+      <dt class="col-sm-3 color-item mb-2">Género</dt>
+      <dd class="col-sm-9"></dd>
+      <dt class="col-sm-3 color-item mb-2">Fecha de nacimiento</dt>
+      <dd class="col-sm-9"></dd>
+      <dt class="col-sm-3 color-item mb-2">País de residencia</dt>
+      <dd class="col-sm-9"></dd>
+      <dt class="col-sm-3 color-item mb-2">Provincia de residencia</dt>
+      <dd class="col-sm-9"></dd>
+      <dt class="col-sm-3 color-item mb-2">e-mail</dt>
       <dd class="col-sm-9"></dd>
       <dt class="col-sm-3 color-item mb-2">Resultados</dt>
       <dd class="col-sm-9"></dd>
@@ -76,83 +223,38 @@
           <li>Instagram</li>
           <li>Twitter</li>
           <li>YouTube</li>
+          <li>Research Gate</li>
+          <li>Otra</li>
         </ul>
       </dd>
-      <dt class="col-sm-3 color-item mb-2">Coordenadas</dt>
-      <dd class="col-sm-9">Debe ingresar al menos una coordenada geográfica del lugar dónde se lleva a cabo el proyecto.
-        Tiene la opción de agregar múltiples coordenadas si es un proyecto que involucra varios lugares.
-      </dd>
-      <dt class="col-sm-3 color-item mb-2">Datos del lugar</dt>
-      <dd class="col-sm-9">Info de la locación en donde se lleva a cabo el proyecto.
-        <ul>
-          <li>País</li>
-          <li>Provincia</li>
-          <li>Ciudad</li>
-          <li>Seleccione tipo de sitio (Parque Nacional, Reserva Nacional, Otro)</li>
-        </ul>
-      </dd>
-      <dt class="col-sm-3 color-item mb-2">Año de inicio</dt>
-      <dd class="col-sm-9"></dd>
-      <dt class="col-sm-3 color-item mb-2">Tipo de Estudio
-      </dt>
-      <dd class="col-sm-9">Por ejemplo: Especie exótica invasora
-      </dd>
-      <dt class="col-sm-3 color-item mb-2">Web</dt>
-      <dd class="col-sm-9">link de la web del grupo o universidad</dd>
     </dl>
-  </div>
-  <div class="offset-1 mt-5">
-    <h5 class="text-muted mb-4"><small><i class="fa fa-image mr-2"></i></small>Imágenes</h5>
-    <p>Puede incluir algunas imágenes de propia autoría arrastrando y soltando en el área correspondiente.</p>
-    <p>Se admiten solo formatos jpg y png.</p>
-  </div>
-  <div class="offset-1 mt-5">
-    <h5 class="text-muted mb-4"><small><i class="fa fa-video-camera mr-2"></i></small>Agregar Videos</h5>
-    <p>Los videos admitidos por el momento deben estar bajo la plataforma YouTube (para agregar más de uno clickee otra
-      vez en el botón Agregar Personal).</p>
-  </div>
-  <div class="offset-1 mt-5">
-    <h5 class="text-muted mb-4"><small><i class="fa fa-users mr-2"></i></small>Agregar Personal</h5>
-    <p>Puede agregar también la información de los integrantes del proyecto (para agregar más de uno clickee otra vez en
-      el botón Agregar Personal).
-    </p>
-    <dl class="row offset-1 mt-3">
-      <dt class="col-sm-3 color-item mb-2">Nombre/s</dt>
-      <dd class="col-sm-9"></dd>
-      <dt class="col-sm-3 color-item mb-2">Apellido/s</dt>
-      <dd class="col-sm-9"></dd>
-      <dt class="col-sm-3 color-item mb-2">Rol</dt>
-      <dd class="col-sm-9">Guardaparque, director, audiovisual, voluntario de campo, codirector/a, investigador
-        principal, otro
-      </dd>
-      <dt class="col-sm-3 color-item mb-2">País de residencia</dt>
-      <dd class="col-sm-9"></dd>
-      <dt class="col-sm-3 color-item mb-2">Provincia de residencia</dt>
-      <dd class="col-sm-9"></dd>
-      <dt class="col-sm-3 color-item mb-2">e-mail</dt>
-      <dd class="col-sm-9"></dd>
-      <dt class="col-sm-3 color-item mb-2">Redes sociales</dt>
-      <dd class="col-sm-9">Facebook, Instagram, Twitter, YouTube, Research Gate</dd>
-    </dl>
-  </div>
-  <div class="offset-1 mt-5 ">
-    <h5 class="text-muted mb-4"><small><i class="fa fa-paw mr-2"></i></small>Agregar Especies</h5>
-    <p>Esta opción está disponible en proyectos de conservación (para agregar más de uno clickee otra vez en el botón
-      Agregar Especies).</p>
-    <dl class="row offset-1 mt-3">
-      <dt class="col-sm-3 color-item mb-2">SPOB</dt>
-      <dd class="col-sm-9">Nombre científico de la Especie Objetivo. (Ej.: Puma concolor). La especie ingresada aquí se
-        buscará en la base de datos de la <a href="https://www.iucnredlist.org/" target="_blank">IUCN Red List</a> para
-        cargar información extra
-      </dd>
-      <dt class="col-sm-3 color-item mb-2">Nombre Vulgar (Ej.: puma)
-      </dt>
-      <dd class="col-sm-9"></dd>
-      <dt class="col-sm-3 color-item mb-2">tso</dt>
-      <dd class="col-sm-9">Tipo según origen (Ej.: Nativa)</dd>
-    </dl>
-  </div>
+  </accordion-group>
+  <accordion-group heading="">
+    <span accordion-heading class="text-secondary">
+      <i class='fa fa-paw mr-2'></i>Registrar Especies
+    </span>
+    <div class="offset-1 mt-5 ">
+      <p>Esta opción está disponible en proyectos de conservación (para agregar más de uno clickee otra vez en el botón
+        Agregar Especies).</p>
+      <dl class="row offset-1 mt-3">
+        <dt class="col-sm-3 color-item mb-2">Especie objetivo</dt>
+        <dd class="col-sm-9">Nombre científico de la Especie Objetivo. (Ej.: Puma concolor). La especie ingresada aquí se
+          buscará en la base de datos de la <a href="https://www.iucnredlist.org/" target="_blank">IUCN Red List</a> para
+          cargar información extra.
+        </dd>
+        <dt class="col-sm-3 color-item mb-2">Nombre Vulgar</dt>
+        <dd class="col-sm-9">Ej.: puma</dd>
+        <dt class="col-sm-3 color-item mb-2">Nombre en inglés</dt>
+        <dd class="col-sm-9"></dd>
+        <dt class="col-sm-3 color-item mb-2">Tipo según origen</dt>
+        <dd class="col-sm-9">Ej.: Nativa</dd>
+      </dl>
+    </div>
+  </accordion-group>
+</accordion>
+
   <p class="text-start mt-5">Al enviar el proyecto, si las coordenadas son correctas se mostrará automáticamente en el
     mapa.
   </p>
 </div>
+

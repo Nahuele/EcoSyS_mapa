@@ -12,14 +12,6 @@
               <input type="email" id="email" class="form-control" formControlName="email">
             </div>
             <div class="form-group">
-              <label for="nombre">Nombre</label>
-              <input type="email" id="nombre" class="form-control" formControlName="email">
-            </div>
-            <div class="form-group">
-              <label for="apellido">Apellido</label>
-              <input type="email" id="apellido" class="form-control" formControlName="email">
-            </div>
-            <div class="form-group">
               <label for="password">Contraseña</label>
               <input type="password" id="password" class="form-control" formControlName="password">
             </div>
@@ -29,6 +21,7 @@
 <!--            <p>Ya tienes cuenta?<a [routerLink]="['/login']">Registrarse</a></p>-->
 <!--          </div>-->
         </div>
+        <h3>{{mensaje | json}}</h3>
       </div>
     </div>
   </div>

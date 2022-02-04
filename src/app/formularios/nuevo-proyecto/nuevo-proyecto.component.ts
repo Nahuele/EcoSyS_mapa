@@ -153,6 +153,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
     // esto revisa cambios en tiempo real del form, los elif son para borrar cuando cambio de tipo_enfoque y no borrar si ya lo tiene cargado
     this.registerForm.valueChanges.subscribe(x => { // .pipe(skip(1))
       x = x.tipo_enfoque
+      console.log(x)
       this.lista_areas_tem = x === 'Conservación de la biodiversidad' ? areasTemBiodiversidad : x === 'Ambiente y sociedad' ? areastemAmbienteysoc :
         x === 'Experiencias agroecológicas' ? areasTemAgroecologico : [];
       this.lista_campo_aplicacion = x === 'Conservación de la biodiversidad' ? campoAplicacBiodiversidad : x === 'Ambiente y sociedad' ? campoAplicacSocYamb : [];
@@ -170,6 +171,8 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
         this.selected_items_areas_tem = [];
         this.selected_items_campo_aplica = [];
       }
+      console.log('lista')
+      console.log(this.selected_items_areas_tem)
     })
   }
 
@@ -200,7 +203,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
     console.log(formProyectoFinal['detalles']);
 
-    // formProyectoFinal['id'] ? this.proyectoService.editarProject(formProyectoFinal) : this.proyectoService.addProject(formProyectoFinal);
+    formProyectoFinal['id'] ? this.proyectoService.editarProject(formProyectoFinal) : this.proyectoService.addProject(formProyectoFinal);
 
     // this.alerta = true;
     // // window.scrollTo(0, 0);
@@ -210,9 +213,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
   }
 
   removeEmptyFields(obj) {
-    return JSON.parse(JSON.stringify(obj, (key, value) => {
-      return (value === null ? undefined : value === '' ? undefined : value === undefined ? undefined : value.length === 0 ? undefined : value);
-    }));
+    return JSON.parse(JSON.stringify(obj, (key, value) => (value === null ? undefined : value === '' ? undefined : value === undefined ? undefined : value.length === 0 ? undefined : value)));
   }
 
   borrarForm() {

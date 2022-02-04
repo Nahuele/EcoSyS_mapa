@@ -7,4 +7,7 @@ export class RoleValidator {
   isAdmin(user: User): boolean {
     return user.roles === 'ADMIN';
   }
+  isVerified(user: User): boolean {
+    return user.emailVerified === true;
+  }
 }

@@ -7,6 +7,8 @@ import { ModalModule} from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import {HttpClientModule} from '@angular/common/http';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -89,6 +91,8 @@ import { MapCoordComponent } from './formularios/map-coord/map-coord.component';
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
     NgMultiSelectDropDownModule.forRoot(),
+    AccordionModule.forRoot(),
+    TabsModule.forRoot()
   ],
   exports:[],
   providers: [AuthService, CanEditGuard, { provide: BUCKET, useValue: 'gs://mapaproyectos-59125.appspot.com'}, StorageService],

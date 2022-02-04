@@ -35,6 +35,7 @@ export class AuthService extends RoleValidator {
       this.updateUserData(user)
       return user;
     } catch (e) {
+      return e;
       console.log(e);
     }
   }
@@ -55,9 +56,10 @@ export class AuthService extends RoleValidator {
     try {
       const {user} = await this.afAuth.createUserWithEmailAndPassword(email, password);
       this.sendVerificationEmail();
-      this.logout();
+      // this.logout();
       return user;
     } catch (e) {
+      return e;
       console.log(e);
     }
   }

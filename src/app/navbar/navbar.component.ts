@@ -14,13 +14,18 @@ export class NavbarComponent implements OnInit {
   public isLogged: boolean = false;
   public uid: string;
 
-  public user$: Observable<any> = this.authService.afAuth.user;
+  // public user$: Observable<any> = this.authService.afAuth.user;
+  user;
+
   constructor(private authService: AuthService,
               private router: Router) { }
 
   ngOnInit() {
     this.getCurrentUser();
-    // this.user$.subscribe(data => this.uid = data.uid)
+    // this.user$.subscribe(data =>
+    //   console.log(data)
+      // this.uid = data.uid
+  // )
   }
 
   onLogout() {
@@ -35,14 +40,15 @@ export class NavbarComponent implements OnInit {
 
   getCurrentUser() {
     this.authService.isAuth().subscribe(auth => {
-      if (auth) {
-        console.log('user logged');
-        this.isLogged = true;
-        this.router.navigate(['/'])
-      } else {
-        console.log('not logged');
-        this.isLogged = false;
-      }
+      this.user = auth;
+      // if (auth.emailVerified) {
+      //   console.log('user logged');
+      //   this.isLogged = true;
+      //   this.router.navigate(['/'])
+      // } else {
+      //   console.log('not logged');
+      //   this.isLogged = false;
+      // }
     })
   }
 

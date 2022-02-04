@@ -34,9 +34,7 @@ export class MapaComponent implements OnInit {
     this.listenPopUps('agroeco');
     this.mapa.getCanvas().style.cursor = 'wait';
     // esto es para el cursor waiting
-    this.loadingCursor.asObservable().subscribe(value => {
-      value == true ? this.mapa.getCanvas().style.cursor = 'wait' : this.mapa.getCanvas().style.cursor = 'default';
-    })
+    this.loadingCursor.asObservable().subscribe(value => value == true ? this.mapa.getCanvas().style.cursor = 'wait' : this.mapa.getCanvas().style.cursor = 'default')
   }
 
   buscarCoordenadas() {
@@ -54,7 +52,7 @@ export class MapaComponent implements OnInit {
         this.projectsList.push(projects[proj]);
 
         if (itemProj.coordenadas) {
-          itemProj.coordenadas.forEach((element) => {
+          itemProj.coordenadas.forEach(element => {
             const coordenadas = [+element.longitud, +element.latitud];
             const detallesPro = itemProj;
             const objForLayer = {
@@ -112,12 +110,12 @@ export class MapaComponent implements OnInit {
 
     return `<div class="card">
         <div class="card-header text-center">
-          <img src="${link}" class="img-fluid" alt="Responsive image" style="border: 1px solid #ddd;
-          border-radius: 4px;padding: 5px;width: 350px;">
+          <img src="${link}" class="img-thumbnail" alt="Responsive image" style="border: 1px solid #ddd;
+          border-radius: 4px;padding: 5px;">
 </div>
   <div class="card-body">
     <h5 class="card-title">${proyecto.detalles.nombre}</h5>
-    <p class="card-text"><div><strong>Resumen:</strong></div> ${proyecto.detalles.resumen}</p>
+    <p class="card-text" style="text-overflow: ellipsis;"><div><strong>Resumen:</strong></div> ${proyecto.detalles.resumen}</p>
     <a href="detalles/${proyecto.id}" class="btn btn-primary btn-sm">Más Detalles
     <i class="fa fa-search"></i></a>
   </div>
@@ -164,7 +162,7 @@ export class MapaComponent implements OnInit {
 
   listenPopUps(layerId) {
 
-    this.mapa.on('click', layerId, (e) => {
+    this.mapa.on('click', layerId, e => {
       const coordinates = e.features[0].geometry.coordinates.slice();
       let description = e.features[0].properties.description;
       const project = description.split('"');
@@ -189,7 +187,7 @@ export class MapaComponent implements OnInit {
         if (url.includes('http')) {
           description = description.replace('https://icon-library.com/images/no-image-available-icon/no-image-available-icon-7.jpg', url);
         }
-        new mapboxgl.Popup({offset: 25, closeButton: false, className: 'mapboxgl-popup', maxWidth: '400px'})
+        new mapboxgl.Popup({offset: 25, closeButton: false, className: 'mapboxgl-popup', maxWidth: '35em', focusAfterOpen: true})
           .setLngLat(coordinates)
           .setHTML(description)
           .addTo(this.mapa);
@@ -245,7 +243,6 @@ export class MapaComponent implements OnInit {
         this.mapa.addLayer(this.getSourceAndLayer('ambienteYsoc', ftsAmbSoc, 'socambLogo').layerConfig);
       });
       // this.showOrHideLayers();
-      console.log('mapa desde funcion correctora con idle, lo carga 3 veces, 2 de las cuales va a dar errores xq ya existen los objetos html')
       this.capasCargadas = true;
 
 // nueva capa del mar argentino, fuente https://marineregions.org/gazetteer.php?p=details&id=8466

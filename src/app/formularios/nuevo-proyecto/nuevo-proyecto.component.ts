@@ -42,9 +42,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
               public proyectoService: ProyectoService,
               private modalService: BsModalService,
               public iucnService: IucnApiService,
-              private authService: AuthService,
-              private router: Router,
-              private location: Location) {}
+              private authService: AuthService) {}
 
   get email() {
     return this.registerForm.get('email');
@@ -151,37 +149,48 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
       allowSearchFilter: false
     };
     // esto revisa cambios en tiempo real del form, los elif son para borrar cuando cambio de tipo_enfoque y no borrar si ya lo tiene cargado
-    this.registerForm.valueChanges.subscribe(x => { // .pipe(skip(1))
-      x = x.tipo_enfoque
-      console.log(x)
-      this.lista_areas_tem = x === 'Conservación de la biodiversidad' ? areasTemBiodiversidad : x === 'Ambiente y sociedad' ? areastemAmbienteysoc :
-        x === 'Experiencias agroecológicas' ? areasTemAgroecologico : [];
-      this.lista_campo_aplicacion = x === 'Conservación de la biodiversidad' ? campoAplicacBiodiversidad : x === 'Ambiente y sociedad' ? campoAplicacSocYamb : [];
+    // this.registerForm.valueChanges.subscribe(x => { // .pipe(skip(1))
+
+    this.onChangeTipoEnfq();
+
+  }
+
+  onChangeTipoEnfq(): void {
+    this.registerForm.get('tipo_enfoque').valueChanges.subscribe(enfq => {
+      console.log(enfq)
+      this.lista_areas_tem = enfq === 'Conservación de la biodiversidad' ? areasTemBiodiversidad : enfq === 'Ambiente y sociedad' ? areastemAmbienteysoc :
+        enfq === 'Experiencias agroecológicas' ? areasTemAgroecologico : [];
+      this.lista_campo_aplicacion = enfq === 'Conservación de la biodiversidad' ? campoAplicacBiodiversidad : enfq === 'Ambiente y sociedad' ? campoAplicacSocYamb : [];
       if (this.proyectoService.selectedProject && this.proyectoService.selectedProject.detalles) {
         console.log('ejecutada, hay proyecto')
-        if (x !== this.proyectoService.selectedProject.detalles.tipo_enfoque && x !== null && x.length !== 0 ) {
-          console.log('son diferentes', x, '///', this.proyectoService.selectedProject.detalles , '///')
+        if (enfq !== this.proyectoService.selectedProject.detalles.tipo_enfoque && enfq !== null && enfq.length !== 0) {
+          console.log('son diferentes', enfq, '///', this.proyectoService.selectedProject.detalles, '///')
           this.selected_items_areas_tem = [];
           this.selected_items_campo_aplica = [];
         } else {
           this.selected_items_areas_tem = this.proyectoService.selectedProject.detalles.areas_tematicas;
           this.selected_items_campo_aplica = this.proyectoService.selectedProject.detalles.campo_aplicacion;
         }
-      } else {
+      }
+      else {
+        console.log('borrando')
         this.selected_items_areas_tem = [];
         this.selected_items_campo_aplica = [];
       }
-      console.log('lista')
-      console.log(this.selected_items_areas_tem)
     })
-  }
+
+
+
+
+
+    }
 
   submit() {
     let formProyectoFinal = {};
     // 2) Nested: actualizar el objeto final
     formProyectoFinal['detalles'] = this.removeEmptyFields(this.registerForm.value);
     formProyectoFinal['userUid'] = this.userUid$.value;
-    formProyectoFinal['detalles'].fecha_modificacion = new Date();
+    formProyectoFinal['detalles'].fecha_modificacion = new Date().toLocaleString();
 
     this.proyectoService.selectedProject ? formProyectoFinal['id'] = this.proyectoService.selectedProject.id: null;
 
@@ -203,6 +212,11 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
     console.log(formProyectoFinal['detalles']);
 
+    // if (formProyectoFinal['id']) {
+    //   this.proyectoService.editarProject(formProyectoFinal)
+    // } else {
+    //   this.proyectoService.addProject(formProyectoFinal)
+    // }
     formProyectoFinal['id'] ? this.proyectoService.editarProject(formProyectoFinal) : this.proyectoService.addProject(formProyectoFinal);
 
     // this.alerta = true;

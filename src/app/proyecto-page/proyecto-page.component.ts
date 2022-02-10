@@ -66,7 +66,8 @@ export class ProyectoPageComponent implements OnInit {
               this.createVideoTag();
             }
           }
-          console.log(proyecto.detalles);
+          console.log(this.detallesPro)
+          console.log(this.detallesPro)
           return this.detallesPro;
         }
       }

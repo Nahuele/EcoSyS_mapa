@@ -29,7 +29,7 @@
       <div class="col">
         <div class="form-group">
           <label for="tipo_enfoque">Tipo</label>
-          <select [ngClass]="{'is-invalid': registerForm.get('tipo_enfoque').invalid}" [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['tipo_enfoque'] : ''"
+          <select [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['tipo_enfoque'] : ''"
                   class="form-control"
                   formControlName="tipo_enfoque"
                   id="tipo_enfoque">

@@ -33,17 +33,17 @@ admin? {{isAdmin}}
               </div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col">
-                    <p><strong>user id:</strong> {{item.userUid}}</p>
-                  </div>
+<!--                  <div class="col">-->
+<!--                    <p><strong>user id:</strong> {{item.userUid}}</p>-->
+<!--                  </div>-->
                   <div class="col">
                     <p><strong>nombre:</strong> {{item.detalles['nombre'] | json}} </p>
                   </div>
                   <div class="col">
-                    <p><strong>coordenadas:</strong> {{item.detalles['coordenadas'] | json}} </p>
+                    <p><strong>tipo de enfoque:</strong> {{item.detalles['tipo_enfoque'] | json}} </p>
                   </div>
                   <div class="col">
-                    <p><strong>ciudad:</strong> {{item.detalles['ciudad'] | json}} </p>
+                    <p><strong>email:</strong> {{item.detalles['email'] | json}} </p>
                   </div>
                 </div>
                 <div class="row justify-content-md-center">

@@ -41,7 +41,7 @@ import {CarouselModule} from 'ngx-bootstrap/carousel';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
 import { IntegrantesComponent } from './proyecto-page/integrantes/integrantes.component';
 import { RedesSocialesComponent } from './proyecto-page/redes-sociales/redes-sociales.component';
-import { ContactComponent } from './contact/contact.component';
+import { EquipoComponent } from './equipo/equipo.component';
 import { AboutComponent } from './acerca-de/about.component';
 import { TutorialComponent } from './tutorial/tutorial.component';
 import { MapCoordComponent } from './formularios/map-coord/map-coord.component';
@@ -64,7 +64,7 @@ import { MapCoordComponent } from './formularios/map-coord/map-coord.component';
     CarouselComponent,
     IntegrantesComponent,
     RedesSocialesComponent,
-    ContactComponent,
+    EquipoComponent,
     AboutComponent,
     TutorialComponent,
     MapCoordComponent,

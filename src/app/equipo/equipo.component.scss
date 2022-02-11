@@ -1,0 +1,189 @@
+.user-pic {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 100%;
+  margin: 20px auto 20px;
+  border-left: 3px solid #ddd;
+  border-right: 3px solid #ddd;
+  border-top: 3px solid #007bff;
+  border-bottom: 3px solid #007bff;
+  transform: rotate(-10deg);
+  transition: 0.5s;
+}
+.card-box:hover .user-pic {
+  transform: rotate(0deg);
+  transform: scale(1.1);
+}
+.card-box {
+  //padding: 15px;
+  background-color: #fdfdfd;
+  margin: 20px 0px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  box-shadow: 0px 0px 8px 0px #d4d4d4;
+  transition: 0.5s;
+}
+.card-box:hover {
+  border: 1px solid #007bff;
+}
+.card-box p {
+  color: #808080;
+}
+
+// desenfoque
+.fade-out-siblings {
+  --gutter: 2.5rem;
+
+  background: var(--gradient-blue);
+  //text-align: center;
+  //grid-gap: var(--gutter);
+  //padding: var(--gutter);
+  //display: grid;
+  //margin: 2rem 0;
+
+  pointer-events: none;
+}
+
+.fade-out-siblings > * {
+  //box-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  background: #fff;
+  //padding: 2rem 1rem;
+  cursor: pointer;
+
+  pointer-events: auto;
+  transition: 300ms opacity, 300ms transform;
+}
+
+.fade-out-siblings:hover > * {
+  opacity: 0.4;
+}
+
+.fade-out-siblings:hover > *:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+@media (min-width: 40em) {
+  .fade-out-siblings {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .fade-out-siblings > * {
+    padding: 4rem 1rem;
+  }
+}
+
+// salon de la fama
+
+
+.filter-result .job-box {
+  -webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+  box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+  border-radius: 10px;
+  padding: 10px 35px;
+}
+
+ul {
+  list-style: none;
+}
+
+.list-disk li {
+  list-style: none;
+  margin-bottom: 12px;
+}
+
+.list-disk li:last-child {
+  margin-bottom: 0;
+}
+
+.job-box .img-holder {
+  height: 65px;
+  width: 65px;
+  background-color: #4e63d7;
+  background-image: -webkit-gradient(linear, left top, right top, from(rgba(78, 99, 215, 0.9)), to(#5a85dd));
+  background-image: linear-gradient(to right, rgba(78, 99, 215, 0.9) 0%, #5a85dd 100%);
+  font-family: "Open Sans", sans-serif;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 65px;
+}
+
+.career-title {
+  background-color: #4e63d7;
+  color: #fff;
+  padding: 15px;
+  text-align: center;
+  border-radius: 10px 10px 0 0;
+  background-image: -webkit-gradient(linear, left top, right top, from(rgba(78, 99, 215, 0.9)), to(#5a85dd));
+  background-image: linear-gradient(to right, rgba(78, 99, 215, 0.9) 0%, #5a85dd 100%);
+}
+
+.job-overview {
+  -webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+  box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+  border-radius: 10px;
+}
+
+@media (min-width: 992px) {
+  .job-overview {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 70px;
+  }
+}
+
+.job-overview .job-detail ul {
+  margin-bottom: 28px;
+}
+
+.job-overview .job-detail ul li {
+  opacity: 0.75;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.job-overview .job-detail ul li i {
+  font-size: 20px;
+  position: relative;
+  top: 1px;
+}
+
+.job-overview .overview-bottom,
+.job-overview .overview-top {
+  padding: 35px;
+}
+
+.job-content ul li {
+  font-weight: 600;
+  opacity: 0.75;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 5px;
+}
+
+@media (min-width: 768px) {
+  .job-content ul li {
+    border-bottom: 0;
+    padding: 0;
+  }
+}
+
+.job-content ul li i {
+  font-size: 20px;
+  position: relative;
+  top: 1px;
+}
+.mb-30 {
+  margin-bottom: 30px;
+}

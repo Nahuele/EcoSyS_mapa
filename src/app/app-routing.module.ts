@@ -9,7 +9,7 @@ import {ResetPassComponent} from './editar-db/reset-pass/reset-pass.component';
 import {CanEditGuard} from './editar-db/auth/can-edit.guard';
 import {ProyectosComponent} from './editar-db/proyectos/proyectos.component';
 import {NuevoProyectoComponent} from './formularios/nuevo-proyecto/nuevo-proyecto.component';
-import {ContactComponent} from './contact/contact.component';
+import {EquipoComponent} from './equipo/equipo.component';
 import {AboutComponent} from './acerca-de/about.component';
 import {TutorialComponent} from './tutorial/tutorial.component';
 
@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'verifemail', component: SendEmailComponent},
   {path: 'resetpass', component: ResetPassComponent},
-  {path: 'contacto', component: ContactComponent},
+  {path: 'equipo', component: EquipoComponent},
   {path: 'acerca-de', component: AboutComponent},
   {path: 'tutorial', component: TutorialComponent},
   {path: 'proyectos', component: ProyectosComponent, canActivate: [CanEditGuard]},

@@ -7,8 +7,12 @@
         <div class="form-group">
           <label>Nombre del Proyecto</label>
           <input [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['nombre'] : ''" class="form-control" formControlName="nombre" name="nombre"
+                 [ngClass]="{'is-invalid': registerForm.get('nombre').invalid}"
                  type="text">
         </div>
+                            <div class="invalid-feedback">
+                              El nombre es requerido
+                            </div>
       </div>
       <div class="col">
         <div class="form-group">
@@ -17,30 +21,28 @@
                  class="form-control"
                  formControlName="email"
                  type="email">
-          <!--          <div class="invalid-feedback">-->
-          <!--            email requerido-->
-          <!--          </div>-->
         </div>
-        <!--        <div *ngIf="email.invalid && !email.pristine">-->
-        <!--          <p *ngIf="email.errors.email" style="color: red">Un email es requerido</p>-->
-        <!--        </div>-->
+                <div *ngIf="email.invalid && !email.pristine">
+                  <p *ngIf="email.errors.email" style="color: red">Un email es requerido</p>
+                </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label for="tipo_enfoque">Tipo</label>
           <select [ngModel]="this.proyectoService.selectedProject ? this.proyectoService.selectedProject.detalles['tipo_enfoque'] : ''"
+                  [ngClass]="{'is-invalid': registerForm.get('tipo_enfoque').invalid}"
                   class="form-control"
                   formControlName="tipo_enfoque"
                   id="tipo_enfoque">
             <option disabled selected>Seleccione tipo</option>
-            <!--            <option>Conservación de fauna</option>-->
-            <!--            <option>Conservación de vegetación</option>-->
             <option>Conservación de la biodiversidad</option>
             <option>Experiencias agroecológicas</option>
             <option>Ambiente y sociedad</option>
           </select>
         </div>
+
+
       </div>
     </div>
     <div class="row">
@@ -695,14 +697,23 @@
       </div>
       <hr class="m-5">
     </div>
-
+    <br>
+    <div class="row justify-content-md-center">
+      <div *ngIf="alerta === true">
+        <div *ngFor="let alert of alerts">
+          <alert (onClosed)="onClosed(alert)" [dismissOnTimeout]="alert.timeout"
+                 [type]="alert.type">{{ alert.msg }}</alert>
+        </div>
+      </div>
+    </div>
     <!--botones de abajo-->
     <div class="row justify-content-md-center ">
       <div class="col-auto">
         <button class="btn btn-primary btn-lg"
                 style="margin-top: 3rem"
+                [disabled]="!registerForm.valid"
                 type="submit">Enviar
-          <!--                [disabled]="!registerForm.valid"-->
+
         </button>
       </div>
       <div class="col-auto">
@@ -721,15 +732,7 @@
       <!--        </a>-->
       <!--      </div>-->
     </div>
-    <br>
-    <div class="row justify-content-md-center">
-      <div *ngIf="alerta === true">
-        <div *ngFor="let alert of alerts">
-          <alert (onClosed)="onClosed(alert)" [dismissOnTimeout]="alert.timeout"
-                 [type]="alert.type">{{ alert.msg }}</alert>
-        </div>
-      </div>
-    </div>
+
   </form>
 </div>
 

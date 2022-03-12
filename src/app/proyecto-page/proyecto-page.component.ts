@@ -84,6 +84,7 @@ export class ProyectoPageComponent implements OnInit {
     if (this.iucnService.busquedaApi(item)) {
       this.iucnService.busquedaApi(item).subscribe(y => {
         this.iucndetalleslist[item] = y.result[0];
+        console.log(this.iucndetalleslist)
       });
     }
   }

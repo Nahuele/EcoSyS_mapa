@@ -25,20 +25,20 @@
     <div class="btn-group-toggle flex-wrap" data-toggle="buttons">
       <div class="row-cols-1">
         <div class="col">
-          <a (click)="mostrarCapa(featuresConservacionBio);ftConsBio =!ftConsBio" id="conservacionbio"><label
+          <a (click)="mostrarCapa(featuresConservacionBio)" id="conservacionbio"><label
             class="btn btn-transparent btn-sm mr-3">
-            <input #featuresConservacionBio [(ngModel)]="ftConsBio" checked name="featuresConservacionBio" type="checkbox"
+            <input #featuresConservacionBio [(ngModel)]="ftConsBio" name="featuresConservacionBio" type="checkbox"
                    value="0"/>
             Conservación de la biodiversidad
           </label></a></div>
-        <div class="col"><a (click)="mostrarCapa(agroeco);ftAgroEco =!ftAgroEco" id="agroeco">
+        <div class="col"><a (click)="mostrarCapa(agroeco)" id="agroeco">
           <label class="btn btn-transparent btn-sm mr-3">
-            <input #agroeco [(ngModel)]="ftAgroEco" checked name="agroeco" type="checkbox" value="0"/>
+            <input #agroeco [(ngModel)]="ftAgroEco" name="agroeco" type="checkbox" value="0"/>
             Experiencias agroecológicas
           </label></a></div>
-        <div class="col"><a (click)="mostrarCapa(ambienteYsoc);ftAmbSoc =!ftAmbSoc" id="ambienteYsoc">
+        <div class="col"><a (click)="mostrarCapa(ambienteYsoc)" id="ambienteYsoc">
           <label class="btn btn-transparent btn-sm mr-3">
-            <input #ambienteYsoc [(ngModel)]="ftAmbSoc" checked name="ambienteYsoc" type="checkbox" value="0"/>
+            <input #ambienteYsoc [(ngModel)]="ftAmbSoc"  name="ambienteYsoc" type="checkbox" value="0"/>
             Ambiente y sociedad
           </label></a></div>
       </div>
@@ -46,5 +46,4 @@
     <hr>
   </div>
 </div>
-<!--</div>-->
 

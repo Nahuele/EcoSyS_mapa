@@ -18,7 +18,7 @@ export class MapaComponent implements OnInit {
   ftAgroEco = true;
   ftAmbSoc = true;
   idproject: string;
-  capasCargadas = false;
+  // capasCargadas = false;
   private projectsList = [];
   loadingCursor = new BehaviorSubject<boolean>(false);
 
@@ -114,7 +114,7 @@ export class MapaComponent implements OnInit {
           border-radius: 4px;padding: 5px;">
 </div>
   <div class="card-body">
-    <h5 class="card-title">${proyecto.detalles.nombre}</h5>
+    <a href="detalles/${proyecto.id}"><h5 class="card-title">${proyecto.detalles.nombre}</h5></a>
     <p class="card-text" style="text-overflow: ellipsis;"><div><strong>Resumen:</strong></div> ${proyecto.detalles.resumen}</p>
     <a href="detalles/${proyecto.id}" class="btn btn-primary btn-sm">Más Detalles
     <i class="fa fa-search"></i></a>
@@ -154,9 +154,9 @@ export class MapaComponent implements OnInit {
     const clickedLayerId = event.name;
     // toggle layer visibility by changing the layout object's visibility property
     if (visibility === true) {
-      this.mapa.setLayoutProperty(clickedLayerId, 'visibility', 'none');
-    } else {
       this.mapa.setLayoutProperty(clickedLayerId, 'visibility', 'visible');
+    } else {
+      this.mapa.setLayoutProperty(clickedLayerId, 'visibility', 'none');
     }
   }
 
@@ -243,7 +243,7 @@ export class MapaComponent implements OnInit {
         this.mapa.addLayer(this.getSourceAndLayer('ambienteYsoc', ftsAmbSoc, 'socambLogo').layerConfig);
       });
       // this.showOrHideLayers();
-      this.capasCargadas = true;
+      // this.capasCargadas = true;
 
 // nueva capa del mar argentino, fuente https://marineregions.org/gazetteer.php?p=details&id=8466
       this.mapa.addSource('mararg', {

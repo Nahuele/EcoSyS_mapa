@@ -43,6 +43,11 @@
   font-size: medium;
 }
 
+.mapboxgl-popup {
+  max-height: 150px;
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
 /*#menutipo a {*/
 /*  font-size: 13px;*/
 /*  color: #404040;*/

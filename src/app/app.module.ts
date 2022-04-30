@@ -94,7 +94,7 @@ import { MapCoordComponent } from './formularios/map-coord/map-coord.component';
     NgMultiSelectDropDownModule.forRoot(),
     AccordionModule.forRoot(),
     TabsModule.forRoot(),
-    NgxGoogleAnalyticsModule.forRoot('G-GGLV5HY2KR'),
+    NgxGoogleAnalyticsModule.forRoot('G-FZS1X5GE3T'),
     NgxGoogleAnalyticsRouterModule
   ],
   exports:[],

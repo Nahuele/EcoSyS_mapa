@@ -10,6 +10,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
+import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -92,7 +93,9 @@ import { MapCoordComponent } from './formularios/map-coord/map-coord.component';
     CollapseModule.forRoot(),
     NgMultiSelectDropDownModule.forRoot(),
     AccordionModule.forRoot(),
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    NgxGoogleAnalyticsModule.forRoot('G-GGLV5HY2KR'),
+    NgxGoogleAnalyticsRouterModule
   ],
   exports:[],
   providers: [AuthService, CanEditGuard, { provide: BUCKET, useValue: 'gs://mapaproyectos-59125.appspot.com'}, StorageService],

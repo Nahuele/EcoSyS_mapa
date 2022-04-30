@@ -34,7 +34,7 @@ export class MapaComponent implements OnInit {
     this.listenPopUps('agroeco');
     this.mapa.getCanvas().style.cursor = 'wait';
     // esto es para el cursor waiting
-    this.loadingCursor.asObservable().subscribe(value => value == true ? this.mapa.getCanvas().style.cursor = 'wait' : this.mapa.getCanvas().style.cursor = 'default')
+    this.loadingCursor.asObservable().subscribe(value => value == true ? this.mapa.getCanvas().style.cursor = 'wait' : this.mapa.getCanvas().style.cursor = 'default');
   }
 
   buscarCoordenadas() {

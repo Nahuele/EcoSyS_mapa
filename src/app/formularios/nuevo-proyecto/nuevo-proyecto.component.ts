@@ -19,6 +19,7 @@ import {
   campoAplicacSocYamb
 } from '../campos-formulario';
 import {MapCoordComponent} from '../map-coord/map-coord.component';
+import {StorageService} from '../../upload-image/storage.service';
 
 @Component({
   selector:    'app-nuevo-proyecto',
@@ -43,7 +44,8 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
               private modalService: BsModalService,
               public iucnService: IucnApiService,
               private router: Router,
-              private authService: AuthService) {}
+              private authService: AuthService,
+              private storageSvc: StorageService) {}
 
   get email() {
     return this.registerForm.get('email');
@@ -82,7 +84,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
   alerts: any[] = [{
     type:    'success',
-    msg:     `Gracias! se ha agregado el proyecto a la base de datos. Redirigiendo a Tus Proyectos ...`,
+    msg:     `Subiendo datos... No cierre esta página.`,
     timeout: 3000
   }];
 
@@ -213,9 +215,9 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
     this.alerta = true;
     // window.scrollTo(0, 0);
-    setTimeout(() => {
-      this.router.navigate(['proyectos']);
-    }, 3000);
+    // setTimeout(() => {
+      // this.router.navigate(['proyectos']);
+    // }, 3000);
   }
 
   removeEmptyFields(obj) {

@@ -24,8 +24,8 @@ export class MapCoordComponent implements OnInit {
     this.mapa = new mapboxgl.Map({
       container: 'mapacoord', // container id
       style:     `mapbox://styles/mapbox/streets-v11`, // mapbox://styles/mapbox/streets-v11
-      center: [-66.477375, -35.584892], // starting position
-      zoom:   4 // starting zoom
+      center: [-60, -35.584892], // starting position
+      zoom:   6 // starting zoom
     });
 
     this.mapa.on('mousemove', function (e) {

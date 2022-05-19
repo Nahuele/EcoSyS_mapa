@@ -143,7 +143,8 @@ export class MapaComponent implements OnInit {
       layout: {
         visibility:   'visible',
         'icon-image': icon,
-        'icon-size':  1
+        'icon-size':  1,
+        'icon-allow-overlap': true
       },
     };
     return {source, layerConfig};
@@ -209,13 +210,13 @@ export class MapaComponent implements OnInit {
   }
 
   iniciarMapa(layer?: string) {
-    const selectedLayer = layer ? layer : 'satellite-v9';
+    const selectedLayer = layer ? layer : 'outdoors-v11';
     this.mapa = new mapboxgl.Map({
       container: 'mapa-mapbox', // container id
       style:     `mapbox://styles/mapbox/${selectedLayer}`, // mapbox://styles/mapbox/streets-v11
       // mapbox://styles/iannbarbe/ckduoxxyy0u7d19teotam0daj
-      center: [-50, -27], // starting position
-      zoom:   2.7 // starting zoom
+      center: [-60, -35], // starting position X der izq, Y arriba abajo
+      zoom:   6, // starting zoom
     });
     this.mapa.addControl(new mapboxgl.NavigationControl());
     this.mapa.addControl(new mapboxgl.ScaleControl());

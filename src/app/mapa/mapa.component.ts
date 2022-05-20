@@ -210,7 +210,7 @@ export class MapaComponent implements OnInit {
   }
 
   iniciarMapa(layer?: string) {
-    const selectedLayer = layer ? layer : 'satellite-v9';
+    const selectedLayer = layer ? layer : 'outdoors-v11';
     this.mapa = new mapboxgl.Map({
       container: 'mapa-mapbox', // container id
       style:     `mapbox://styles/mapbox/${selectedLayer}`, // mapbox://styles/mapbox/streets-v11

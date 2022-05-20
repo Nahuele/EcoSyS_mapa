@@ -3,6 +3,7 @@ import {AngularFireStorage} from '@angular/fire/storage';
 import {FileItem} from './models/file-item';
 import {finalize} from 'rxjs/operators';
 import {BehaviorSubject, Observable, of} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Injectable()
 
@@ -10,7 +11,8 @@ export class StorageService {
 
   private MEDIA_STORAGE_PATH = 'uploads';
 
-  constructor(private readonly storage: AngularFireStorage) { }
+  constructor(private readonly storage: AngularFireStorage,
+              private router: Router) { }
 
   uploadImage(images: FileItem[], idNewProject, idUser) {
     for (const item of images) {
@@ -24,6 +26,7 @@ export class StorageService {
         finalize( () => {
           item.downloadURL = fileRef.getDownloadURL();
           item.uploading = false;
+          this.router.navigate(['proyectos']);
         })
       ).subscribe();
     }

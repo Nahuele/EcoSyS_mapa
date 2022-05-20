@@ -82,7 +82,7 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
   alerts: any[] = [{
     type:    'success',
-    msg:     `Gracias! se ha agregado el proyecto a la base de datos. Redirigiendo a Tus Proyectos ...`,
+    msg:     `Agregando el proyecto... No cierre esta página.`,
     timeout: 3000
   }];
 
@@ -213,9 +213,6 @@ export class NuevoProyectoComponent implements OnInit, OnDestroy {
 
     this.alerta = true;
     // window.scrollTo(0, 0);
-    setTimeout(() => {
-      this.router.navigate(['proyectos']);
-    }, 3000);
   }
 
   removeEmptyFields(obj) {

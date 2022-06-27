@@ -210,10 +210,10 @@ export class MapaComponent implements OnInit {
   }
 
   iniciarMapa(layer?: string) {
-    const selectedLayer = layer ? layer : 'satellite-v9';
+    const selectedLayer = layer ? layer : 'satellite-v9?optimize=true';
     this.mapa = new mapboxgl.Map({
       container: 'mapa-mapbox', // container id
-      style:     `mapbox://styles/mapbox/${selectedLayer}`, // mapbox://styles/mapbox/streets-v11
+      style:     `mapbox://styles/mapbox/${selectedLayer}?optimize=true`, // mapbox://styles/mapbox/streets-v11
       // mapbox://styles/iannbarbe/ckduoxxyy0u7d19teotam0daj
       center: [-60, -35], // starting position X der izq, Y arriba abajo
       zoom:   6, // starting zoom
@@ -249,17 +249,19 @@ export class MapaComponent implements OnInit {
 // nueva capa del mar argentino, fuente https://marineregions.org/gazetteer.php?p=details&id=8466
       this.mapa.addSource('mararg', {
         'type': 'geojson',
-        'data': '../assets/coordenadas_mar_argentino.geojson'
+        'data': '../assets/linea_limite_maritimos.geojson'
       });
 
 // muestro poligono del mar arg.
       this.mapa.addLayer({
         'id': 'mar-arg_layer',
-        'type': 'fill',
+        'type': 'line',
         'source': 'mararg',
         'paint': {
-          'fill-color': 'rgba(74, 5, 5, 0.4)',
-          'fill-outline-color': 'rgba(240, 78, 78, 1)'
+          'line-color': '#bbbbbb',
+          'line-width': 1.5
+          // 'fill-color': 'rgba(74, 5, 5, 0.4)',
+          // 'fill-outline-color': 'rgba(240, 78, 78, 1)'
         }
       });
     });

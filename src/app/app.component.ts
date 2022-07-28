@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd, Event as NavigationEvent } from '@angular/router';
 import { Location } from '@angular/common';
+import {GoogleTagManagerService} from 'angular-google-tag-manager';
 
 
 @Component({
@@ -13,9 +14,25 @@ import { Location } from '@angular/common';
 export class AppComponent {
   title = 'ecomapa';
 
-  constructor(){}
+  constructor(
+      private gtmService: GoogleTagManagerService,
+      private router: Router) {
+    gtmService.addGtmToDom();
+  }
 
+  ngOnInit():void {
+    this.gtmService.addGtmToDom();
+    this.router.events.forEach(item => {
+      if (item instanceof NavigationEnd) {
+        const gtmTag = {
+          event: 'page',
+          pageName: item.url
+        };
 
+        this.gtmService.pushTag(gtmTag);
+      }
+    });
+  }
 
   event$
   // public ruta;

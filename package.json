@@ -1,6 +1,6 @@
 {
   "name": "ecosysmapa",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
@@ -29,6 +29,7 @@
     "@angular/platform-browser-dynamic": "~9.1.0",
     "@angular/router": "~9.1.0",
     "@angular/youtube-player": "^10.2.6",
+    "angular-google-tag-manager": "1.4.2",
     "bootstrap": "^4.5.0",
     "express": "^4.17.1",
     "firebase": "^7.17.2",

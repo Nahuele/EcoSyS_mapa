@@ -9,6 +9,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { GoogleTagManagerModule } from 'angular-google-tag-manager';
 
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 import { AppRoutingModule } from './app-routing.module';
@@ -95,7 +96,10 @@ import { MapCoordComponent } from './formularios/map-coord/map-coord.component';
     AccordionModule.forRoot(),
     TabsModule.forRoot(),
     NgxGoogleAnalyticsModule.forRoot('G-FZS1X5GE3T'),
-    NgxGoogleAnalyticsRouterModule
+    NgxGoogleAnalyticsRouterModule,
+    GoogleTagManagerModule.forRoot({
+      id: 'GTM-KL9KXMN',
+    })
   ],
   exports:[],
   providers: [AuthService, CanEditGuard, { provide: BUCKET, useValue: 'gs://mapaproyectos-59125.appspot.com'}, StorageService],

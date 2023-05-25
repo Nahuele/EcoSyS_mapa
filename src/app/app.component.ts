@@ -20,7 +20,7 @@ export class AppComponent {
     gtmService.addGtmToDom();
   }
 
-  ngOnInit():void {
+  ngOnInit() {
     this.gtmService.addGtmToDom();
     this.router.events.forEach(item => {
       if (item instanceof NavigationEnd) {

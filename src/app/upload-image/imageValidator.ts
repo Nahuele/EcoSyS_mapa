@@ -1,7 +1,7 @@
 import {FileItem} from './models/file-item';
 
 export class ImageValidator {
-  private acceptType = ['image/jpeg', 'image/png'];
+  private acceptType = ['image/jpeg', 'image/png', 'image/jpg'];
 
   // valida q solo sean jpeg y png
   validateType(fileType : string):boolean {

@@ -217,6 +217,7 @@ export class MapaComponent implements OnInit {
       // mapbox://styles/iannbarbe/ckduoxxyy0u7d19teotam0daj
       center: [-60, -35], // starting position X der izq, Y arriba abajo
       zoom:   6, // starting zoom
+      maxzoom: 12,
     });
     this.mapa.addControl(new mapboxgl.NavigationControl());
     this.mapa.addControl(new mapboxgl.ScaleControl());

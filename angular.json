@@ -21,7 +21,8 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/CODE_OF_CONDUCT.md"
             ],
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -30,6 +31,7 @@
               "src/styles.css"
             ],
             "scripts": [
+              "node_modules/marked/marked.min.js"
             ]
           },
           "configurations": {
@@ -89,12 +91,13 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/CODE_OF_CONDUCT.md"
             ],
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": ["node_modules/marked/marked.min.js"]
           }
         },
         "lint": {

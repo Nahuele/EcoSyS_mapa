@@ -45,3 +45,7 @@ testem.log
 .DS_Store
 Thumbs.db
 /ecosysmapa
+
+# esconder archivos sensibles
+src/environments/*
+src/index.html

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {MarkdownService} from "ngx-markdown";
 
 @Component({
   selector: 'app-about',
@@ -6,8 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./about.component.css']
 })
 export class AboutComponent implements OnInit {
-
-  constructor() { }
+  constructor(private markdownService: MarkdownService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
   }

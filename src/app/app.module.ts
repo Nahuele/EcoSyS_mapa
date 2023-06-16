@@ -11,6 +11,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { GoogleTagManagerModule } from 'angular-google-tag-manager';
 import { MarkdownModule } from 'ngx-markdown';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 import { AppRoutingModule } from './app-routing.module';

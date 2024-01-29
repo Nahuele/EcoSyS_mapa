@@ -1,12 +1,15 @@
 # Acerca de
 
+Updated LINK of the WebSite: [https://ecosysmapa.b4a.app/](https://ecosysmapa.b4a.app) 
+
+___
+
 Proyecto de Mapa ecológico de Arg.
 
 Permite explorar proyectos locales relacionados con el medioambiente (incluyendo info, fotos, videos, detalles de los integrantes, etc.).
 
 Para agregar un proyecto debe crearse un usuario, luego podrá ingresar proyectos dentro de las siguientes categorías:
-- Conservación de Fauna
-- Conservación de Flora
+- Conservación de la Biodiversidad
 - Agroecología y Soberanía Alimentaria
 - Ambiente y Sociedad
 
